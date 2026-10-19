@@ -1,0 +1,33 @@
+name: Documentation and teaching model
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: docs-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check publication links, sources, and generated-file consistency
+        run: python3 scripts/check_docs.py
+      - name: Test the documentation checker, including invalid fixtures
+        run: python3 -m unittest discover -s tests -v
+      - name: Install the exact example compiler in temporary tooling
+        run: npm install --prefix "$RUNNER_TEMP/research-ts" --no-audit --no-fund typescript@5.8.3
+      - name: Check public contracts and expected-invalid type declarations
+        run: '"$RUNNER_TEMP/research-ts/node_modules/.bin/tsc" -p examples/task-assignment/runnable/tsconfig.json'
+      - name: Test the limited in-memory model
+        run: node --test examples/task-assignment/runnable/assignment.test.mjs

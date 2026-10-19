@@ -1,0 +1,14 @@
+[
+  {
+    "file": "original-blueprint.md",
+    "original_filename": "AI_Software_Factory_Blueprint.md",
+    "original_sha256": "39bc62dfd1051f8ff3e3bd1d3ddc30de4c6d941c1dd80668d8add754a0511082",
+    "modification": "Historical-status banner added; original body otherwise preserved."
+  },
+  {
+    "file": "original-starter-prompt.md",
+    "original_filename": "Coding_Session_Starter_Prompt.md",
+    "original_sha256": "ddce2a2b5ef638aea1bc2960fc35d7fea1e70bfbe91495cac1ba03ea9e53222a",
+    "modification": "Historical-status banner added; original body otherwise preserved."
+  }
+]

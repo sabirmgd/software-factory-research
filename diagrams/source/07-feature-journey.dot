@@ -1,0 +1,28 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="From request to useful change"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+request [label="REQUEST\nWhat problem matters?", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+discover [label="DISCOVER\nResearch and resolve unknowns", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+design [label="DESIGN\nFit behavior to stable\ncontracts", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+implement [label="IMPLEMENT\nSmall bounded slices", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+verify [label="VERIFY\nTest claims and inspect gaps", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+release [label="REVIEW AND RELEASE\nProportional review +\nauthority", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+outcome [label="CUSTOMER FEEDBACK\nDid the intervention help?", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+next [label="NEXT CHOICE\nExpand, revise, stop, or learn", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+request -> discover [style=invis, weight=100];
+discover -> design [style=invis, weight=100];
+design -> implement [style=invis, weight=100];
+implement -> verify [style=invis, weight=100];
+verify -> release [style=invis, weight=100];
+release -> outcome [style=invis, weight=100];
+outcome -> next [style=invis, weight=100];
+request -> discover [constraint=false, label=""];
+discover -> design [constraint=false, label=""];
+design -> implement [constraint=false, label=""];
+implement -> verify [constraint=false, label=""];
+verify -> release [constraint=false, label=""];
+release -> outcome [constraint=false, label=""];
+outcome -> next [constraint=false, label=""];
+}

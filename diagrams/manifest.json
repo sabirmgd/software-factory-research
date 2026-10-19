@@ -1,0 +1,95 @@
+{
+  "generator": "scripts/render_diagrams.py",
+  "canonical": "JSON source",
+  "rendering": "Graphviz dot; Mermaid exported, not rendered by mmdc",
+  "diagrams": [
+    {
+      "id": "01-levels",
+      "source": "diagrams/source/01-levels.json",
+      "source_sha256": "91c9ac1ec6dc175566c513cfa051f4d208c7183db6771d9d7096203272264ed9",
+      "outputs": {
+        "diagrams/source/01-levels.mmd": "10995a82e0313f20aad3b0b8f0feafe2e33ef9886cfed90a3ab0b91e0ed8a2b7",
+        "diagrams/source/01-levels.dot": "881cab499ea141a2d09ed420148d2425363da8382c8c9cb90af3de5d5aefb927",
+        "diagrams/rendered/01-levels.svg": "050e3960786f879f48316980035049d13e64530d06f45775f60c3fef5fbbef1f",
+        "diagrams/rendered/01-levels.png": "3f0c6f6765250db0bfe36ede5fddad8e00855798835d0e5de8a49d6bd6ce9074"
+      }
+    },
+    {
+      "id": "02-three-loops",
+      "source": "diagrams/source/02-three-loops.json",
+      "source_sha256": "eaa8d198f8edee73512252dedd6979e11e3a0160f5445128262cadb4838f687f",
+      "outputs": {
+        "diagrams/source/02-three-loops.mmd": "1e92f53b8debba3a925ac5be63b57b7397b86d105949bedcf36cc1bed763d300",
+        "diagrams/source/02-three-loops.dot": "1270b057bd461f19f2d60e686eabef6f334fa841bb25f661989a60e9e0fc4fd4",
+        "diagrams/rendered/02-three-loops.svg": "2b6194e01c0fda4727356b3b64f8cb2e69a9aaa8e5a7189963b2e2abe2caf9f9",
+        "diagrams/rendered/02-three-loops.png": "c3cfa007ca435eb85d62d1987a373abe4fac7bdec1f7156bd1d01d82499ecd6d"
+      }
+    },
+    {
+      "id": "03-responsibilities",
+      "source": "diagrams/source/03-responsibilities.json",
+      "source_sha256": "cb7df98ef04d4d81ef54fffc8dfc53ba005fbc1b905b13cb4862cb0c12bb8f31",
+      "outputs": {
+        "diagrams/source/03-responsibilities.mmd": "25922a2d577508ad758ef08c6642476d20a6e3609e5ff72fe52483e6a6073b36",
+        "diagrams/source/03-responsibilities.dot": "435e315732e351fbaec34768ae0efca841cce3e1da64248ecce5eaf0453cc51a",
+        "diagrams/rendered/03-responsibilities.svg": "279e476ec24990315f58551659ac58366c735ddd7cc3e6acb703ca1d640359ba",
+        "diagrams/rendered/03-responsibilities.png": "13f71fc4e5978784827752b1a6e06fc2ad697cfa94f29db250b1c204fb3be76c"
+      }
+    },
+    {
+      "id": "04-planning-artifacts",
+      "source": "diagrams/source/04-planning-artifacts.json",
+      "source_sha256": "b86daf9be14af0a72cf63a9ad53ebb2c86e44c90e7ec22491be7d112df9b4d29",
+      "outputs": {
+        "diagrams/source/04-planning-artifacts.mmd": "120a6f4a8053103e1041f2b245427981fdceacc9a4a809117dfe0fc2a6a4434b",
+        "diagrams/source/04-planning-artifacts.dot": "5b34d9c105ce963fde6a90df2d68e0b768407f96dc8b6de4d59e14666c0baffe",
+        "diagrams/rendered/04-planning-artifacts.svg": "f3c7bdf11223523025aa0e2af747d449ec2de337a893f9baf1c2b1bfc5d9291b",
+        "diagrams/rendered/04-planning-artifacts.png": "ce8ef5233fe58450915e171ed5866235d2fae57ca1d1c24f7e621042b41edfc4"
+      }
+    },
+    {
+      "id": "05-module-depth",
+      "source": "diagrams/source/05-module-depth.json",
+      "source_sha256": "caceb270f1f944264ba71a0854e0c8ae8aa0bd24cc96ed5ae9241cb3bc5a41bc",
+      "outputs": {
+        "diagrams/source/05-module-depth.mmd": "976180b0dfd9f252323625210c356b8234bf12eea85cfa039a45f92d7c8da7ee",
+        "diagrams/source/05-module-depth.dot": "de8fd39c04c0806b9471b301105e6568568b6172279a1a10b0a0c08a44f58bbe",
+        "diagrams/rendered/05-module-depth.svg": "847b08ff334ddf71b00dea1e7f6ab67bd18222e5b53532b1612b4015c83aa2c2",
+        "diagrams/rendered/05-module-depth.png": "c97038459d16e4a22d45a89e395a98b80cde959053c30be7d5023d58086d0cf9"
+      }
+    },
+    {
+      "id": "06-make-clear",
+      "source": "diagrams/source/06-make-clear.json",
+      "source_sha256": "8b3c32451446b94999cd2abd8409ed98d2856411b85a764395f6ea5ffcebbdd2",
+      "outputs": {
+        "diagrams/source/06-make-clear.mmd": "cbd739b8b87e3e58ac920b859cec03d3153bff6fd2d2b5aafea93d678f9aa8b7",
+        "diagrams/source/06-make-clear.dot": "dc02a6ecbb0d500402d68cf6de8d646789db3e9f85ece4434d3c3cc965d6beb9",
+        "diagrams/rendered/06-make-clear.svg": "654fa8f1eee91589dd787f44c3fb2f0c3454935b6b6895138bc7e065ac475880",
+        "diagrams/rendered/06-make-clear.png": "46c55d7dff8bbfa3beeae93a59275a9e91d3044ada7e048a28b70fa38f100553"
+      }
+    },
+    {
+      "id": "07-feature-journey",
+      "source": "diagrams/source/07-feature-journey.json",
+      "source_sha256": "be8a9a4b591360421d3b5bbb64043d698644229cf2c0fcdb65c991c13dcfaaf6",
+      "outputs": {
+        "diagrams/source/07-feature-journey.mmd": "82ed11eab5ff7a6604c4307e145f0d40f033dbdd9d231169b1cbce704f74d7cd",
+        "diagrams/source/07-feature-journey.dot": "95adf0d018eeecf952c9a9c310419c4ec7118e4f7b4d3b3c137251467bf9104d",
+        "diagrams/rendered/07-feature-journey.svg": "a61a664e9ec02ec88cf93ab1160e9bcf19bc947ff9d19d8ccc276d9f82136d26",
+        "diagrams/rendered/07-feature-journey.png": "5c76327e1db168a207a2c4fb359dd1c51eadcc94292752790688b02c7d7b0aa0"
+      }
+    },
+    {
+      "id": "08-assignment-flow",
+      "source": "diagrams/source/08-assignment-flow.json",
+      "source_sha256": "503fb91c6cca594e985767438f5c49a3b617b04d3cfc1f0ed47e4c413f682d78",
+      "outputs": {
+        "diagrams/source/08-assignment-flow.mmd": "9705485096ed8f2e0bafaa2c83a8f5259ed06e9c963e68199c9874cf734da1a8",
+        "diagrams/source/08-assignment-flow.dot": "c478ca900cd9495b32b7c88e2807654ca7642e6c6ad48e2436d6751af482fbb0",
+        "diagrams/rendered/08-assignment-flow.svg": "e4326204de0aa320aaec6982a7c821cd5ffc45edb5d5eacbe848804e11988948",
+        "diagrams/rendered/08-assignment-flow.png": "73c00a6b5cd85972043e7ddd5d1ae8f0d0ec3fe4ec8e7f60f0e0abfb45daff1b"
+      }
+    }
+  ]
+}

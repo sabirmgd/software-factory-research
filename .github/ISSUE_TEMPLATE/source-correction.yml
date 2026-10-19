@@ -1,0 +1,25 @@
+name: Source correction
+description: Correct an attribution, stale reference, or mismatch between a claim and evidence.
+title: '[Source] '
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Chapter or source ID
+      description: Point to the smallest relevant claim.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should change?
+      description: Distinguish the source's position from your interpretation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Primary evidence
+      description: Provide a source URL, date/revision, and relevant location. Do not paste private material or a full copyrighted article.
+    validations:
+      required: true

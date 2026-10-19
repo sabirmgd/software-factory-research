@@ -1,0 +1,2 @@
+# Optional browser inspection only; not required for normal CI or reading.
+playwright==1.57.0

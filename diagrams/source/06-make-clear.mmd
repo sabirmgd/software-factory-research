@@ -1,0 +1,14 @@
+%% Generated from 06-make-clear.json; edit the JSON source.
+flowchart TD
+    evidence["GROUNDING<br/>Code, intent, tests, observations"]
+    question["UNDERSTANDING GOAL<br/>Audience, question, device"]
+    view["SMALLEST USEFUL VIEW<br/>Explain, compare, visualize"]
+    labels["KEEP STATUS VISIBLE<br/>Observed / proposed / unverified"]
+    understand["HUMAN UNDERSTANDS<br/>Challenges or corrects the model"]
+    decision["OPTIONAL DECISION<br/>Approve, revise, or explore"]
+    evidence --> question
+    question --> view
+    view --> labels
+    labels --> understand
+    understand -->|"only when useful"| decision
+    understand -->|"correct source, refresh view"| evidence

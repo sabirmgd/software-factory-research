@@ -1,0 +1,2 @@
+# Only needed to rebuild index.html; core documentation checks use stdlib.
+markdown-it-py==4.2.0

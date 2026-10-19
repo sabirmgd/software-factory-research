@@ -1,0 +1,70 @@
+{
+  "id": "01-levels",
+  "title": "What are we optimizing?",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "Proposed levels of the problem. Lower-level activity is justified by its contribution to higher-level outcomes; more activity is not automatically more value.",
+  "nodes": [
+    {
+      "id": "outcome",
+      "label": "CUSTOMER OUTCOME\nA worthwhile task gets better",
+      "kind": "human"
+    },
+    {
+      "id": "behavior",
+      "label": "PRODUCT BEHAVIOR\nA useful intervention",
+      "kind": "work"
+    },
+    {
+      "id": "decisions",
+      "label": "ENGINEERING DECISIONS\nMeaning, ownership, constraints",
+      "kind": "contract"
+    },
+    {
+      "id": "execution",
+      "label": "AGENT WORK\nA bounded change",
+      "kind": "work"
+    },
+    {
+      "id": "evidence",
+      "label": "EVIDENCE\nBehavior, risk, real use",
+      "kind": "evidence"
+    },
+    {
+      "id": "learn",
+      "label": "REVISE THE NEXT CHOICE\nInclude building less",
+      "kind": "human"
+    }
+  ],
+  "edges": [
+    {
+      "from": "outcome",
+      "to": "behavior",
+      "label": "guides"
+    },
+    {
+      "from": "behavior",
+      "to": "decisions",
+      "label": ""
+    },
+    {
+      "from": "decisions",
+      "to": "execution",
+      "label": ""
+    },
+    {
+      "from": "execution",
+      "to": "evidence",
+      "label": ""
+    },
+    {
+      "from": "evidence",
+      "to": "learn",
+      "label": ""
+    },
+    {
+      "from": "learn",
+      "to": "outcome",
+      "label": "feedback"
+    }
+  ]
+}

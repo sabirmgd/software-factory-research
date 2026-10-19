@@ -1,0 +1,14 @@
+%% Generated from 01-levels.json; edit the JSON source.
+flowchart TD
+    outcome["CUSTOMER OUTCOME<br/>A worthwhile task gets better"]
+    behavior["PRODUCT BEHAVIOR<br/>A useful intervention"]
+    decisions["ENGINEERING DECISIONS<br/>Meaning, ownership, constraints"]
+    execution["AGENT WORK<br/>A bounded change"]
+    evidence["EVIDENCE<br/>Behavior, risk, real use"]
+    learn["REVISE THE NEXT CHOICE<br/>Include building less"]
+    outcome -->|"guides"| behavior
+    behavior --> decisions
+    decisions --> execution
+    execution --> evidence
+    evidence --> learn
+    learn -->|"feedback"| outcome

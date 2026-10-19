@@ -1,0 +1,65 @@
+{
+  "id": "04-planning-artifacts",
+  "title": "Different documents, different jobs",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "The full route is shown for clarity. Known-pattern work may skip or combine documents. TDD here is a technical design document. Findings and feedback may revise earlier choices.",
+  "nodes": [
+    {
+      "id": "research",
+      "label": "RESEARCH\nWhat exists? What is unknown?",
+      "kind": "evidence"
+    },
+    {
+      "id": "prd",
+      "label": "PRD\nWhat should people achieve?",
+      "kind": "human"
+    },
+    {
+      "id": "system",
+      "label": "TDD: SYSTEM DESIGN\nHow do components interact?",
+      "kind": "contract"
+    },
+    {
+      "id": "program",
+      "label": "TDD: PROGRAM DESIGN\nWhat is the code shape?",
+      "kind": "contract"
+    },
+    {
+      "id": "outline",
+      "label": "OUTLINE\nIn what order, with which checks?",
+      "kind": "work"
+    },
+    {
+      "id": "slice",
+      "label": "IMPLEMENTATION\nA small verifiable behavior",
+      "kind": "work"
+    }
+  ],
+  "edges": [
+    {
+      "from": "research",
+      "to": "prd",
+      "label": ""
+    },
+    {
+      "from": "prd",
+      "to": "system",
+      "label": ""
+    },
+    {
+      "from": "system",
+      "to": "program",
+      "label": ""
+    },
+    {
+      "from": "program",
+      "to": "outline",
+      "label": ""
+    },
+    {
+      "from": "outline",
+      "to": "slice",
+      "label": ""
+    }
+  ]
+}

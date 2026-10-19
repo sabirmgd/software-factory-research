@@ -1,0 +1,65 @@
+{
+  "id": "05-module-depth",
+  "title": "Deep modules, not long call chains",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "Two illustrative caller experiences. The second places the operation and its coordination behind one useful interface. A smaller public API alone does not prove that ownership is correct.",
+  "nodes": [
+    {
+      "id": "a",
+      "label": "SHALLOW BOUNDARY\nCaller coordinates the operation",
+      "kind": "warning"
+    },
+    {
+      "id": "a1",
+      "label": "Caller checks membership\nthen eligibility\nthen save + audit",
+      "kind": "warning"
+    },
+    {
+      "id": "risk",
+      "label": "Repeated callers must learn\nand repeat internal rules",
+      "kind": "warning"
+    },
+    {
+      "id": "b",
+      "label": "DEEPER CAPABILITY\nCaller asks: assign(command)",
+      "kind": "contract"
+    },
+    {
+      "id": "b1",
+      "label": "PRIVATE OWNERSHIP\nPolicy, consistency, state, audit",
+      "kind": "work"
+    },
+    {
+      "id": "benefit",
+      "label": "Callers depend on behavior\nnot the internal sequence",
+      "kind": "evidence"
+    }
+  ],
+  "edges": [
+    {
+      "from": "a",
+      "to": "a1",
+      "label": ""
+    },
+    {
+      "from": "a1",
+      "to": "risk",
+      "label": ""
+    },
+    {
+      "from": "risk",
+      "to": "b",
+      "label": "alternative design"
+    },
+    {
+      "from": "b",
+      "to": "b1",
+      "label": ""
+    },
+    {
+      "from": "b1",
+      "to": "benefit",
+      "label": ""
+    }
+  ]
+}

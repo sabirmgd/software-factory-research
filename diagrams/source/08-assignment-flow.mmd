@@ -1,0 +1,15 @@
+%% Generated from 08-assignment-flow.json; edit the JSON source.
+flowchart TD
+    identity["IDENTITY + INPUT<br/>Trusted boundary assumed"]
+    authority["CURRENT AUTHORITY<br/>Membership + assignment capability"]
+    task["SCOPED RESOURCE<br/>Task belongs to this workspace"]
+    replay["PRIOR REQUEST?<br/>Same key + content → old receipt"]
+    eligible["NEW REQUEST CHECKS<br/>Target access + expected revision"]
+    prepare["PREPARE NEXT STATE<br/>Assignment, audit, replay record"]
+    commit["SYNCHRONOUS COMMIT<br/>Replace state only on success"]
+    identity --> authority
+    authority --> task
+    task --> replay
+    replay -->|"no prior receipt"| eligible
+    eligible --> prepare
+    prepare -->|"simulated failure aborts"| commit

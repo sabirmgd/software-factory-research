@@ -1,0 +1,70 @@
+{
+  "id": "06-make-clear",
+  "title": "Make Clear: understanding first",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "A visual is a view of evidence, not a substitute for it. Understanding can be the endpoint. When a decision is needed, record it separately and update the owning source.",
+  "nodes": [
+    {
+      "id": "evidence",
+      "label": "GROUNDING\nCode, intent, tests, observations",
+      "kind": "evidence"
+    },
+    {
+      "id": "question",
+      "label": "UNDERSTANDING GOAL\nAudience, question, device",
+      "kind": "human"
+    },
+    {
+      "id": "view",
+      "label": "SMALLEST USEFUL VIEW\nExplain, compare, visualize",
+      "kind": "work"
+    },
+    {
+      "id": "labels",
+      "label": "KEEP STATUS VISIBLE\nObserved / proposed / unverified",
+      "kind": "contract"
+    },
+    {
+      "id": "understand",
+      "label": "HUMAN UNDERSTANDS\nChallenges or corrects the model",
+      "kind": "human"
+    },
+    {
+      "id": "decision",
+      "label": "OPTIONAL DECISION\nApprove, revise, or explore",
+      "kind": "human"
+    }
+  ],
+  "edges": [
+    {
+      "from": "evidence",
+      "to": "question",
+      "label": ""
+    },
+    {
+      "from": "question",
+      "to": "view",
+      "label": ""
+    },
+    {
+      "from": "view",
+      "to": "labels",
+      "label": ""
+    },
+    {
+      "from": "labels",
+      "to": "understand",
+      "label": ""
+    },
+    {
+      "from": "understand",
+      "to": "decision",
+      "label": "only when useful"
+    },
+    {
+      "from": "understand",
+      "to": "evidence",
+      "label": "correct source, refresh view"
+    }
+  ]
+}

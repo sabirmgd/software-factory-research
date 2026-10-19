@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="Different documents, different\njobs"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+research [label="RESEARCH\nWhat exists? What is unknown?", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+prd [label="PRD\nWhat should people achieve?", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+system [label="TDD: SYSTEM DESIGN\nHow do components interact?", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+program [label="TDD: PROGRAM DESIGN\nWhat is the code shape?", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+outline [label="OUTLINE\nIn what order, with which\nchecks?", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+slice [label="IMPLEMENTATION\nA small verifiable behavior", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+research -> prd [style=invis, weight=100];
+prd -> system [style=invis, weight=100];
+system -> program [style=invis, weight=100];
+program -> outline [style=invis, weight=100];
+outline -> slice [style=invis, weight=100];
+research -> prd [constraint=false, label=""];
+prd -> system [constraint=false, label=""];
+system -> program [constraint=false, label=""];
+program -> outline [constraint=false, label=""];
+outline -> slice [constraint=false, label=""];
+}

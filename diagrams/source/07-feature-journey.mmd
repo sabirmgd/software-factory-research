@@ -1,0 +1,17 @@
+%% Generated from 07-feature-journey.json; edit the JSON source.
+flowchart TD
+    request["REQUEST<br/>What problem matters?"]
+    discover["DISCOVER<br/>Research and resolve unknowns"]
+    design["DESIGN<br/>Fit behavior to stable contracts"]
+    implement["IMPLEMENT<br/>Small bounded slices"]
+    verify["VERIFY<br/>Test claims and inspect gaps"]
+    release["REVIEW AND RELEASE<br/>Proportional review + authority"]
+    outcome["CUSTOMER FEEDBACK<br/>Did the intervention help?"]
+    next["NEXT CHOICE<br/>Expand, revise, stop, or learn"]
+    request --> discover
+    discover --> design
+    design --> implement
+    implement --> verify
+    verify --> release
+    release --> outcome
+    outcome --> next

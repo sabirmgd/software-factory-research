@@ -1,0 +1,75 @@
+{
+  "id": "03-responsibilities",
+  "title": "Where human judgment enters",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "Authority and evidence are separate. Design agreement does not itself authorize production release. Unexpected consequential choices return to an accountable human.",
+  "nodes": [
+    {
+      "id": "human",
+      "label": "HUMAN\nIntent and consequential choices",
+      "kind": "human"
+    },
+    {
+      "id": "contract",
+      "label": "DELEGATION CONTRACT\nScope, authority, evidence, limits",
+      "kind": "contract"
+    },
+    {
+      "id": "agent",
+      "label": "AGENT\nResearch and implement",
+      "kind": "work"
+    },
+    {
+      "id": "check",
+      "label": "CHECKS\nEvidence for agreed behavior",
+      "kind": "evidence"
+    },
+    {
+      "id": "decision",
+      "label": "ACCEPTANCE\nReview proportional to risk",
+      "kind": "human"
+    },
+    {
+      "id": "release",
+      "label": "RELEASE\nOnly with explicit authority",
+      "kind": "contract"
+    }
+  ],
+  "edges": [
+    {
+      "from": "human",
+      "to": "contract",
+      "label": ""
+    },
+    {
+      "from": "contract",
+      "to": "agent",
+      "label": ""
+    },
+    {
+      "from": "agent",
+      "to": "check",
+      "label": ""
+    },
+    {
+      "from": "check",
+      "to": "agent",
+      "label": "repair within scope"
+    },
+    {
+      "from": "agent",
+      "to": "human",
+      "label": "new consequential choice"
+    },
+    {
+      "from": "check",
+      "to": "decision",
+      "label": "results and gaps"
+    },
+    {
+      "from": "decision",
+      "to": "release",
+      "label": ""
+    }
+  ]
+}

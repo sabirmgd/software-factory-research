@@ -1,0 +1,13 @@
+%% Generated from 02-three-loops.json; edit the JSON source.
+flowchart TD
+    intent["CUSTOMER-VALUE LOOP<br/>Problem and desired outcome"]
+    delivery["ENGINEERING LOOP<br/>Design → bounded change → checks"]
+    use["REAL USE<br/>Adoption, outcomes, harms"]
+    learning["FACTORY-LEARNING LOOP<br/>Diagnose repeated difficulty"]
+    assets["REUSABLE CAPABILITY<br/>Contracts, examples, tools"]
+    intent -->|"choose a useful change"| delivery
+    delivery -->|"release with authority"| use
+    use -->|"revise the product"| intent
+    delivery -->|"effort and surprises"| learning
+    learning -->|"improve or simplify"| assets
+    assets -->|"support the next change"| delivery

@@ -1,0 +1,24 @@
+name: Counterexample or alternative
+description: Show where a proposed mechanism fails or a different approach is preferable.
+title: '[Challenge] '
+body:
+  - type: input
+    id: claim
+    attributes:
+      label: Mechanism or claim challenged
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and constraints
+      description: Include task type, risk, scale, and relevant limitations without identifying clients.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Observations or reasoning
+      description: Separate observed results from a hypothetical counterexample. Explain your alternative and its tradeoffs.
+    validations:
+      required: true

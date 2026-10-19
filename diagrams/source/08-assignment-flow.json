@@ -1,0 +1,75 @@
+{
+  "id": "08-assignment-flow",
+  "title": "One assignment capability",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "Simplified view of the synchronous teaching model. Every failed check returns without mutation. Real authentication, durable transactions, concurrent revocation, and a browser flow remain unimplemented.",
+  "nodes": [
+    {
+      "id": "identity",
+      "label": "IDENTITY + INPUT\nTrusted boundary assumed",
+      "kind": "contract"
+    },
+    {
+      "id": "authority",
+      "label": "CURRENT AUTHORITY\nMembership + assignment capability",
+      "kind": "work"
+    },
+    {
+      "id": "task",
+      "label": "SCOPED RESOURCE\nTask belongs to this workspace",
+      "kind": "work"
+    },
+    {
+      "id": "replay",
+      "label": "PRIOR REQUEST?\nSame key + content \u2192 old receipt",
+      "kind": "evidence"
+    },
+    {
+      "id": "eligible",
+      "label": "NEW REQUEST CHECKS\nTarget access + expected revision",
+      "kind": "work"
+    },
+    {
+      "id": "prepare",
+      "label": "PREPARE NEXT STATE\nAssignment, audit, replay record",
+      "kind": "work"
+    },
+    {
+      "id": "commit",
+      "label": "SYNCHRONOUS COMMIT\nReplace state only on success",
+      "kind": "evidence"
+    }
+  ],
+  "edges": [
+    {
+      "from": "identity",
+      "to": "authority",
+      "label": ""
+    },
+    {
+      "from": "authority",
+      "to": "task",
+      "label": ""
+    },
+    {
+      "from": "task",
+      "to": "replay",
+      "label": ""
+    },
+    {
+      "from": "replay",
+      "to": "eligible",
+      "label": "no prior receipt"
+    },
+    {
+      "from": "eligible",
+      "to": "prepare",
+      "label": ""
+    },
+    {
+      "from": "prepare",
+      "to": "commit",
+      "label": "simulated failure aborts"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="Make Clear: understanding first"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+evidence [label="GROUNDING\nCode, intent, tests,\nobservations", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+question [label="UNDERSTANDING GOAL\nAudience, question, device", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+view [label="SMALLEST USEFUL VIEW\nExplain, compare, visualize", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+labels [label="KEEP STATUS VISIBLE\nObserved / proposed /\nunverified", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+understand [label="HUMAN UNDERSTANDS\nChallenges or corrects the\nmodel", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+decision [label="OPTIONAL DECISION\nApprove, revise, or explore", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+evidence -> question [style=invis, weight=100];
+question -> view [style=invis, weight=100];
+view -> labels [style=invis, weight=100];
+labels -> understand [style=invis, weight=100];
+understand -> decision [style=invis, weight=100];
+evidence -> question [constraint=false, label=""];
+question -> view [constraint=false, label=""];
+view -> labels [constraint=false, label=""];
+labels -> understand [constraint=false, label=""];
+understand -> decision [constraint=false, label="only when useful"];
+understand -> evidence [constraint=false, label="correct source,\nrefresh view"];
+}

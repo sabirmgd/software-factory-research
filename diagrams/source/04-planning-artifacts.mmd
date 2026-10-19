@@ -1,0 +1,13 @@
+%% Generated from 04-planning-artifacts.json; edit the JSON source.
+flowchart TD
+    research["RESEARCH<br/>What exists? What is unknown?"]
+    prd["PRD<br/>What should people achieve?"]
+    system["TDD: SYSTEM DESIGN<br/>How do components interact?"]
+    program["TDD: PROGRAM DESIGN<br/>What is the code shape?"]
+    outline["OUTLINE<br/>In what order, with which checks?"]
+    slice["IMPLEMENTATION<br/>A small verifiable behavior"]
+    research --> prd
+    prd --> system
+    system --> program
+    program --> outline
+    outline --> slice

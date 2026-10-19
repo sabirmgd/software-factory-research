@@ -1,0 +1,31 @@
+name: Experiment report
+description: Share a positive, negative, or inconclusive evaluation with its limits.
+title: '[Experiment] '
+body:
+  - type: input
+    id: hypothesis
+    attributes:
+      label: Hypothesis and run identity
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Method, comparison, and authority
+      description: Describe versions, task selection, safety constraints, and prior task exposure.
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Actual observations
+      description: Include failures, setup costs, missing data, units, and evidence. No invented or expected results presented as measured.
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: Limits and interpretation
+      description: Explain what was not tested and what alternative explanations remain.
+    validations:
+      required: true

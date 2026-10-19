@@ -1,0 +1,23 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="What are we optimizing?"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+outcome [label="CUSTOMER OUTCOME\nA worthwhile task gets better", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+behavior [label="PRODUCT BEHAVIOR\nA useful intervention", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+decisions [label="ENGINEERING DECISIONS\nMeaning, ownership,\nconstraints", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+execution [label="AGENT WORK\nA bounded change", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+evidence [label="EVIDENCE\nBehavior, risk, real use", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+learn [label="REVISE THE NEXT CHOICE\nInclude building less", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+outcome -> behavior [style=invis, weight=100];
+behavior -> decisions [style=invis, weight=100];
+decisions -> execution [style=invis, weight=100];
+execution -> evidence [style=invis, weight=100];
+evidence -> learn [style=invis, weight=100];
+outcome -> behavior [constraint=false, label="guides"];
+behavior -> decisions [constraint=false, label=""];
+decisions -> execution [constraint=false, label=""];
+execution -> evidence [constraint=false, label=""];
+evidence -> learn [constraint=false, label=""];
+learn -> outcome [constraint=false, label="feedback"];
+}

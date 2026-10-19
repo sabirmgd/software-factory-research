@@ -1,0 +1,12 @@
+# Local build/cache outputs
+**/.build/
+**/__pycache__/
+*.pyc
+.venv/
+node_modules/
+.DS_Store
+# Never add local credentials or private configuration
+.env
+.env.*
+*.pem
+*.key

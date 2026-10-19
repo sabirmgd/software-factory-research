@@ -1,0 +1,85 @@
+{
+  "id": "07-feature-journey",
+  "title": "From request to useful change",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "Illustrative feature journey. Small tasks can combine stages. Shipping is an engineering milestone; evaluating the customer outcome requires evidence from use.",
+  "nodes": [
+    {
+      "id": "request",
+      "label": "REQUEST\nWhat problem matters?",
+      "kind": "human"
+    },
+    {
+      "id": "discover",
+      "label": "DISCOVER\nResearch and resolve unknowns",
+      "kind": "evidence"
+    },
+    {
+      "id": "design",
+      "label": "DESIGN\nFit behavior to stable contracts",
+      "kind": "contract"
+    },
+    {
+      "id": "implement",
+      "label": "IMPLEMENT\nSmall bounded slices",
+      "kind": "work"
+    },
+    {
+      "id": "verify",
+      "label": "VERIFY\nTest claims and inspect gaps",
+      "kind": "evidence"
+    },
+    {
+      "id": "release",
+      "label": "REVIEW AND RELEASE\nProportional review + authority",
+      "kind": "human"
+    },
+    {
+      "id": "outcome",
+      "label": "CUSTOMER FEEDBACK\nDid the intervention help?",
+      "kind": "evidence"
+    },
+    {
+      "id": "next",
+      "label": "NEXT CHOICE\nExpand, revise, stop, or learn",
+      "kind": "human"
+    }
+  ],
+  "edges": [
+    {
+      "from": "request",
+      "to": "discover",
+      "label": ""
+    },
+    {
+      "from": "discover",
+      "to": "design",
+      "label": ""
+    },
+    {
+      "from": "design",
+      "to": "implement",
+      "label": ""
+    },
+    {
+      "from": "implement",
+      "to": "verify",
+      "label": ""
+    },
+    {
+      "from": "verify",
+      "to": "release",
+      "label": ""
+    },
+    {
+      "from": "release",
+      "to": "outcome",
+      "label": ""
+    },
+    {
+      "from": "outcome",
+      "to": "next",
+      "label": ""
+    }
+  ]
+}

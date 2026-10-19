@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="Deep modules, not long call chains"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+a [label="SHALLOW BOUNDARY\nCaller coordinates the\noperation", fillcolor="#fff0df", color="#a56b26", fontcolor="#17283c"];
+a1 [label="Caller checks membership\nthen eligibility\nthen save + audit", fillcolor="#fff0df", color="#a56b26", fontcolor="#17283c"];
+risk [label="Repeated callers must learn\nand repeat internal rules", fillcolor="#fff0df", color="#a56b26", fontcolor="#17283c"];
+b [label="DEEPER CAPABILITY\nCaller asks: assign(command)", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+b1 [label="PRIVATE OWNERSHIP\nPolicy, consistency, state,\naudit", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+benefit [label="Callers depend on behavior\nnot the internal sequence", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+a -> a1 [style=invis, weight=100];
+a1 -> risk [style=invis, weight=100];
+risk -> b [style=invis, weight=100];
+b -> b1 [style=invis, weight=100];
+b1 -> benefit [style=invis, weight=100];
+a -> a1 [constraint=false, label=""];
+a1 -> risk [constraint=false, label=""];
+risk -> b [constraint=false, label="alternative design"];
+b -> b1 [constraint=false, label=""];
+b1 -> benefit [constraint=false, label=""];
+}

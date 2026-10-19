@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: A01: eligible assignment updates state, revision and audit together
+ok 1 - A01: eligible assignment updates state, revision and audit together
+  ---
+  duration_ms: 1.859904
+  type: 'test'
+  ...
+# Subtest: A02: unauthenticated request is denied without mutation
+ok 2 - A02: unauthenticated request is denied without mutation
+  ---
+  duration_ms: 0.592965
+  type: 'test'
+  ...
+# Subtest: A03: forged client role does not replace trusted membership
+ok 3 - A03: forged client role does not replace trusted membership
+  ---
+  duration_ms: 0.251902
+  type: 'test'
+  ...
+# Subtest: A04: no workspace membership is denied
+ok 4 - A04: no workspace membership is denied
+  ---
+  duration_ms: 0.154736
+  type: 'test'
+  ...
+# Subtest: A04: task in another workspace is not exposed
+ok 5 - A04: task in another workspace is not exposed
+  ---
+  duration_ms: 0.187892
+  type: 'test'
+  ...
+# Subtest: A05: assignee outside workspace is ineligible
+ok 6 - A05: assignee outside workspace is ineligible
+  ---
+  duration_ms: 0.270044
+  type: 'test'
+  ...
+# Subtest: A05: inactive assignee is ineligible
+ok 7 - A05: inactive assignee is ineligible
+  ---
+  duration_ms: 0.314954
+  type: 'test'
+  ...
+# Subtest: A06: revoked caller cannot assign
+ok 8 - A06: revoked caller cannot assign
+  ---
+  duration_ms: 0.130261
+  type: 'test'
+  ...
+# Subtest: A07: stale revision never overwrites current assignment
+ok 9 - A07: stale revision never overwrites current assignment
+  ---
+  duration_ms: 0.325387
+  type: 'test'
+  ...
+# Subtest: A08: replay returns prior receipt without duplicate audit or mutation
+ok 10 - A08: replay returns prior receipt without duplicate audit or mutation
+  ---
+  duration_ms: 1.278624
+  type: 'test'
+  ...
+# Subtest: A08: replay after caller revocation is denied
+ok 11 - A08: replay after caller revocation is denied
+  ---
+  duration_ms: 0.217494
+  type: 'test'
+  ...
+# Subtest: A09: idempotency key reused for different content is rejected
+ok 12 - A09: idempotency key reused for different content is rejected
+  ---
+  duration_ms: 0.365618
+  type: 'test'
+  ...
+# Subtest: A10: injected failure commits neither state, audit, nor replay; retry succeeds
+ok 13 - A10: injected failure commits neither state, audit, nor replay; retry succeeds
+  ---
+  duration_ms: 0.168881
+  type: 'test'
+  ...
+# Subtest: A11: restricted task is not assigned to a member who lacks access
+ok 14 - A11: restricted task is not assigned to a member who lacks access
+  ---
+  duration_ms: 0.090995
+  type: 'test'
+  ...
+# Subtest: A11: explicitly shared restricted task is eligible
+ok 15 - A11: explicitly shared restricted task is eligible
+  ---
+  duration_ms: 0.071735
+  type: 'test'
+  ...
+# Subtest: baseline excludes guests even when shared
+ok 16 - baseline excludes guests even when shared
+  ---
+  duration_ms: 0.074041
+  type: 'test'
+  ...
+# Subtest: next-change profile permits explicitly shared guest without public API change
+ok 17 - next-change profile permits explicitly shared guest without public API change
+  ---
+  duration_ms: 0.092092
+  type: 'test'
+  ...
+# Subtest: next-change profile does not silently share an unshared task
+ok 18 - next-change profile does not silently share an unshared task
+  ---
+  duration_ms: 0.068171
+  type: 'test'
+  ...
+# Subtest: empty identifiers and invalid revision are rejected
+ok 19 - empty identifiers and invalid revision are rejected
+  ---
+  duration_ms: 0.213042
+  type: 'test'
+  ...
+# Subtest: snapshot is detached from the internal model
+ok 20 - snapshot is detached from the internal model
+  ---
+  duration_ms: 0.071593
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 85.481122

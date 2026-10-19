@@ -1,0 +1,24 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="Where human judgment enters"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+human [label="HUMAN\nIntent and consequential\nchoices", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+contract [label="DELEGATION CONTRACT\nScope, authority, evidence,\nlimits", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+agent [label="AGENT\nResearch and implement", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+check [label="CHECKS\nEvidence for agreed behavior", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+decision [label="ACCEPTANCE\nReview proportional to risk", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+release [label="RELEASE\nOnly with explicit authority", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+human -> contract [style=invis, weight=100];
+contract -> agent [style=invis, weight=100];
+agent -> check [style=invis, weight=100];
+check -> decision [style=invis, weight=100];
+decision -> release [style=invis, weight=100];
+human -> contract [constraint=false, label=""];
+contract -> agent [constraint=false, label=""];
+agent -> check [constraint=false, label=""];
+check -> agent [constraint=false, label="repair within\nscope"];
+agent -> human [constraint=false, label="new consequential\nchoice"];
+check -> decision [constraint=false, label="results and gaps"];
+decision -> release [constraint=false, label=""];
+}

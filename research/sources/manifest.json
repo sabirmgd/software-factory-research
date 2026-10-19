@@ -1,0 +1,254 @@
+[
+  {
+    "id": "S01",
+    "title": "HumanLayer RPI workflow",
+    "url": "https://github.com/humanlayer/skills/blob/main/plugins/rpi/skills/rpi/references/workflow.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "9a794408b7eb2d47a8dc7bc85e7d6f9024bfe635",
+    "supported_scope": "Multiple routes, review points, and durable handoffs."
+  },
+  {
+    "id": "S02",
+    "title": "HumanLayer technical-design process",
+    "url": "https://github.com/humanlayer/skills/blob/main/plugins/rpi/skills/rpi/references/create-tdd/process.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "b084a6424a83c1ed6dee8aa9716951fff7059f77",
+    "supported_scope": "Separate system and program design discussions and approvals."
+  },
+  {
+    "id": "S03",
+    "title": "HumanLayer product-requirements process",
+    "url": "https://github.com/humanlayer/skills/blob/main/plugins/rpi/skills/rpi/references/create-prd/process.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "5f33dbd078d3401578aba7364a3465fa8aa4a13b",
+    "supported_scope": "User-facing problem, success, solution, and deferred technical choices."
+  },
+  {
+    "id": "S04",
+    "title": "HumanLayer legacy repository README",
+    "url": "https://github.com/humanlayer/humanlayer/blob/main/README.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "d0548cfe2fae178f9cce8df7793dd969f4e0ed81",
+    "supported_scope": "Deprecation status of the old implementation."
+  },
+  {
+    "id": "S05",
+    "title": "Matt Pocock skills repository",
+    "url": "https://github.com/mattpocock/skills",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "repository README via web",
+    "blob_sha": null,
+    "supported_scope": "Composable practices and alignment/feedback framing; not every skill inspected."
+  },
+  {
+    "id": "S06",
+    "title": "Matt Pocock prototype skill",
+    "url": "https://github.com/mattpocock/skills/blob/main/skills/engineering/prototype/SKILL.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "a0044501fe0d385b4d8575b610188ede9b236ccf",
+    "supported_scope": "Logic versus UI experiments, disposable code, and captured learning."
+  },
+  {
+    "id": "S07",
+    "title": "Matt Pocock to-spec skill",
+    "url": "https://github.com/mattpocock/skills/blob/main/skills/engineering/to-spec/SKILL.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "3f52599ae2a4347aee5a07432c2707518e691a7f",
+    "supported_scope": "Specification includes implementation and testing decisions."
+  },
+  {
+    "id": "S08",
+    "title": "PStack architect skill",
+    "url": "https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "88e23ca105b89e67f4085d0e676c40d4b170a623",
+    "supported_scope": "Grounding, alternatives, caller-first sketches, opt-in approval, and repeated friction."
+  },
+  {
+    "id": "S09",
+    "title": "PStack design red flags",
+    "url": "https://github.com/cursor/plugins/blob/main/pstack/skills/architect/references/design-red-flags.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "f8503c9595b289c607ff5088f82b21197edf94ec",
+    "supported_scope": "Interface depth, knowledge leakage, ownership, and duplicate paths."
+  },
+  {
+    "id": "S10",
+    "title": "PStack correct skill",
+    "url": "https://github.com/cursor/plugins/blob/main/pstack/skills/correct/SKILL.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "c45e06f48a0982ae19f92c6e83a8cd05988097a3",
+    "supported_scope": "Recurring mistake classes, stronger enforcement, and negative proof."
+  },
+  {
+    "id": "S11",
+    "title": "DORA: Working in small batches",
+    "url": "https://dora.dev/capabilities/working-in-small-batches/",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official article via web",
+    "blob_sha": null,
+    "supported_scope": "Short feedback loops and revising assumptions."
+  },
+  {
+    "id": "S12",
+    "title": "DORA: Work in process limits",
+    "url": "https://dora.dev/capabilities/wip-limits/",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official article via web",
+    "blob_sha": null,
+    "supported_scope": "Whole-stream constraints and unfinished work."
+  },
+  {
+    "id": "S13",
+    "title": "DORA: Customer feedback",
+    "url": "https://dora.dev/capabilities/customer-feedback/",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official article via web",
+    "blob_sha": null,
+    "supported_scope": "Feedback from customer behavior should inform product choices."
+  },
+  {
+    "id": "S14",
+    "title": "Robert C. Martin: The Clean Architecture",
+    "url": "https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "author article via web",
+    "blob_sha": null,
+    "supported_scope": "Dependency direction and separation of business rules from mechanisms."
+  },
+  {
+    "id": "S15",
+    "title": "John Ousterhout: Software Design Book",
+    "url": "https://web.stanford.edu/~ouster/cgi-bin/book.php",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "author book page via web",
+    "blob_sha": null,
+    "supported_scope": "Bibliographic reference and explicit disagreement with some Clean Code advice; full book not retrieved."
+  },
+  {
+    "id": "S16",
+    "title": "NestJS authorization documentation",
+    "url": "https://docs.nestjs.com/security/authorization",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official documentation via web",
+    "blob_sha": null,
+    "supported_scope": "Framework authorization mechanisms; our policy is an adaptation."
+  },
+  {
+    "id": "S17",
+    "title": "TypeScript narrowing documentation",
+    "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official documentation via web",
+    "blob_sha": null,
+    "supported_scope": "Narrowing, discriminated unions, and exhaustiveness."
+  },
+  {
+    "id": "S18",
+    "title": "dependency-cruiser rule reference",
+    "url": "https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official repository documentation via web",
+    "blob_sha": null,
+    "supported_scope": "Rule-based dependency validation; configurations require project validation."
+  },
+  {
+    "id": "S19",
+    "title": "SlopCodeBench repository",
+    "url": "https://github.com/SprocketLab/slop-code-bench",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "repository description and README via web",
+    "blob_sha": null,
+    "supported_scope": "Iterative specification refinement and code erosion; not a production lint plugin."
+  },
+  {
+    "id": "S20",
+    "title": "HumanLayer show-me skill",
+    "url": "https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "full file via GitHub connector",
+    "blob_sha": "f0ccd047c136d7b702b385e0ecad775ccb773eae",
+    "supported_scope": "Small useful visual and code-shape representations."
+  },
+  {
+    "id": "S21",
+    "title": "GitHub: Creating diagrams",
+    "url": "https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official documentation via web",
+    "blob_sha": null,
+    "supported_scope": "Mermaid support in GitHub Markdown surfaces."
+  },
+  {
+    "id": "S22",
+    "title": "StrykerJS introduction",
+    "url": "https://stryker-mutator.io/docs/stryker-js/introduction/",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official documentation via web",
+    "blob_sha": null,
+    "supported_scope": "Mutation testing tooling, not universal assurance."
+  },
+  {
+    "id": "S23",
+    "title": "Google SRE: Canarying releases",
+    "url": "https://sre.google/workbook/canarying-releases/",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official book chapter via web",
+    "blob_sha": null,
+    "supported_scope": "Limited exposure and evaluation before wider rollout."
+  },
+  {
+    "id": "S24",
+    "title": "GitHub CLI: gh repo create",
+    "url": "https://cli.github.com/manual/gh_repo_create",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official CLI manual via web",
+    "blob_sha": null,
+    "supported_scope": "Explicit repository creation, visibility, source, and push flags."
+  },
+  {
+    "id": "S25",
+    "title": "ArchUnit user guide",
+    "url": "https://www.archunit.org/userguide/html/000_Index.html",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official guide via web",
+    "blob_sha": null,
+    "supported_scope": "Architecture tests for Java."
+  },
+  {
+    "id": "S26",
+    "title": "Import Linter documentation",
+    "url": "https://import-linter.readthedocs.io/en/stable/",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official documentation via web",
+    "blob_sha": null,
+    "supported_scope": "Import contracts for Python."
+  },
+  {
+    "id": "S27",
+    "title": "Dex Horthy: Why Software Factories Fail",
+    "url": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/wsff.md",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "partial excerpt via GitHub connector; response truncated",
+    "blob_sha": null,
+    "supported_scope": "Historical starting point; no full-article verification or empirical statistics claimed."
+  },
+  {
+    "id": "S28",
+    "title": "GitHub Actions token permissions",
+    "url": "https://docs.github.com/en/actions/tutorials/authenticate-with-github_token",
+    "inspected_on": "2026-10-17",
+    "inspection_scope": "official documentation via web",
+    "blob_sha": null,
+    "supported_scope": "Workflow token permissions should be explicitly scoped."
+  }
+]

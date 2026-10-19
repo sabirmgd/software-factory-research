@@ -1,0 +1,65 @@
+{
+  "id": "02-three-loops",
+  "title": "Three connected learning loops",
+  "status": "proposed conceptual view; assignment view describes limited local model",
+  "caption": "Proposed operating model, not an observed productivity result. Customer evidence can change the product; engineering evidence can change the implementation; recurring difficulties can change the factory.",
+  "nodes": [
+    {
+      "id": "intent",
+      "label": "CUSTOMER-VALUE LOOP\nProblem and desired outcome",
+      "kind": "human"
+    },
+    {
+      "id": "delivery",
+      "label": "ENGINEERING LOOP\nDesign \u2192 bounded change \u2192 checks",
+      "kind": "work"
+    },
+    {
+      "id": "use",
+      "label": "REAL USE\nAdoption, outcomes, harms",
+      "kind": "evidence"
+    },
+    {
+      "id": "learning",
+      "label": "FACTORY-LEARNING LOOP\nDiagnose repeated difficulty",
+      "kind": "human"
+    },
+    {
+      "id": "assets",
+      "label": "REUSABLE CAPABILITY\nContracts, examples, tools",
+      "kind": "contract"
+    }
+  ],
+  "edges": [
+    {
+      "from": "intent",
+      "to": "delivery",
+      "label": "choose a useful change"
+    },
+    {
+      "from": "delivery",
+      "to": "use",
+      "label": "release with authority"
+    },
+    {
+      "from": "use",
+      "to": "intent",
+      "label": "revise the product"
+    },
+    {
+      "from": "delivery",
+      "to": "learning",
+      "label": "effort and surprises"
+    },
+    {
+      "from": "learning",
+      "to": "assets",
+      "label": "improve or simplify"
+    },
+    {
+      "from": "assets",
+      "to": "delivery",
+      "label": "support the next change"
+    }
+  ]
+}

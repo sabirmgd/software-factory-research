@@ -1,0 +1,13 @@
+%% Generated from 05-module-depth.json; edit the JSON source.
+flowchart TD
+    a["SHALLOW BOUNDARY<br/>Caller coordinates the operation"]
+    a1["Caller checks membership<br/>then eligibility<br/>then save + audit"]
+    risk["Repeated callers must learn<br/>and repeat internal rules"]
+    b["DEEPER CAPABILITY<br/>Caller asks: assign(command)"]
+    b1["PRIVATE OWNERSHIP<br/>Policy, consistency, state, audit"]
+    benefit["Callers depend on behavior<br/>not the internal sequence"]
+    a --> a1
+    a1 --> risk
+    risk -->|"alternative design"| b
+    b --> b1
+    b1 --> benefit

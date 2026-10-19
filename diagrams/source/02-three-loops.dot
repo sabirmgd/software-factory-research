@@ -1,0 +1,21 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="Three connected learning loops"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+intent [label="CUSTOMER-VALUE LOOP\nProblem and desired outcome", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+delivery [label="ENGINEERING LOOP\nDesign → bounded change →\nchecks", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+use [label="REAL USE\nAdoption, outcomes, harms", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+learning [label="FACTORY-LEARNING LOOP\nDiagnose repeated difficulty", fillcolor="#e9effb", color="#355484", fontcolor="#17283c"];
+assets [label="REUSABLE CAPABILITY\nContracts, examples, tools", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+intent -> delivery [style=invis, weight=100];
+delivery -> use [style=invis, weight=100];
+use -> learning [style=invis, weight=100];
+learning -> assets [style=invis, weight=100];
+intent -> delivery [constraint=false, label="choose a useful\nchange"];
+delivery -> use [constraint=false, label="release with\nauthority"];
+use -> intent [constraint=false, label="revise the product"];
+delivery -> learning [constraint=false, label="effort and\nsurprises"];
+learning -> assets [constraint=false, label="improve or\nsimplify"];
+assets -> delivery [constraint=false, label="support the next\nchange"];
+}

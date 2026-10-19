@@ -1,0 +1,15 @@
+%% Generated from 03-responsibilities.json; edit the JSON source.
+flowchart TD
+    human["HUMAN<br/>Intent and consequential choices"]
+    contract["DELEGATION CONTRACT<br/>Scope, authority, evidence, limits"]
+    agent["AGENT<br/>Research and implement"]
+    check["CHECKS<br/>Evidence for agreed behavior"]
+    decision["ACCEPTANCE<br/>Review proportional to risk"]
+    release["RELEASE<br/>Only with explicit authority"]
+    human --> contract
+    contract --> agent
+    agent --> check
+    check -->|"repair within scope"| agent
+    agent -->|"new consequential choice"| human
+    check -->|"results and gaps"| decision
+    decision --> release

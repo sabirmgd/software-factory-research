@@ -1,0 +1,25 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.28", ranksep="0.46", splines=polyline, dpi=144];
+node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=16, group="main", margin="0.18,0.16", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=11, color="#788495", fontcolor="#445166", arrowsize=0.7];
+labelloc=t; label="One assignment capability"; fontname="DejaVu Sans"; fontsize=21; fontcolor="#182b42";
+identity [label="IDENTITY + INPUT\nTrusted boundary assumed", fillcolor="#eeeafa", color="#6c5599", fontcolor="#17283c"];
+authority [label="CURRENT AUTHORITY\nMembership + assignment\ncapability", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+task [label="SCOPED RESOURCE\nTask belongs to this workspace", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+replay [label="PRIOR REQUEST?\nSame key + content → old\nreceipt", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+eligible [label="NEW REQUEST CHECKS\nTarget access + expected\nrevision", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+prepare [label="PREPARE NEXT STATE\nAssignment, audit, replay\nrecord", fillcolor="#f2f4f7", color="#596678", fontcolor="#17283c"];
+commit [label="SYNCHRONOUS COMMIT\nReplace state only on success", fillcolor="#e5f2ed", color="#337361", fontcolor="#17283c"];
+identity -> authority [style=invis, weight=100];
+authority -> task [style=invis, weight=100];
+task -> replay [style=invis, weight=100];
+replay -> eligible [style=invis, weight=100];
+eligible -> prepare [style=invis, weight=100];
+prepare -> commit [style=invis, weight=100];
+identity -> authority [constraint=false, label=""];
+authority -> task [constraint=false, label=""];
+task -> replay [constraint=false, label=""];
+replay -> eligible [constraint=false, label="no prior receipt"];
+eligible -> prepare [constraint=false, label=""];
+prepare -> commit [constraint=false, label="simulated failure\naborts"];
+}
