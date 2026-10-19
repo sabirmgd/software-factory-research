@@ -1,65 +1,67 @@
 # Glossary
 
-**Acceptance criteria.** Observable conditions defining the agreed behavior of a change. They are not the same as evidence that the feature benefits customers.
+These definitions explain how this book uses its recurring terms.
 
-**Architecture contract.** A current statement of responsibilities, public interfaces, dependencies, and invariants. Some parts can be enforced; others require judgment.
+**Acceptance criteria.** The behavior a change must demonstrate before it can be accepted. Meeting it does not prove that customers benefit.
 
-**Architecture test / fitness function.** A repeated check of a chosen architectural property. It does not prove that the chosen architecture is optimal.
+**Architecture contract.** A current statement of a module's responsibilities, public interface, dependencies, and rules.
 
-**Authority boundary.** The actions and decisions explicitly permitted for a task, independent of whether the agent is technically capable of doing more.
+**Architecture check / fitness function.** A repeatable check for one chosen structural rule. It can enforce the rule without proving the rule is correct.
 
-**Bounded autonomy.** Independent action inside an approved scope, with evidence requirements and escalation conditions.
+**Authority boundary.** What a task is allowed to do. Technical capability does not expand that permission.
 
-**Brownfield / inherited system.** An existing product whose behavior, constraints, and users must be understood before changing it.
+**Bounded autonomy.** Independent work inside an approved scope, with required evidence and clear stop conditions.
 
-**Change locality.** The extent to which a change stays within the expected responsibilities. It is a signal to interpret, not a universal objective to minimize touched files.
+**Brownfield / inherited system.** An existing product whose users, behavior, and constraints must be understood before it is changed.
 
-**Deep module.** A capability whose public contract saves callers from understanding substantial internal coordination. Not a deep call chain or an unbounded god object.
+**Change locality.** How closely a change stays within the responsibilities expected to own it. Touching many files is a signal to inspect, not automatic failure.
 
-**Delegation contract.** A task's intended result, allowed scope, stable constraints, required evidence, permitted actions, and stop conditions.
+**Deep module.** A small public interface that saves callers from coordinating substantial internal work. It is not a giant class or a long call chain.
 
-**Delivered.** The accepted behavior is available in its intended environment. This alone does not mean the customer outcome has been evaluated.
+**Delegation contract.** The result, scope, stable rules, evidence, allowed actions, and stop conditions for a task.
 
-**Design debt / decision debt.** Working terminology for the cost of consequential decisions left implicit or repeatedly rediscovered.
+**Delivered.** The accepted behavior is available in its intended environment. Customer benefit may still be unknown.
 
-**Deterministic check.** A specified computation over an input whose result can be reproduced under controlled conditions. The usefulness of the property being checked remains a separate question.
+**Decision debt.** The cost of important choices left implicit and repeatedly rediscovered.
 
-**Evidence package.** Revision-specific claims, actual checks and results, artifacts, and limitations supplied for review.
+**Deterministic check.** A check that gives reproducible results for controlled inputs. Its consistency does not prove that it checks the right rule.
 
-**Factory.** In this publication, a learning and delivery system intended to increase sustainable customer value without proportional unnecessary human effort.
+**Evidence package.** The exact revision, claims, checks, results, artifacts, and limitations prepared for review.
 
-**Golden path.** A supported, demonstrated way to perform recurring work. It should have an exception path and should not preserve obsolete patterns indefinitely.
+**Factory.** The learning and delivery system proposed by this book. Its purpose is more sustainable customer value without proportional unnecessary human effort.
 
-**Greenfield.** A new product with no inherited application implementation, though it still has surrounding business and integration constraints.
+**Golden path.** A supported and demonstrated way to perform recurring work, with a route for legitimate exceptions.
 
-**Guardrail.** A mechanism or policy that constrains behavior. Written guidance is not equivalent to tool-level enforcement.
+**Greenfield.** A new product without an inherited application, though it still has business and integration constraints.
 
-**Leverage.** A proposed benefit in which an investment improves multiple later actions. Its setup and maintenance costs must also be counted.
+**Guardrail.** A rule or mechanism that limits behavior. Written guidance is weaker than tool-level enforcement.
 
-**Make Clear.** The proposed human-understanding capability: choose the smallest useful explanation, comparison, visualization, or experiment; preserve evidence and uncertainty. Understanding need not lead to approval.
+**Leverage.** An investment that improves several later actions after setup and maintenance costs are counted.
 
-**Module ownership.** Accountability for a piece of state or business knowledge and the supported means of changing it.
+**Make Clear.** Choose the smallest explanation, comparison, visual, or experiment that creates accurate understanding while preserving evidence and uncertainty.
 
-**Outcome hypothesis.** A testable expectation about how an intervention helps particular people perform a task, with a plan for observing improvement and unacceptable regressions.
+**Module ownership.** Responsibility for a piece of state or business knowledge and the supported ways to change it.
 
-**Persona.** A human context and motivation used in product design. It is not automatically a security role.
+**Outcome hypothesis.** A testable expectation that an intervention will improve particular people's work without unacceptable regressions.
 
-**PRD.** Product requirements document: the problem, intended behavior, success hypothesis, scope, and acceptance examples.
+**Persona.** A person's context and motivation in product design. It is not automatically a security role.
 
-**Program design.** The code shape that realizes a system design: types, public operations, file responsibilities, call sequences, and test seams.
+**PRD.** Product requirements document: the problem, intended behavior, scope, success hypothesis, and acceptance examples.
 
-**Prototype.** A disposable experiment answering an uncertainty. Its learning can influence production; its existence does not prove production readiness.
+**Program design.** The code shape used to realize the system design: types, public operations, file responsibilities, call sequences, and test seams.
 
-**Reversibility.** The specific ability to restore a state or compensate a side effect. Reverting source code does not reverse every consequence.
+**Prototype.** A disposable experiment used to answer one uncertainty. It is not production evidence.
 
-**RPI.** Research, Plan, Implement; also the name of an inspected HumanLayer skill with several workflow routes.
+**Reversibility.** The ability to restore a named state or compensate for a named side effect. Reverting code does not reverse every consequence.
 
-**System design.** Responsibilities and interactions among components, data stores, interfaces, and external systems.
+**RPI.** Research, Plan, Implement; also the name of an inspected HumanLayer workflow with several possible routes.
 
-**TDD.** Ambiguous abbreviation: technical design document in the planning chapters; test-driven development when discussing red–green–refactor. The meanings are not interchangeable.
+**System design.** The responsibilities and interactions among components, data stores, interfaces, and external systems.
 
-**Understanding debt.** Working terminology for the effort required to reconstruct meaning, rationale, or evidence that should have remained accessible.
+**TDD.** Either technical design document or test-driven development. This book writes the intended meaning when context may be ambiguous.
 
-**Vertical slice.** A small demonstrable behavior across the layers it requires. A database-only or domain-only task may be useful but is not necessarily a complete vertical slice.
+**Understanding debt.** The effort needed to reconstruct meaning, reasoning, or evidence that should have remained accessible.
 
-**WIP.** Work in process: started but unfinished work, including waiting for decisions, review, environments, and release.
+**Vertical slice.** A small behavior demonstrated across the layers it actually needs.
+
+**WIP.** Work in process: started but unfinished work, including work waiting for decisions, review, environments, or release.

@@ -1,39 +1,39 @@
-# Local preparation validation
+# Local validation
 
-**Status: executed local checks. Date: October 17, 2026.** These observations concern the research publication and its small teaching model. They do not establish customer value, production security, comparative agent performance, or the effectiveness of the proposed factory.
+**Latest run: October 19, 2026.** These checks cover the publication and its small teaching model. They do not establish customer value, production security, comparative agent performance, or the effectiveness of the proposed factory.
 
-## Environment
+## Plain-language revision checks
 
-Python 3.13.5, Node.js v22.16.0, TypeScript 5.8.3, Graphviz 2.42.4, markdown-it-py 4.2.0, and Playwright 1.57.0 with the available Chromium binary. The repository's public CI is configured separately and has **not** run on GitHub.
+| Check | Result | What it establishes |
+| --- | --- | --- |
+| `python3 scripts/check_docs.py` | Passed for 76 Markdown documents and 13 chapters | Local links and anchors, source-ledger shape, diagram hashes, and reader freshness |
+| `python3 -m unittest discover -s tests -v` | 12 tests passed | The documentation checker rejects representative broken links, anchors, and diagrams |
+| TypeScript 5.8.3 compilation of the assignment model | Passed | Static example contracts and expected-invalid type fixtures |
+| `node --test examples/task-assignment/runnable/assignment.test.mjs` | 20 tests passed | In-memory allowed, denied, retry, conflict, and simulated-failure behavior |
+| `bash -n scripts/publish.sh` | Passed | Shell syntax only; the script is now historical and is not the update path for the private repository |
+| `python3 scripts/check_reader_browser.py` | Passed at a 390 × 844 viewport | No horizontal overflow, missing images, duplicate IDs, missing internal anchors, external requests, or browser errors |
+| `git diff --check` | Passed | No new whitespace errors in the revision |
 
-## Executed checks
-
-| Check | Actual result | Scope and limit |
-|---|---|---|
-| `python3 scripts/check_docs.py` | Passed for 75 Markdown documents and 13 substantive chapters | Local link/anchor integrity, source-ledger shape, diagram hashes, reader freshness; not external URL availability or factual proof |
-| `python3 -m unittest discover -s tests -v` | 12 tests passed | Checker behavior including broken-link, missing-anchor, and invalid-diagram fixtures |
-| `tsc -p examples/task-assignment/runnable/tsconfig.json` | Exit 0 with 3 expected-invalid declaration fixtures | Static example contracts only; no actual Nest route discovery or request authentication |
-| `node --test examples/task-assignment/runnable/assignment.test.mjs` | 20 tests passed, 0 failed or skipped | Synchronous in-memory behavior, denial, retries, stale revision, simulated failure, and the known guest extension |
-| `python3 scripts/render_diagrams.py` | 8 diagrams rendered, with SVG/PNG and Mermaid/DOT exports | Graphviz executed; an independent Mermaid renderer and GitHub rendering were not exercised |
-| `bash -n scripts/publish.sh` | Passed | Shell syntax, not remote authorization or publishing |
-| `bash scripts/publish.sh --public --dry-run` | Passed local checks; no Git/GitHub writes | Does not inspect remote state, create a repository, or push commits |
-| YAML parse of workflow and issue forms | Four YAML files parsed; workflow has read-only contents permission | Structural inspection, not GitHub's remote workflow execution |
-| `python3 scripts/check_reader_browser.py` | 390-pixel document width at a 390-pixel viewport; no broken images, duplicate IDs, missing internal anchors, script errors, or external requests | Chromium in-memory rendering; not a test of the ChatGPT iOS app or GitHub |
+The offline reader was rebuilt after the Markdown changes. The browser inspection loaded the owned HTML directly in memory and used the locally installed Chrome binary. It did not test GitHub rendering, iOS, or the ChatGPT app.
 
 ## Inspectable evidence
 
-The [model TAP output](evidence/model-tests.tap), [compiler record](evidence/typecheck.txt), [checker test output](evidence/documentation-tests.txt), and [browser result](evidence/browser-check.json) preserve the executed checks' outputs. Timing values in test logs are environment-specific and are not performance benchmarks.
+The [browser result](evidence/browser-check.json) records the current reader checks. The [mobile contents sample](evidence/reader-mobile.png) and [chapter sample](evidence/reader-chapter-mobile.png) show the current narrow-screen layout.
 
-The [mobile reader sample](evidence/reader-mobile.png) and [chapter sample](evidence/reader-chapter-mobile.png) show the generated content at a narrow viewport. Representative diagrams and reader views were visually inspected for readable labels, clipping, and layout. Diagrams have captions that distinguish proposals from the limited executable model.
+The [model TAP output](evidence/model-tests.tap), [compiler record](evidence/typecheck.txt), and [checker test output](evidence/documentation-tests.txt) preserve the original first-edition outputs. The current revision reran those test suites successfully; timing values are not performance benchmarks.
 
-The preparation browser blocks navigation to local `file:` URLs. The generated HTML was therefore loaded directly into an in-memory browser document for layout inspection. No browser policy was changed. Normal file opening on a user's device was not tested here.
+The diagram sources and rendered outputs still match their recorded hashes. Diagrams were not regenerated because their canonical sources did not change in the plain-language revision.
 
-## Corrections made during validation
+## Repository boundary
 
-The initial graph layout was too wide for the intended phone reading path, so the diagram generator was changed to favor vertical layouts. The README's example commands were reordered to compile before running Node tests. The offline reader rewrites internal links and embeds assets so no network request is needed for the text or diagrams. Freshness checks cover distributable source and evidence files, not just chapter prose.
+The project now exists as the private GitHub repository `sabirmgd/software-factory-research`. Local checks do not replace remote GitHub Actions. Each pushed revision must be verified against its own workflow run.
 
-## What is still not demonstrated
+Making the repository public, enabling GitHub Pages, choosing an open license, or deploying a production system remain separate decisions.
 
-No repository was created on GitHub and no remote workflow, Pages site, or production deployment was executed. No comparison establishes that this process reduces human effort, improves long-term maintainability, or creates customer benefit. The task-assignment model does not implement real identity validation, durable transactions, concurrent membership revocation, framework integration, or browser behavior. The later feature is visible in advance and is not held-out evaluation data.
+## What is not demonstrated
 
-Those questions belong to the [evaluation program](../evaluation-plan.md), not to a green documentation check. Preserve this distinction when describing the publication to others.
+No comparison establishes that this process reduces total human effort, improves long-term maintainability, or creates customer benefit.
+
+The assignment model does not implement real identity validation, durable database transactions, concurrent membership revocation, framework integration, or production behavior. Its later guest-assignment change is visible in advance and is not held-out evaluation data.
+
+Those questions belong to the [evaluation program](../evaluation-plan.md), not to a green documentation check.

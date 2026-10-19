@@ -2,83 +2,120 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Research and adaptive planning](05-research-and-adaptive-planning.md) · [Next: Executable engineering constraints](07-executable-engineering-constraints.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. The examples describe design choices, not one universal architecture.
 
-## The cost of the next feature
+## Architecture is about the next change
 
-A system can satisfy today's requirement while imposing difficult choices on the next contributor. Our interest in architecture begins with that gap. We want a structure in which ordinary changes have a sensible home, important rules are not repeatedly reconstructed, and a contributor can work from a bounded view without violating hidden obligations elsewhere.
+Architecture matters because software will change again.
 
-Architecture does not eliminate future change. It chooses which knowledge is grouped together, which dependencies are allowed, and which changes can be made independently. A useful design protects likely variation without inventing a general mechanism for every imaginable future.
+A design is useful when it helps a contributor find where a change belongs, understand what must remain true, and modify behavior without learning unrelated internals.
 
-## Discover modules from owned knowledge
+For task reassignment, the question is not which folder name looks cleanest. It is who owns assignment rules, membership checks, conflict handling, persistence, and audit behavior—and how another feature can use that responsibility safely.
 
-Start with business capabilities and the decisions they own. A Tasks module might own assignment state and task transitions. Membership might own participation in a workspace. Notifications might own delivery attempts and provider behavior. These are candidates to validate, not a prescribed domain model for every application.
+## Find modules through owned knowledge
 
-A folder named `database` is not a business capability merely because many modules use a database. Likewise, a global `services` directory says little about who owns a rule. Technical layers can help inside a capability, but they should not substitute for coherent ownership across the system.
+A module should own a coherent piece of business knowledge or state.
 
-The module contract should state purpose, owned state, public operations, allowed dependencies, prohibited knowledge, failure behavior, and a small set of expected change scenarios. Keep it short enough that a new contributor can actually use it.
+The Tasks module may own the lifecycle and assignment of tasks. A Membership capability may answer whether a person is an active member of a workspace. An Audit capability may record accepted events. The exact boundaries depend on the product, but ownership should be explicit.
+
+Do not create modules merely by grouping technical files or nouns. Ask:
+
+- What decision does this module own?
+- What state may it change?
+- What rules does it protect?
+- How may other code ask it to act?
+
+If several modules can directly edit the same task assignment, the system has hidden shared ownership.
 
 ## Design from the caller backward
 
-Consider two ways to assign a task. In the first, the caller loads membership, checks a role, checks the task's workspace, updates an assignment row, appends an audit entry, and sends a notification. Every new caller must reconstruct that sequence and its failure handling.
+Begin with what a caller needs to accomplish.
 
-In the second, the caller invokes an assignment capability with an authenticated actor context and a command. The capability owns the required orchestration and exposes a defined outcome. The caller still needs to understand the public contract, but not the private coordination required to uphold it.
+Instead of exposing repositories and expecting every caller to coordinate membership, task loading, authorization, conflict checks, persistence, and audit, expose one operation with clear inputs and outcomes.
 
-![Caller-orchestrated rules compared with a module that owns the assignment operation.](../diagrams/rendered/05-module-depth.png)
+For example:
 
-*The second design is not automatically correct. Its purpose is to make ownership inspectable; the operation still needs adequate runtime checks and well-defined failure semantics.*
+```text
+assign(actor, workspace, task, assignee, expected revision, request id)
+  -> success with new revision
+  -> or a named failure
+```
 
-PStack's architect skill writes the caller's usage before deriving the type sketch. Its red-flag reference distinguishes shallow interfaces, leaked internal knowledge, split ownership, duplicated approaches, importable internals, and hand-maintained parallel lists. We use those as review prompts, not an automatic numerical score. [S08–S09](../research/sources/index.md#s08)
+The operation is not automatically correct because it is small. It must still define permissions, transaction behavior, side effects, and failure semantics. Its purpose is to give one place responsibility for the coordination.
 
-## A deep module is not a large mystery box
+## Prefer deep modules, not mystery boxes
 
-A useful interface hides the details callers should not coordinate. It must still expose outcomes, constraints, and relevant failure conditions. An operation returning only `true` or `false` may be too simple to use responsibly if callers must distinguish denied access, stale state, and a transient external failure.
+A deep module has a small useful interface and substantial internal responsibility. It saves callers from repeating coordination they should not own.
 
-Nor does depth mean a long chain of tiny wrappers. A sequence of forwarding methods can make understanding more distributed without hiding meaningful complexity. Keep a layer when it adds policy, adaptation, ownership, or a useful seam. Remove it when it only changes the name of the same call.
+Ousterhout's module-depth idea supports this direction. [S14](../research/sources/index.md#s14)
 
-Our design question is therefore not “How few methods exist?” It is “How much relevant coordination does the caller no longer need to understand, and are the remaining obligations clear?”
+Depth does not mean a giant class, a long call chain, or hidden side effects. A module must expose the consequences callers need to reason about. If reassignment sends notifications, grants access, or triggers billing, those effects cannot disappear behind an innocent-looking method name.
 
-## Clean dependency direction without ceremonial layers
+## Protect business rules without ceremonial layers
 
-A practical modular monolith is a reasonable starting hypothesis for our NestJS/Next.js example: one backend deployment with explicit internal capability boundaries. That is our proposed baseline, not a universal rule. Independent scaling, isolation, ownership, or deployment requirements can justify a different structure.
+Clean Architecture argues that business policy should not depend directly on web frameworks, databases, or external providers. [S08–S09](../research/sources/index.md#s08)
 
-Inside a capability, business behavior should not casually depend on HTTP objects, UI state, ORM models, or vendor SDKs. Define the required capabilities on the business-facing side and implement adapters at the edges. The composition root wires them together. This applies the dependency principle from Clean Architecture without requiring an elaborate class hierarchy. [S14](../research/sources/index.md#s14)
+The practical benefit is change isolation. The assignment rules can be tested without a running web server. A new persistence mechanism does not redefine eligibility. An HTTP error mapper does not become the source of business truth.
 
-A pure business policy can be a function. An application operation can coordinate ports. A controller can parse and authenticate a request and translate the outcome. These responsibilities need not all become separate files until separation improves clarity or change independence.
+But layers are not valuable by themselves. An interface that simply forwards every method to an identical implementation adds movement without hiding complexity or protecting a decision.
 
-## Shared types and common clients
+> **Do not confuse:** more layers with better boundaries.
 
-Two objects with the same fields do not necessarily represent the same concept. A public API payload, a database row, and a domain entity may differ in ownership and change cadence. Sharing them indiscriminately can turn a convenient package into the most coupled part of the system.
+## Share contracts carefully
 
-Share a contract when consumers genuinely share its meaning. Keep storage representations private. Let the browser consume a public wire contract or generated client, not backend internals. Place vendor SDKs behind the capability that owns the integration. Avoid creating a universal `CommonModule` simply because several features need helpers.
+Shared types can reduce drift across services or applications. They can also couple unrelated release cycles and expose internal concepts as permanent public contracts.
 
-The source of truth also matters. When a permission list drives several derived artifacts, derive them from one registry where feasible. When the lists represent different things, test their intended relationship rather than pretending they are interchangeable.
+Share a type when several consumers genuinely depend on the same stable meaning. Keep local implementation details local. A task-assignment command may be a useful public contract; the private shape of a database row usually is not.
 
-## Database ownership is architectural ownership
+The source material on stable boundaries supports separating policy from delivery mechanisms, but the correct package structure remains project-specific. [S08](../research/sources/index.md#s08)
 
-A single physical database can support several logically owned modules. Each table or aggregate should have an accountable owner, and writes should pass through that owner's supported capability or an explicitly approved integration path.
+## Database ownership is part of architecture
 
-This does not mean every reporting query must traverse a chain of HTTP calls. Read models, analytical views, and controlled joins can be appropriate. Their ownership, freshness, and access restrictions should be explicit. The anti-pattern is a feature making a convenient direct write into someone else's state without understanding its invariants.
+A folder boundary means little when any module may write any table.
 
-Transaction boundaries deserve special attention. If assignment requires membership to remain active at a particular consistency point, state precisely what that point is and how it is enforced. A membership check followed much later by a write is not automatically equivalent to an atomic invariant. The illustrative in-memory example does not prove distributed consistency.
+State ownership should identify:
 
-## Repeated friction as feedback
+- who may write the data;
+- which operations are supported;
+- which invariants must hold;
+- how other modules read or react to changes; and
+- what transaction guarantees are available.
 
-One awkward case does not condemn an architecture. A pattern is more informative: different callers need the same internal workaround; several features duplicate the same rule; types require recurring escape hatches; or a supposedly local change repeatedly touches unrelated modules.
+One physical database may serve several modules. That does not require shared write ownership.
 
-Investigate whether the cause is a missed requirement, an implementation mistake, an unclear contract, or a boundary that no longer fits. PStack's architect process explicitly treats patterns of friction as a reason to revisit the sketch. Our adaptation requires a review of consequential boundary changes rather than an automatic rewrite. [S08](../research/sources/index.md#s08)
+For reassignment, task state and audit state may need one atomic decision. If the storage cannot provide that behavior, the design must define an alternative rather than letting a partial update appear successful.
 
-A useful record contains the repeated symptom, concrete examples, the implicated decision, alternative explanations, and a small corrective experiment. Do not jump from “this feels awkward” to “replace the architecture.”
+## Treat friction as design feedback
 
-## Measure what can be measured without pretending it is everything
+One awkward change does not prove the architecture is wrong. Repeated friction is more informative.
 
-An architecture test can enforce an agreed dependency boundary. It cannot establish that the boundary makes future work easy. For that, use a later change scenario and inspect the actual work: public interfaces altered, modules affected, repeated knowledge, rework, and regressions.
+Signals include:
 
-Change locality is a signal, not an absolute goal. A genuine change in business policy may correctly require coordinated changes. Penalizing every cross-module edit can encourage duplicating logic or hiding coupling. Compare the observed change with the responsibility model and the nature of the requirement.
+- the same rule implemented in several places;
+- frequent changes touching unrelated modules;
+- recurring private-detail leaks through public interfaces;
+- tests requiring large amounts of unrelated setup; and
+- contributors repeatedly asking where a behavior belongs.
 
-## The practical implication
+The response may be a better boundary, a clearer operation, a new check, or removal of an abstraction that no longer helps.
 
-Establish a small set of module contracts, implement a reference behavior, and then challenge it with a plausible next change. Preserve stable defaults, not frozen guesses. Good architecture should reduce the knowledge required to make a correct ordinary change while keeping consequential decisions visible.
+## Measure without pretending the metric is the goal
+
+Change locality, public-interface growth, duplication, test setup, and later modification cost are useful signals. None is a universal score.
+
+A legitimate cross-cutting change may touch many files. A tiny diff may hide a dangerous behavior. Use metrics to find questions, then inspect why the change took its shape.
+
+## What to do next
+
+For the next feature, draw a small ownership map:
+
+1. Which module owns the decision?
+2. Which state may it change?
+3. Which other capabilities must it consult?
+4. What is the smallest public operation callers need?
+5. Which failure or side effect must remain visible?
+
+If those answers are unclear, resolve the ownership before extracting generators or adding more layers.
 
 ---
 

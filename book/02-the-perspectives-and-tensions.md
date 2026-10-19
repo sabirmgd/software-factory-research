@@ -2,73 +2,86 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Why a factory?](01-why-a-factory.md) · [Next: Our working model](03-our-working-model.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Source-backed comparison followed by this book's proposed choices.
 
-## Comparison without flattening the differences
+## Why compare these sources?
 
-It is tempting to assemble a process by taking the most appealing sentence from every author. That creates agreement cheaply, but may produce a workflow no source would recommend and no team can comfortably operate. We instead compare the problem each mechanism addresses, its default behavior, and the circumstances in which we would change it.
+This model did not appear from one method. It combines ideas from several bodies of work that solve different problems.
 
-The sources below are separate projects and bodies of work. They are not interchangeable brands for a single approach. Their inclusion does not imply endorsement of this publication. Version-sensitive skill behavior is recorded in the [source ledger](../research/sources/index.md), including content identifiers where retrieved.
+The useful question is not “Which author is right?” It is:
 
-## Dex Horthy and HumanLayer: make consequential design inspectable
+> What problem does this idea solve, what does it cost, and when should we use it?
 
-HumanLayer's RPI workflow distinguishes findings about the current system from decisions about a proposed change. It offers multiple routes after research: a combined design discussion, product requirements, technical design, or implementation. Its technical-design process separates system interactions from program structure and obtains approval for each. Documents carry the decisions between sessions. These are concrete workflow instructions, not merely a generic suggestion to plan. [S01–S03](../research/sources/index.md#s01)
+The sources do not form one agreed methodology, and their inclusion does not imply that their authors endorse this book.
 
-For our purposes, the value is the separation of intent, technical choices, and execution. It helps expose decisions an agent might otherwise make silently. The cost is interaction and artifact maintenance. We adopt the distinctions but not a requirement to create every document for every feature. Where a known pattern already answers the questions, a compact change brief can be enough.
+## The ideas in plain language
 
-There is an important historical correction. The older `humanlayer/humanlayer` repository now describes its code as deprecated. Its past command files are historical material, not our recommended current implementation base. The newer skills repository is the workflow source examined for this edition. [S04](../research/sources/index.md#s04)
-
-## Matt Pocock: alignment, experiments, and composable practices
-
-Matt's skills repository favors small, adaptable practices rather than a process that owns every development decision. The prototype skill distinguishes questions about state or logic from questions about interface design. It treats prototype code as disposable and records the learning separately from production implementation. The `to-spec` skill synthesizes an existing conversation into a specification that includes implementation and testing decisions. [S05–S07](../research/sources/index.md#s05)
-
-This corrects an overly simple comparison from the conversation. It is not accurate to say Matt only handles product clarification while Dex handles technical design. Their artifacts overlap. The useful distinction is where information is captured and how a user composes the workflow.
-
-We adopt bounded experiments and shared domain language. We do not make every feature wait for a prototype or an extended interview. A prototype must have a question, a small scope, and a verdict. Producing something visually impressive without settling the uncertainty is not success.
-
-## Poteto's PStack: design for the contributor who sees only part of the system
-
-PStack's architect skill starts with grounding, explores structurally distinct designs, compares interfaces, and implements against a chosen sketch. It explicitly revisits a design when recurring workarounds reveal a pattern. Its human checkpoint is opt-in. The related `correct` skill favors removing recurring error classes through structure, types, checks, and tests before relying on more prose. [S08–S10](../research/sources/index.md#s08)
-
-The particularly useful lens is the partial view of the next contributor. A person or agent may see one file, copy the nearest example, and choose the shortest apparent path. Our proposed architecture should make that path more likely to preserve the larger system's obligations.
-
-We adopt caller-first sketches, meaningful alternatives, and correction through enforceable structure. We modify the approval default for our client work: a task may proceed inside an approved scope, but changing tenant isolation, data ownership, external commitments, or other consequential boundaries requires explicit authority. That modification is ours, not a description of PStack's default.
-
-## Uncle Bob: protect the business rules from incidental mechanisms
-
-Robert C. Martin's Clean Architecture describes dependency direction that keeps business rules from depending on delivery and persistence details. This offers a design principle, not a PRD or agent-session format. It helps us ask whether a change to a framework or database representation unnecessarily spreads into core behavior. [S14](../research/sources/index.md#s14)
-
-We adopt that principle where it improves separation. We reject ceremonial interpretation: a controller, service, manager, processor, repository, and facade do not create maintainability merely by existing. A boundary must hide a relevant decision, adapt a real difference, or protect a useful invariant.
-
-The conversation also referenced an interview with Matt. This edition does not rely on an unverified transcript for specific claims about that interview. Established written sources and the separately inspected skills carry the claims we can support. The unresolved attribution is preserved in the [correction record](../research/source-corrections.md).
-
-## John Ousterhout: depth is hidden complexity, not a long call chain
-
-Ousterhout's work supplies the deep-module lens: a useful interface should relieve callers of meaningful complexity. We use the author's book page as the primary bibliographic reference, not as evidence that the complete book was retrieved for this edition. The author also identifies disagreements with Clean Code; we do not erase those disagreements by presenting a unanimous school. [S15](../research/sources/index.md#s15)
-
-For our synthesis, a deep task-assignment capability would own the rules required to perform assignment correctly. It would not require every caller to sequence membership checks, writes, audit creation, and notification decisions manually. This is our illustrative application of the lens. Depth does not mean one enormous object with an unbounded responsibility. It means the public contract saves the caller from learning internal coordination.
-
-## Where the tensions actually matter
-
-| Tension | Useful mechanism | Our proposed choice |
+| Source | Useful idea | Risk if applied mechanically |
 | --- | --- | --- |
-| Planning versus learning by implementation | Design documents and disposable experiments | Resolve consequential uncertainty before committing; refine detail in short loops |
-| Autonomy versus accountability | Agent initiative and explicit checkpoints | Preauthorize routine work; escalate changes to authority or durable boundaries |
-| Standardization versus adaptability | Generators and composable skills | Standardize repeatable plumbing, not every project decision |
-| Prevention versus repair | Types, checks, regression tests, redesign | Prevent known failure classes; investigate patterns rather than patch forever |
-| Simplicity versus inspectability | Small interfaces and concrete design views | Hide implementation complexity without hiding consequences or evidence |
+| HumanLayer / Dex Horthy | Separate research, product decisions, technical design, and implementation so agents do not make important decisions silently. | Every change can become a paperwork exercise. |
+| Matt Pocock | Use focused experiments and composable practices instead of one mandatory workflow. | Small experiments can be mistaken for proof of the whole system. |
+| Poteto's PStack | Design and document for contributors who see only part of the codebase. | Local simplicity can hide problems that cross module boundaries. |
+| Robert C. Martin | Keep business rules from depending directly on frameworks and delivery mechanisms. | Layering can become ceremony with no real change protection. |
+| John Ousterhout | Prefer deep modules: small interfaces that hide substantial coordination. | A small interface can hide dangerous behavior as easily as useful complexity. |
 
-These are not compromises that split every difference. They are conditional choices. For a trivial copy edit, architectural alternatives are waste. For a new sharing model, skipping a discussion because an agent can implement quickly is false economy. For a one-off report, a general plugin platform may be needless. For a repeated integration across several products, a stable adapter capability may be valuable.
+## HumanLayer: expose decisions before code hides them
 
-## What the comparison does not establish
+HumanLayer's inspected RPI material separates findings about the current system from decisions about the proposed change. It offers several routes: research, product requirements, technical design, or implementation. The technical design distinguishes system interactions from program structure. [S01–S03](../research/sources/index.md#s01)
 
-The number of prominent sources favoring a practice does not demonstrate its effectiveness in our environment. Nor does consistency between their ideas prove that combining all of them reduces effort. A process can be composed of individually sensible mechanisms and still impose excessive coordination.
+We keep the separation because it prevents agents from silently deciding product behavior or architecture. We do not require every artifact for every task. A familiar, low-impact change may need only a compact brief and targeted evidence.
 
-The comparison therefore produces hypotheses and design options. The [experiments](../experiments/hypotheses.md) examine whether the selected mechanisms help on actual work. We should be willing to remove a borrowed practice when its local cost exceeds its benefit, even when we admire its author.
+## Matt Pocock: use the smallest experiment that answers the question
 
-## The practical implication
+The inspected material emphasizes alignment, bounded experiments, and practices that can be composed according to the task. [S04](../research/sources/index.md#s04)
 
-Borrow mechanisms together with their reasons and failure modes. When a practice enters the factory, record the recurring problem it is supposed to solve, the authority it requires, the evidence it expects, and the circumstances under which it should be skipped. That is more useful than maintaining a collection of admired names.
+We adopt the idea that an experiment should answer one uncertainty. For task reassignment, a small type or state model may reveal whether assignment and access are being confused. That experiment is useful without pretending it is the production feature.
+
+## PStack: help the contributor who sees only part of the system
+
+PStack's inspected material treats repository guidance, examples, and checks as tools for contributors working with partial context. [S05–S07](../research/sources/index.md#s05)
+
+That fits agent work well. An agent should not need the entire history of a company to add one safe operation. But local guidance must still point to wider product, security, and data rules when those rules matter.
+
+## Clean Architecture: protect business rules from incidental mechanisms
+
+The inspected Clean Architecture material argues for dependency direction that keeps business policy independent from frameworks, databases, and delivery details. [S08–S10](../research/sources/index.md#s08)
+
+We keep the principle and reject ceremonial layering. If a domain operation can be tested without a web framework or database, future changes are easier to reason about. Extra interfaces that merely forward calls do not create the same benefit.
+
+## Ousterhout: hide complexity behind useful interfaces
+
+Ousterhout's deep-module idea asks whether an interface saves callers from understanding substantial internal coordination. [S14](../research/sources/index.md#s14)
+
+For task reassignment, a useful operation may own authorization, eligibility, concurrency, persistence, and audit behavior behind one clear contract. “Deep” does not mean a large class or long call chain. It means the interface is simpler than the responsibility it manages.
+
+## The real tensions
+
+The sources become useful when their tensions are visible:
+
+- **Planning versus feedback:** design enough to avoid expensive mistakes, then let implementation provide better evidence.
+- **Local context versus system context:** make one change area understandable without hiding cross-cutting obligations.
+- **Separation versus ceremony:** protect important business rules without creating layers that add no value.
+- **Small interfaces versus hidden danger:** hide internal detail, but expose side effects, permissions, and failure behavior.
+- **Reusable practice versus local fit:** promote a pattern after repeated value, not merely because it can be generalized.
+
+The book also draws on feedback, flow, and customer-outcome material from DORA and related sources. Those sources support parts of the model; they do not establish that the combined model works. [S15](../research/sources/index.md#s15)
+
+## What this comparison proves—and does not prove
+
+The comparison explains where the proposed mechanisms came from and why they were selected. It does not prove that combining them improves delivery, customer value, or maintainability.
+
+That requires experiments on real changes, including setup cost, review effort, escaped defects, later change cost, and customer results.
+
+## What to do with these ideas
+
+For each practice, ask four questions:
+
+1. What recurring problem does it solve?
+2. What is the smallest form that could help?
+3. What new work or failure mode does it introduce?
+4. What evidence would justify keeping, changing, or removing it?
+
+Use the source as a tool, not as a badge. The factory should be coherent because its choices fit the problem, not because it collected respected names.
 
 ---
 

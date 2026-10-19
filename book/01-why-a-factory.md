@@ -1,71 +1,97 @@
 # 1. Why a factory?
 
-[Reading guide](../READING-GUIDE.md) · [Start here](../README.md) · [Next: The perspectives and the tensions](02-the-perspectives-and-tensions.md)
+[Five-minute version](../START-HERE.md) · [Reading guide](../READING-GUIDE.md) · [Next: The perspectives and the tensions](02-the-perspectives-and-tensions.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. The examples are illustrative, not client results.
 
-## The problem behind the project
+## The short version
 
-This investigation began with a practical contradiction. Coding agents can produce a large amount of implementation while leaving an experienced engineer with a large amount of work: checking behavior, reconstructing intent, untangling boundaries, correcting assumptions, and determining whether the result can safely be maintained. Faster production does not, by itself, resolve that contradiction.
+AI agents can write code faster than an engineer can safely review it. If every change still requires the engineer to reconstruct the problem, inspect unfamiliar decisions, correct the same mistakes, and explain the same rules, code generation has moved the bottleneck rather than removed it.
 
-Sabir's starting perspective combines hands-on development with extensive agent delegation. He values both the speed of agents and the work of engineering. He does not want a return to approving every line. He also does not want to inherit systems whose apparent speed depends on someone else absorbing the maintenance cost later. The desired increase in capacity is personal and practical: undertake more worthwhile client work without becoming the permanent supervisor of every implementation detail.
+The factory is an attempt to solve that problem. It makes important judgment reusable, gives agents room to work inside clear boundaries, connects claims to evidence, and learns from repeated friction.
 
-This book is an AI-assisted editorial synthesis of that investigation, not a verbatim transcript or a claim that every proposed mechanism has already worked. The original questions and the evolution of the answers remain discoverable in the [research map](../research/questions-and-coverage.md). The purpose is to make the reasoning useful to other engineers without asking them to replay a long conversation.
+The goal is not more code. The goal is more useful, reliable change without a matching increase in supervision or future maintenance.
 
-## A change in the unit of progress
+## Start with the work people need to do
 
-At first, the factory can appear to be a system for producing code. Zoom out once and it becomes a system for completing features. Zoom out again and it becomes a system for delivering reliable changes. One more level exposes the real objective: helping people accomplish something worthwhile.
+A feature request is not yet a customer outcome.
+
+Suppose a customer asks for “task reassignment.” A fast implementation could add an assignee field, an endpoint, and a dropdown. But the customer may actually need supervisors to redistribute urgent work without exposing tasks to the wrong people or losing the audit trail.
+
+That difference matters. The requested feature describes a possible solution. The outcome describes what should improve for a person and what must not get worse.
+
+The best intervention may still be software. It may also be a smaller change, a corrected data feed, a search improvement, or a process change. A useful factory must be allowed to discover that the requested feature is not the right answer.
+
+## Change the unit of progress
+
+It is easy to measure generated code, completed tickets, or active agents. Those are production signals, not proof of value.
+
+Zoom out through five levels:
+
+1. Code was produced.
+2. The code behaves as intended.
+3. The change is safe to release and maintain.
+4. People can use it in their real work.
+5. Their work improves without unacceptable harm elsewhere.
 
 ![The levels of the problem: customer outcome, behavior, engineering decisions, execution, and evidence.](../diagrams/rendered/01-levels.png)
 
-*This is a conceptual hierarchy, not a requirement to execute five sequential phases. Evidence must be able to change decisions at every level.*
+These are not five mandatory phases. They are five different claims. Evidence at a lower level does not automatically prove a higher one.
 
-Suppose a customer requests an AI assistant. Producing a working chat interface satisfies a construction task. It does not establish that the customer's staff can now find reliable information, make fewer mistakes, or complete work faster. The right intervention might be a better search experience, a corrected data feed, a changed operating procedure, or a smaller application. A useful factory must remain capable of recommending those alternatives.
+> **Do not confuse:** a completed implementation with an improved customer outcome.
 
-We therefore propose a different objective: increase valuable, reliable change that can be delivered and sustained without a proportional increase in unnecessary human attention. This is a direction for evaluation, not a single numerical score. Customer value, safety, delivery time, attention, and future change cost are different quantities. Collapsing them prematurely into one number can hide a serious failure behind an improvement elsewhere.
+## Protect valuable human attention
 
-## Human attention is not all the same
+The factory should not remove human involvement indiscriminately. Some attention changes the outcome; some attention merely repairs avoidable confusion.
 
-Reducing human involvement indiscriminately would be a mistake. Time spent discovering what a client actually needs is not equivalent to time spent reconstructing an agent's confusing pull request. Time spent resolving a consequential ownership decision is not equivalent to repeatedly explaining the same naming convention.
+High-value attention includes understanding a difficult domain, choosing a security boundary, noticing that the stated problem is incomplete, or deciding not to release a risky change.
 
-The factory should move attention toward work where judgment changes the outcome. That includes understanding a difficult domain, recognizing an inappropriate product direction, choosing a security boundary, or deciding that a risky release should not proceed. It should reduce repeated reconstruction, mechanical correction, and decisions that a stable contract can settle.
+Low-value repetition includes rediscovering the same naming rule, finding the same authorization entry point, correcting the same missing test, or reconstructing an agent's unexplained pull request.
 
-This distinction also prevents an unrealistic promise. A capable engineer is not merely an approval service that can be removed once prompts improve. Some of the most valuable work consists of noticing that the stated problem is incomplete. An operating model that suppresses such involvement may increase the speed of execution while reducing the quality of decisions.
+The aim is to preserve the first kind and reduce the second. An experienced engineer is not an approval service. Their greatest value may be recognizing that the team is solving the wrong problem.
 
-## What the factory metaphor helps us see
+## Avoid three kinds of debt
 
-The metaphor directs attention toward repeatable work, explicit interfaces, quality controls, and accumulated capability. A good module generator can preserve an established boundary. An authorization policy inventory can make an omission visible. A reference slice can communicate conventions more precisely than repeated reminders. A review capability can present evidence in a form someone can understand.
+This book uses three working categories:
 
-But software work is not simply repeated assembly of identical units. Requirements change, integration constraints surprise us, and the meaning of success must often be discovered. We should standardize mechanisms that support learning, not assume that the learning itself can be standardized away.
+- **Implementation debt:** the code is hard to change safely.
+- **Decision debt:** important choices were left implicit, so later work must rediscover them.
+- **Understanding debt:** people cannot quickly explain the system, the reason for a decision, or the evidence behind a claim.
 
-DORA's account of small batches emphasizes feedback and revising assumptions, rather than treating a plan as a guarantee of the right result. We use that as support for short delivery loops, not as empirical proof of this particular factory. [S11](../research/sources/index.md#s11)
+One problem may create all three. An undocumented shared database table can make changes risky, hide ownership, and force every contributor to investigate the same questions.
 
-## The three kinds of debt we are trying not to create
+Code alone cannot remove every kind of debt. Documentation alone cannot either. Important knowledge should live where it can guide action and, when possible, be checked automatically.
 
-Implementation debt appears when the code becomes difficult to change. Decision debt appears when consequential choices were never made explicitly, so every later feature must rediscover them. Understanding debt appears when no one can efficiently explain the system or inspect why a decision was made.
+## Let the factory refuse unnecessary work
 
-These are working categories introduced by this publication. They overlap. A shared database table with several undocumented writers may create all three. The categories help locate an intervention: a type or boundary rule may address implementation debt; a short decision record may address decision debt; a grounded system view may address understanding debt.
+A request can lead to several responsible actions:
 
-Documentation alone does not resolve all three. Nor does code alone. The goal is to put each important piece of knowledge where it can guide action and, where possible, be checked.
+- implement it because the need and risk are already clear;
+- clarify product or technical decisions first;
+- run a small experiment because one assumption determines whether the work is worthwhile; or
+- recommend a non-software solution.
 
-## A factory should be able to refuse unnecessary work
+None is always correct. The important point is that “build immediately” is not the only available route.
 
-Consider three responses to a feature request. The first implements immediately. The second writes a comprehensive specification before implementing. The third identifies the uncertain assumption that determines whether implementation is worthwhile, then runs a small experiment. Any of the three may be appropriate. The third is not automatically superior; sometimes the request is clear and low risk. The point is that the operating model must have more than one response.
+DORA's discussion of small batches supports short feedback loops and revising assumptions. It does not prove this particular factory model. [S11](../research/sources/index.md#s11)
 
-Success may mean shipping a feature. It may mean avoiding an unnecessary feature. It may mean discovering that the data or organizational process needs attention first. This is why the customer-value loop must surround the engineering-delivery loop.
+## What progress would look like
 
-## What would count as progress?
+A credible early result is modest. For similar changes, the engineer should spend less time on avoidable explanation, rework, and navigation while acceptance quality and release safety stay at least as strong. Later changes in the same area should not become disproportionately harder.
 
-A credible first improvement would be narrower than a claim of autonomous software engineering. For comparable changes, we might see less rework, fewer avoidable explanations, and less time spent finding where a change belongs, while preserving acceptance quality and release safety. Later changes in the same area should not become disproportionately difficult.
+Factory work also has a cost. A generator, template, or guardrail is not leverage merely because it is reusable. Count the effort to design, maintain, explain, and handle exceptions. Invest when the same costly problem appears repeatedly, not whenever an abstraction is possible.
 
-We also need to count setup and maintenance of the factory itself. Building elaborate tools that save a few minutes on a task performed once is not obvious leverage. A recurring class of mistakes, a repeated review burden, or a capability reused across projects is a stronger reason to invest.
+## What to do next
 
-This leads to the central question of the book: how can engineering judgment become reusable without freezing assumptions, and how can autonomous work remain accountable without turning every task into bureaucracy? The following chapters develop a proposed answer and a way to challenge it.
+Before designing agent roles or orchestration, choose:
 
-## The practical implication
+1. one real customer workflow;
+2. one representative change;
+3. the human effort currently needed to deliver it safely; and
+4. the repeated confusion or correction you want to reduce.
 
-Before designing agent roles, identify one customer workflow, one representative delivery task, and the current human effort needed to get it right. That gives the factory something real to improve. The objective is not to remove the engineer. It is to stop paying repeatedly for the same understanding and the same correction.
+That gives the factory something real to improve. The goal is not to remove the engineer. It is to stop paying repeatedly for the same understanding.
 
 ---
 
-[Start here](../README.md) · [Next: The perspectives and the tensions](02-the-perspectives-and-tensions.md)
+[Five-minute version](../START-HERE.md) · [Next: The perspectives and the tensions](02-the-perspectives-and-tensions.md)

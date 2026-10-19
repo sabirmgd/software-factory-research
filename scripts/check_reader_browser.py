@@ -35,7 +35,9 @@ def main()->int:
           missingAnchors:[...document.querySelectorAll('a[href^="#"]')].map(a=>a.getAttribute('href').slice(1)).filter(id=>id&&!document.getElementById(id)),
           imageCount:document.images.length, articles:document.querySelectorAll('article').length
         })''')
-        page.locator('#doc-book-09-make-clear-and-human-understanding-md').evaluate('(e) => e.scrollIntoView()')
+        chapter=page.locator('#doc-book-09-make-clear-and-human-understanding-md h1')
+        chapter.scroll_into_view_if_needed()
+        page.wait_for_timeout(150)
         page.screenshot(path=str(output/'reader-chapter-mobile.png'),full_page=False)
         result['externalRequests']=requests;result['pageErrors']=errors
         result['method']='HTML loaded in memory, 390x844 Chromium viewport; no file URL navigation or GitHub/iOS validation'

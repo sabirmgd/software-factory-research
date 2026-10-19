@@ -2,73 +2,148 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Verification and safe delivery](10-verification-and-safe-delivery.md) · [Next: Putting it into practice](12-putting-it-into-practice.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. This repository contains no customer trial proving the model's outcome claims.
 
-## There are two different endings
+## Delivery has two endings
 
-A feature can be delivered while its customer effect remains unknown. Treating both as one “Done” state makes it easy to stop learning at the moment code reaches production.
+Engineering work can end in two different ways:
 
-We propose separate states: delivered, operationally supported, and outcome evaluated. They need not require separate ceremonies, but the distinction should be visible. A feature may pass acceptance while adoption is low, or be adopted while creating a new support burden. Those are product findings, not necessarily implementation failures.
+1. The accepted behavior is available in the intended environment.
+2. The change improves the customer's work.
 
-## Make the outcome hypothesis observable
+The first is delivery. The second is an outcome.
 
-At the start, name the people, task, present difficulty, hoped-for improvement, and unacceptable regressions. After release, collect evidence suited to that claim. For task assignment, evidence might include observed task completion, mistaken assignments, follow-up clarification, and whether users can explain current responsibility.
+For task reassignment, delivery means authorized managers can use the feature safely. Outcome means supervisors redistribute work more effectively without creating access mistakes, confusion, or extra support effort.
 
-DORA's customer-feedback guidance emphasizes using customer interaction to inform product decisions. Our proposed operating model makes that feedback capable of changing the next task the agents receive. [S13](../research/sources/index.md#s13)
+A feature can be delivered correctly and still fail to help. It can also help one group while making another group's work worse.
 
-Do not overstate causality. A change in task time may reflect training, a different mix of work, cleaner data, or familiarity with the system. Record the comparison, sample, context, and uncertainty. A small qualitative observation can be useful without being described as proven return on investment.
+## Make the outcome observable
 
-## Software delivery and adoption are different work
+An outcome hypothesis should name:
 
-People may need access, training, clear responsibility, migrated data, or a changed operating procedure. A factory that ignores these can deliver technically correct software that nobody can use effectively.
+- the people affected;
+- the work they are trying to do;
+- the current difficulty;
+- the improvement expected;
+- how it will be observed; and
+- what must not regress.
 
-The outcome owner should be named. That person need not be the developer. The developer should, however, know whether an adoption dependency blocks evaluation. “The feature shipped but no one has access” is an actionable state, not a successful outcome.
+For example:
 
-Sometimes the best next intervention is not another feature. It may be a corrected integration, a clearer workflow, or removal of an unnecessary step. The factory should be capable of taking that feedback seriously even when it has already invested in a technical direction.
+> Supervisors can redistribute urgent tasks faster because they no longer need an administrator, while assignment errors and unauthorized visibility do not increase.
 
-## Learn from the effort, not only the result
+Possible observations include time to complete the workflow, support requests, correction frequency, access incidents, and direct customer feedback.
 
-The factory-improvement loop examines what repeatedly consumed attention. Did an agent ask the same domain question? Did a reviewer catch the same authorization omission? Did different callers duplicate one business rule? Did deployment wait for an unowned decision? Did the explanation obscure the same distinction?
+DORA's customer-feedback material supports connecting delivery with adoption and user evidence. This book uses that principle without claiming one universal metric. [S13](../research/sources/index.md#s13)
 
-Classify the cause before adding a rule. An architectural problem may need a clearer owner. A representation problem may need a type. A structural omission may need a build check. A behavior regression may need a test. A judgment problem may need a decision record or a better example.
+## Adoption is work too
 
-PStack's `correct` skill provides an especially concrete source for addressing recurring mistake classes through mechanisms and demonstrating the check against a known failure. Our broader learning loop also includes product and operational causes. [S10](../research/sources/index.md#s10)
+Shipping a feature does not ensure people can find, understand, or trust it.
 
-## Remove knowledge that should no longer be repeated
+Adoption may require:
 
-Suppose three agent sessions each implement a slightly different assignment sequence. Writing a longer instruction to use the right sequence may help temporarily. A stronger intervention could be one supported assignment capability that owns the sequence, plus removal of obsolete examples and direct write paths.
+- suitable permissions and account setup;
+- migration of existing data;
+- clear product language;
+- training or a changed operating procedure;
+- support ownership; and
+- observation of early failures.
 
-Now the next contributor needs less knowledge. The correction has changed the environment rather than merely increasing the amount of prose the contributor is expected to remember.
+These are not cosmetic tasks after the “real” engineering. They are part of making the intended result possible.
 
-This is the kind of leverage the project seeks: a human correction becomes an improvement to future work. It does not happen automatically. The new abstraction can be wrong or too broad. It should be tested against the actual recurring cases and a legitimate variation.
+## Learn from the effort as well as the result
 
-## Do not turn every incident into permanent bureaucracy
+After a change, ask two sets of questions.
 
-A one-off event may not justify a universal rule. A check can become obsolete. An exception can reveal that a boundary no longer matches the product. A template can accumulate fields no one reads.
+### Customer learning
 
-Every durable rule should have a reason, an owner, a mechanism, and a review condition. The learning loop should be allowed to remove it. Otherwise, the factory becomes a growing collection of constraints that preserves old mistakes as policy.
+- Did people use the change?
+- Did their work improve?
+- What became harder or riskier?
+- Was the original problem correctly understood?
 
-A useful question is: what evidence would convince us that this rule is no longer worth its cost? If the answer is “nothing,” we may have turned an engineering hypothesis into dogma.
+### Factory learning
+
+- Where did the engineer spend avoidable attention?
+- Which rule had to be explained again?
+- Which test or environment failed too late?
+- Which boundary made the change easier or harder?
+- Which artifact helped a decision, and which created noise?
+
+The purpose is not a long retrospective for every task. Capture evidence that can improve a repeated class of work.
+
+## Put knowledge where the next action can use it
+
+Different lessons belong in different places:
+
+- A stable domain meaning may belong in the glossary or module contract.
+- A repeated structural rule may belong in an architecture check.
+- A known implementation pattern may belong in a reference example.
+- A release hazard may belong in the deployment workflow.
+- A one-off decision may belong in the feature record and nowhere else.
+
+Do not copy every lesson into every document. Duplication becomes stale and creates another reconstruction problem.
+
+The source material on architecture and feedback supports keeping business policy and its enforcement visible. [S10](../research/sources/index.md#s10)
+
+## Remove obsolete knowledge
+
+Learning is not only accumulation.
+
+Delete or revise guidance when it no longer matches the product. Retire checks that enforce obsolete boundaries. Remove template fields that never affect a decision. Replace an old example when it teaches the wrong path.
+
+A factory that only adds rules becomes harder to use and maintain. Simplification is part of learning.
+
+## Do not turn every incident into bureaucracy
+
+One failure may be unusual. A new permanent process is justified when the failure is important, likely to recur, or cheap to prevent reliably.
+
+Ask:
+
+1. What caused the failure?
+2. Is the cause likely to recur?
+3. Can a stable mechanism prevent or detect it?
+4. What will that mechanism cost to maintain?
+5. Could it block legitimate work?
+
+The answer may be a test, a clearer contract, a better example, a smaller release, or no permanent change.
 
 ## Keep three knowledge layers separate
 
-Reusable foundations contain conventions and capabilities that genuinely apply across projects: a tested route-policy pattern, an evidence format, or a validated module generator. Project knowledge contains the client's language, authorization meaning, data ownership, and operating constraints. Experiments contain practices whose value remains uncertain.
+It helps to distinguish:
 
-Do not promote a client-specific policy into the general starter merely because it appeared in a successful project. Nor should experimental orchestration become a mandatory foundation before it has been evaluated. Separation makes it easier to change or remove one layer without disrupting the others.
+- **Product knowledge:** customers, workflows, language, policies, and desired outcomes.
+- **Project knowledge:** architecture, integrations, environments, and local conventions.
+- **Factory knowledge:** reusable delivery, verification, explanation, and agent practices.
 
-Versioning matters. A project should know which factory defaults it adopted. Updating the template should not silently change an existing product's behavior. A migration path is required when a shared mechanism changes.
+Promote knowledge upward only when its meaning remains valid. A customer-specific permission rule should not become a universal starter default merely because it worked once.
 
-## Measure a balanced set of outcomes
+## Measure a balanced result
 
-Track customer task outcomes, delivery time, human attention, rework, escaped defects, waiting time, and subsequent change cost. Record setup costs separately. Compare similar work where possible and explain differences in scope or risk.
+Useful signals may include:
 
-Do not optimize a single proxy such as number of commits, tests, agents, diagrams, or documents. More activity can accompany worse outcomes. A shorter review can be worse if it misses important issues. A higher test count can hide tests that repeat implementation details.
+- customer task success;
+- error or correction rate;
+- delivery lead time;
+- human review and clarification effort;
+- escaped defects;
+- later change cost;
+- factory setup and maintenance cost; and
+- work waiting for decisions or environments.
 
-The [evaluation plan](../experiments/evaluation-plan.md) specifies a modest first study. Its purpose is to discover whether the proposed mechanisms improve real work, not to manufacture a positive headline.
+No single number represents the whole system. Faster delivery with more customer harm is not success. Less review time with harder future changes is not clearly leverage.
 
-## The practical implication
+> **Do not confuse:** agent output with completed value.
 
-After each meaningful delivery, ask two questions: did this help the intended people, and what should become easier next time? Record the evidence, including inconclusive or negative results. That is how the factory becomes a learning system rather than a faster queue of feature requests.
+## What to do next
+
+After the next delivery, capture three things:
+
+1. one observation about the customer's result;
+2. one source of repeated engineering effort; and
+3. one factory mechanism to keep, change, remove, or test.
+
+Make the smallest useful update. The factory improves when learning changes future action, not when every task produces another permanent document.
 
 ---
 

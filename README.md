@@ -1,41 +1,77 @@
 # Beyond Code Generation
-## Designing a software factory around customer outcomes, human judgment, and maintainable change
+## A practical model for building useful software with AI agents
 
-**A living research book by Sabir Moglad, developed through AI-assisted inquiry and editorial synthesis.** First research edition · October 17, 2026.
+**A living research book by Sabir Moglad.** Plain-language revision · October 19, 2026.
 
-> How can we deliver more valuable, reliable change without requiring a proportional increase in human supervision—or accumulating a proportional increase in future maintenance?
+AI agents can produce code quickly. The harder problem is deciding what is worth building, keeping changes safe, understanding what the agents changed, and proving the result helped.
 
-This repository preserves an engineer's investigation: the questions behind the framework, differences among the sources, changes of mind, proposed mechanisms, concrete examples, and experiments that could prove us wrong. It is not a transcript, a universal methodology, or a claim that autonomous software engineering has been solved.
+This book proposes a software factory built around that harder problem. Human judgment becomes reusable. Agents work independently inside clear boundaries. Claims are connected to evidence. Repeated friction improves the next change instead of becoming permanent review work.
 
-**[Start reading](READING-GUIDE.md)** · **[Explore the questions](research/questions-and-coverage.md)** · **[Follow one feature](examples/task-assignment/README.md)** · **[Inspect the sources](research/sources/index.md)**
+**[Read the five-minute version](START-HERE.md)** · **[Choose a reading route](READING-GUIDE.md)** · **[Follow one complete example](examples/task-assignment/README.md)**
 
-![The proposed three-loop operating model.](diagrams/rendered/02-three-loops.png)
+![Three connected loops: customer value, engineering delivery, and factory learning.](diagrams/rendered/02-three-loops.png)
 
-*Customer value determines what is worthwhile. Engineering delivery makes a bounded change. Factory learning improves the next iteration. The model is proposed; its outcome claims remain to be evaluated.*
+The model has three connected loops:
 
-## The argument
+- **Customer value:** Are we solving a worthwhile problem?
+- **Engineering delivery:** Can we make and release the change safely?
+- **Factory learning:** What should become easier next time?
 
-Make important human judgment reusable through current contracts, examples, and executable constraints. Let agents act within explicit authority. Connect claims to inspectable evidence. Use Make Clear to reduce the work of reconstructing understanding. Let customer reality change the plan, including the decision to build less software.
+These are not three departments or a fixed sequence. A small change may pass through all three in one session.
 
-The influences include Dex Horthy/HumanLayer, Matt Pocock, Poteto's PStack, Robert C. Martin, and John Ousterhout. The comparison preserves their differences and distinguishes their source positions from our adaptations. No endorsement by those authors is implied.
+## The problem this book addresses
 
-## What is here
+Faster code generation does not automatically create more useful or maintainable software. It can instead move the bottleneck to the engineer, who must reconstruct intent, inspect unfamiliar changes, catch hidden assumptions, and decide whether the result is safe to release.
 
-The **book** develops the argument in 13 chapters. **Research** preserves the questions, source notes, corrections, and evolution of the ideas. **Examples** demonstrate one continuous feature, adoption in an inherited codebase, and a customer request that may not need the requested software. **Templates** provide optional working artifacts. **Diagrams** include editable sources and rendered images. **Experiments** define hypotheses and evidence collection without inventing results. The **archive** preserves the earlier implementation handoff as historical material.
+The goal is not maximum agent activity. The goal is more valuable, reliable change without a matching increase in unnecessary human supervision or future maintenance.
 
-This is the publication repository, not the eventual NestJS/Next.js application starter. The runnable example is an intentionally limited in-memory model, not a production application.
+That requires a few simple disciplines:
 
-## Evidence status
+1. Start with the customer's work and desired result.
+2. Investigate the unknowns that could change the decision.
+3. Record important product and engineering rules where they can guide later work.
+4. Give agents freedom inside explicit scope and authority.
+5. Verify specific claims with appropriate evidence.
+6. Make the important parts easy for a person to understand.
+7. Improve or remove factory mechanisms based on repeated evidence.
 
-Source-backed descriptions link to a dated source ledger. Proposed practices are labeled as synthesis. Fictional examples use synthetic data. Local documentation and example checks are recorded separately from customer or factory experiments. No client productivity improvement, return on investment, or production deployment is claimed.
+## One example runs through the book
 
-The original local Make Clear implementation and the specific interview transcript discussed in the conversation were not retrieved for this edition. Their limits are documented rather than filled with invented detail.
+The main example is task reassignment. A manager wants to assign a task to another person. The code is small, but the real behavior raises questions about membership, visibility, permissions, concurrency, audit history, and retries.
 
-## Read or run locally
+The example shows how to move from a feature request to a useful outcome, design a clear operation, delegate the work, test both allowed and denied cases, explain the result, and learn from the effort.
 
-Open `index.html` for an offline, phone-friendly reading edition. Markdown files remain the canonical prose. The reader is generated with `python3 scripts/build_reader.py` and has no external assets or tracking.
+The runnable model is intentionally small and uses synthetic data. It demonstrates selected rules; it is not a production application.
 
-Use Python 3.13, Node.js 22+, and TypeScript 5.8.3 for the checks used in this edition. Rebuilding the reader also needs `python3 -m pip install -r requirements-docs.txt`.
+## What is in this repository
+
+- **Book:** thirteen short chapters that develop the model.
+- **Start here:** a five-minute explanation of the whole argument.
+- **Examples:** one continuous feature, one inherited-codebase path, and one customer request that may not need the requested software.
+- **Templates:** optional working documents, not mandatory paperwork.
+- **Research:** source notes, corrections, changes of mind, and open questions.
+- **Experiments:** ways to test the claims without inventing results.
+- **Diagrams:** editable source data and rendered views.
+
+This is the research publication, not the future NestJS/Next.js starter or a deployed multi-agent system.
+
+## How to read claims
+
+The book keeps an important distinction:
+
+- **Source position:** what an inspected source says.
+- **Proposed:** this publication's recommendation or inference.
+- **Illustrative:** a fictional example.
+- **Observed locally:** a check executed in this repository.
+- **Not evaluated:** a result for which no outcome evidence has been collected.
+
+These labels protect the argument from becoming more certain as it is repeated. They should clarify the writing, not dominate it. Specific limitations appear where they change what the reader may conclude.
+
+## Run the local checks
+
+Open `index.html` for the complete offline reader. Markdown files remain the canonical source.
+
+The edition uses Python 3.13, Node.js 22+, and TypeScript 5.8.3:
 
 ```bash
 python3 scripts/check_docs.py
@@ -44,16 +80,14 @@ tsc -p examples/task-assignment/runnable/tsconfig.json
 node --test examples/task-assignment/runnable/assignment.test.mjs
 ```
 
-To rebuild diagrams, install Graphviz and run `python3 scripts/render_diagrams.py`. See [the diagram guide](diagrams/README.md) for the source-of-truth and rendering policy.
+Rebuild the reader with `python3 scripts/build_reader.py`. Rebuilding diagrams requires Graphviz and `python3 scripts/render_diagrams.py`.
 
-## Publish this prepared repository
+## Evidence boundary
 
-See [PUBLISHING.md](PUBLISHING.md). `bash scripts/publish.sh --public` creates a new repository under the authenticated `sabirmgd` account and pushes these files after local checks. It requires an authenticated GitHub CLI, refuses an existing target, and does not overwrite a repository. Preparing this package did not create the remote repository.
+The documentation checks, generated reader, diagrams, and small assignment model have local evidence in this repository. The broader claim—that this factory improves customer outcomes or engineering capacity—has not been established. The [experiment plan](experiments/evaluation-plan.md) describes what should be measured.
 
-## Contribute a useful challenge
+## Contribute
 
-Bring a counterexample, a source correction, an implementation experience with evidence, or a bounded experiment. See [CONTRIBUTING.md](CONTRIBUTING.md). The goal is a better model, not agreement with the current one.
+A useful contribution can be a counterexample, source correction, implementation result, failed experiment, or simpler mechanism. The goal is a better model, not agreement with the current one. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Rights and attribution
-
-A blanket reuse license has not been chosen for the original publication. See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). Referenced projects retain their own licenses; their source code and full articles are not vendored here.
+Rights and attribution are described in [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). The original publication does not yet have a blanket reuse license.

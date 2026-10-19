@@ -2,69 +2,133 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Make Clear and human understanding](09-make-clear-and-human-understanding.md) · [Next: Customer outcomes and factory learning](11-customer-outcomes-and-factory-learning.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. Evidence supports specific claims; it does not create release authority automatically.
 
-## Verification answers a claim, not a feeling
+## Replace “it works” with a claim
 
-“The feature works” is too broad to evaluate. A useful claim identifies behavior, conditions, and evidence: an authorized manager can assign an active member in the same workspace; an unauthorized request leaves state unchanged; a repeated command does not duplicate the audit event. Each claim needs an appropriate observation.
+“The feature works” is too broad to verify.
 
-Verification is not a single agent role. It is a collection of mechanisms that compare the implementation with accepted behavior and constraints. A reviewer may interpret the evidence, but evidence should remain independently inspectable rather than existing only in the reviewer's summary.
+For task reassignment, useful claims include:
 
-## A layered evidence plan
+- an authorized manager can assign an active member of the same workspace;
+- an unauthorized request leaves task and audit state unchanged;
+- a member from another workspace cannot become the assignee;
+- retrying the same request does not duplicate the audit event; and
+- a stale revision does not overwrite a newer assignment.
 
-Types can check certain representations. Domain tests can exercise rules and state transitions. Integration tests can examine persistence and external boundaries. Contract tests can check public shapes. End-to-end tests can exercise a real workflow across components. Architecture checks can detect specified structural violations. Operational observation can reveal behavior in deployment.
+Each claim needs evidence that can actually observe it.
 
-None substitutes for all the others. A browser flow may not explore every invalid state. A unit test may not reveal a missing route guard. A schema check may not establish that a user is entitled to the data returned. Select the evidence according to the claim and the risk rather than maximizing the number of tests indiscriminately.
+## Match the evidence to the claim
 
-The runnable assignment model in this repository provides a deliberately narrow demonstration. Its tests establish behavior of an in-memory implementation and typed declarations. They do not establish the correctness of a NestJS integration, database transaction, identity provider, or production system. See the [example's scope](../examples/task-assignment/runnable/README.md).
+Different checks answer different questions:
 
-## Negative cases expose hidden obligations
+- **Types:** Are known commands, identifiers, and result shapes represented correctly?
+- **Domain tests:** Do business rules and state transitions behave correctly?
+- **Integration tests:** Do persistence and external boundaries behave as required?
+- **Contract tests:** Do public interfaces retain their agreed shape and meaning?
+- **End-to-end tests:** Does a real workflow work across components?
+- **Architecture checks:** Are specified structural rules being followed?
+- **Operational observation:** Does the deployed system behave correctly with its actual configuration and dependencies?
 
-For an assignment operation, test unauthenticated access, insufficient capability, cross-workspace references, inactive membership, unavailable targets, stale revisions, and repeated commands. Also test that failures do not leave partial state or leak details the actor should not see.
+No layer proves everything. A browser test may miss invalid states. A unit test may miss a missing route guard. A schema test may prove shape without proving entitlement.
 
-A policy test matrix is valuable because it makes the intended distinction explicit. The case “manager in the wrong workspace” is different from “member in the right workspace.” Roles alone do not settle resource access.
+The runnable assignment model in this repository demonstrates only in-memory behavior and typed declarations. It does not prove database transactions, identity-provider behavior, framework integration, or production readiness.
 
-Timing can matter. A check performed before a concurrent revocation may have different semantics from a policy enforced at commit time. The technical design must choose the requirement and an implementation mechanism. Tests should reproduce the relevant timing where feasible; they should not quietly assume away the race.
+## Test denied behavior as carefully as allowed behavior
 
-## Independence has several meanings
+Happy-path tests show what succeeds. Denied cases expose hidden obligations.
 
-A second agent can review without being the original author, but it may still share the same assumptions, model weaknesses, or incomplete context. Treat it as another source of scrutiny rather than as an oracle.
+For reassignment, test:
 
-Stronger independence can come from externally observable behavior, tests derived from an accepted use case, a separate route inventory, or a reviewer examining evidence without seeing the author's rationale first. These mechanisms reduce particular forms of self-confirmation. They do not guarantee complete coverage.
+- no authenticated actor;
+- insufficient permission;
+- wrong workspace;
+- inactive or ineligible assignee;
+- hidden or missing task;
+- stale revision;
+- repeated request; and
+- storage failure before commit.
 
-One rule is especially important: the implementing agent must not silently redefine success. It may identify a faulty test or an outdated policy, but changing the evaluator should be separately visible and authorized. A green result obtained by deleting a relevant assertion is not equivalent to a correct implementation.
+Also prove what did **not** happen. A rejected request should not partially update the task, write a misleading audit event, or reveal whether a hidden resource exists.
 
-## Test quality can itself be challenged
+Timing matters. If membership can be revoked while the assignment is being committed, the product and technical design must define the intended result. A test should not quietly assume the race away.
 
-A test that continues to pass when the intended behavior is broken may not protect the claim it appears to protect. Deliberately introduce a representative defect, or use mutation testing where appropriate, to examine whether the test detects the change. Mutation tooling such as Stryker supplies one mechanism for JavaScript and TypeScript; selecting and configuring it remains project work. [S22](../research/sources/index.md#s22)
+## Independence is more than a second agent
 
-This need not run on every local edit. Focus expensive analysis on consequential policies and recurring weak spots. Treat a surviving mutation as a question to investigate, not automatic proof that the test suite is bad; the mutation may be equivalent or outside the relevant behavior.
+A second agent may notice different problems, but it can share the author's assumptions, model weaknesses, and incomplete context.
 
-## The evidence package
+Stronger independence can come from:
 
-A compact review package should identify the accepted behavior, the change revision, the actual commands and environments used, their outcomes, relevant artifacts, and remaining limitations. It should distinguish passed, failed, not run, and blocked checks.
+- externally observable behavior;
+- tests derived from an accepted use case;
+- a route or policy inventory built separately from the implementation;
+- an invalid fixture that challenges the checker; or
+- a reviewer examining evidence before reading the author's explanation.
 
-A Make Clear view can make the package easier to understand: what changed for the user, which boundary changed, and which important failure path was demonstrated. It must link back to the evidence rather than replacing it with a confident narrative.
+These reduce particular forms of self-confirmation. None guarantees complete coverage.
 
-Do not include secrets, production personal data, or unnecessary customer records in logs and screenshots. Evidence should be sufficient for the claim and appropriately scoped for the audience.
+One rule is critical: the implementing agent must not silently redefine success. If a test or policy is wrong, make that correction visible and review it separately.
 
-## Delivery is an action with its own authority
+## Test whether the tests can fail
 
-A merge, preview deployment, limited rollout, and full production release are different actions. Approval of a technical design does not automatically authorize all of them. The delegation contract should state which are permitted.
+A test that stays green when the intended behavior is broken may protect nothing.
 
-Release design includes who is exposed, what will be observed, what conditions stop expansion, and what recovery can accomplish. Google's SRE guidance describes canarying as a limited deployment evaluated before broader rollout. We use that principle as one possible containment mechanism, not a universal requirement for every application. [S23](../research/sources/index.md#s23)
+Deliberately introduce a representative defect or use mutation testing where appropriate. For example, remove the workspace comparison or allow a failed commit to retain its audit event. The relevant test should fail for the expected reason.
 
-Reverting code is not the same as reversing consequences. A message sent, a payment initiated, or data disclosed may require compensation or incident response. A claim of reversibility must name the state and side effects that can actually be restored.
+Mutation tools such as Stryker provide one mechanism for JavaScript and TypeScript. Surviving mutations are questions to investigate, not automatic proof that the suite is bad. [S22](../research/sources/index.md#s22)
 
-## Operational readiness is part of the feature
+Expensive analysis does not need to run on every edit. Focus it on important policies and recurring weak spots.
 
-A feature may require configuration, credentials, migrations, backfills, support ownership, alerts, and access for its users. These are not cosmetic delivery details. Missing one can prevent value even when the code is correct.
+## Package the evidence for review
 
-For database changes, plan compatibility and recovery explicitly. An expand/migrate/contract sequence may reduce coupling between releases, but destructive migrations and backfills still require their own evidence and authority. Do not let an agent discover these requirements only when it reaches production.
+A useful evidence package contains:
 
-## The practical implication
+- the accepted behavior;
+- the exact revision;
+- commands and environments actually used;
+- passed, failed, blocked, and unrun checks;
+- relevant artifacts; and
+- remaining limitations.
 
-Define verification at design time, execute it against the actual change, and preserve its scope. Then decide separately whether the available evidence and recovery plan justify the permitted release. Confidence should come from inspectable claims, not a polished completion message.
+A Make Clear view may summarize the user-visible change, boundary, and important failure path. It should link to evidence rather than replace it.
+
+Keep secrets, personal data, and unnecessary customer records out of logs and screenshots.
+
+## Release is a separate action
+
+A commit, merge, preview, limited rollout, and full production release are different actions. Approval of a design does not authorize all of them.
+
+Release planning should state:
+
+- who will be exposed;
+- what will be monitored;
+- what condition stops expansion;
+- what can be rolled back; and
+- which effects cannot be undone.
+
+Google's SRE guidance describes canarying as a limited deployment evaluated before wider rollout. It is one containment option, not a requirement for every feature. [S23](../research/sources/index.md#s23)
+
+Reverting code does not reverse a sent message, initiated payment, or disclosed record. Recovery claims must name the state and side effects that can actually be restored.
+
+## Operational readiness belongs to the feature
+
+Correct code may still require configuration, credentials, migrations, backfills, support ownership, alerts, and user access.
+
+Plan these before production. Database changes need compatibility and recovery. An expand–migrate–contract sequence can reduce release coupling, but destructive migrations and backfills still need their own evidence and authority.
+
+> **Do not confuse:** green code checks with a usable deployed feature.
+
+## What to do next
+
+For each important behavior:
+
+1. Write the claim precisely.
+2. Choose the cheapest evidence that can observe it credibly.
+3. Include the denied or failure case.
+4. Record the actual revision and environment.
+5. Decide release authority separately.
+
+Confidence should come from inspectable claims, not a polished completion message.
 
 ---
 

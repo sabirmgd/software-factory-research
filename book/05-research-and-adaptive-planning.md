@@ -2,75 +2,115 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Discovery and product intent](04-discovery-and-product-intent.md) · [Next: Architecture for future change](06-architecture-for-future-change.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. The examples show how to scale planning, not a mandatory document sequence.
 
-## Planning is a purchase of information
+## Planning should buy useful information
 
-The useful question is not whether planning is good. It is what expensive uncertainty a planning activity can remove, and whether a cheaper action could remove it just as credibly. A long document can expose a mistaken assumption; it can also repeat settled information while the real uncertainty remains untouched.
+The question is not whether planning is good. The question is:
 
-Our proposed rule is that substantial research or design work should name the question it will answer and the decision that depends on the answer. “Research the notification system” has no clear boundary. “Determine whether the existing delivery mechanism prevents duplicate messages, because that determines whether reassignment can safely retry” does.
+> Which unknown could make us choose the wrong approach, and what is the cheapest credible way to resolve it?
 
-## Research establishes the current situation
+A long document can expose an important mistake. It can also repeat facts everyone already knows while the real uncertainty remains untouched.
 
-Research should distinguish observed facts from interpretations and unknowns. A useful report identifies the relevant paths, tests, interfaces, data ownership, and constraints at a known revision. It describes what is there before proposing a replacement.
+For task reassignment, “research the task system” is too broad. A useful research question is: “Where does current workspace membership come from, and can it change between the permission check and the assignment commit?” The answer affects both the design and the tests.
 
-Autonomous research can be the default within the resources the task is allowed to access. That does not mean unrestricted access to client records, production logs, paid services, or arbitrary network destinations. Reading documentation may be harmless; running a script found in a repository may have side effects. Retrieved content is evidence to evaluate, not new authority for the agent.
+## Research the current system before replacing it
 
-The depth should scale with the question. A label change may need a file lookup and a neighboring test. A membership change may require tracing several entry points and checking the runtime source of tenant context. A new integration may require reading current vendor documentation and running an isolated experiment. A research agent must record when it could not access something rather than turning a guess into a finding.
+A useful research note separates:
 
-## Four different artifacts, four different jobs
+- **Observed:** found in code, tests, configuration, or executed behavior.
+- **Inferred:** the best explanation from incomplete evidence.
+- **Unknown:** not established with the available access or time.
+- **Proposed:** a possible change, not current behavior.
+
+It identifies the relevant paths, interfaces, ownership, tests, and constraints at a known revision. It does not turn a plausible guess into a current-system fact.
+
+Research depth should match the question. A label change may need one file and a nearby test. A membership rule may require tracing identity, tenant context, persistence, and several entry points. A new provider may require current documentation and an isolated experiment.
+
+Autonomous research is appropriate inside the task's approved resources. That does not grant access to arbitrary customer data, production logs, paid services, or scripts with unknown side effects.
+
+## Give each artifact one job
 
 ![Planning artifacts derived from one feature, with feedback to earlier decisions.](../diagrams/rendered/04-planning-artifacts.png)
 
-*This shows information ownership. It does not require four separate documents for every change.*
+Four artifacts can be useful, but they do not need to be four files:
 
-The research report says what the system currently does and what remains unknown. The PRD says what people should be able to accomplish and what behavior is required. The technical design document says how system responsibilities and code structure will support that behavior. The outline says in what order the work will be implemented and verified.
+- **Research:** What does the system do now, and what remains unknown?
+- **Product requirement:** What should people be able to do, and what behavior is required?
+- **Technical design:** How will system responsibilities and program structure support that behavior?
+- **Implementation outline:** In what order will we build and verify useful increments?
 
-Here, TDD means **technical design document**. Elsewhere, TDD commonly means test-driven development. This book writes out the term when the context could be ambiguous. Test-driven development is an implementation feedback practice, not another name for a design document.
+For reassignment, one compact document might contain all four. A large cross-system change may keep them separate so different owners can review the right decisions.
 
-For assignment, the PRD might require that an authorized manager assign an active member without creating new access. The system design identifies the source of identity, membership, task ownership, persistence, and audit. The program design specifies a task-assignment operation and the ports it uses. The outline begins with a small complete permitted assignment and then adds the denied and conflicting interactions.
+Here, technical design document is written out instead of shortened to TDD, because TDD also commonly means test-driven development.
 
-## System design and program design
+## Separate system design from program design
 
-System design describes interactions among components and data stores, including transaction boundaries, resource context, failure behavior, and external systems. Program design describes the shape of the implementation: public interfaces, important types, file responsibilities, dependency injection, call sequences, and test seams.
+System design explains components, data stores, external systems, transactions, resource context, and failure behavior.
 
-HumanLayer's inspected TDD process treats these as separate reviewable sections. That offers a concrete way to expose both the high-level design and the internal decisions before code makes them expensive to revisit. [S02](../research/sources/index.md#s02)
+Program design explains public operations, important types, file responsibilities, call sequences, dependency injection, and test seams.
 
-Our adaptation is to review the decisions that matter at the appropriate level. A new data-sharing model deserves explicit attention. The name of a private helper usually does not. A design sketch is useful when it reveals ownership, invariants, or coordination—not because every future function must be specified in advance.
+For reassignment, the system view might show identity, membership, task storage, and audit storage. The program view might define one `assign` operation and the ports it uses.
 
-## The outline must describe demonstrable increments
+HumanLayer's inspected technical-design process reviews these as separate concerns. That is useful when both contain important choices. [S02](../research/sources/index.md#s02)
 
-“Build the database, then build the backend, then build the frontend” is a sequence, but not necessarily a good learning sequence. It postpones integration evidence until late. A thin end-to-end operation can reveal whether the contracts, authorization, and user interaction fit together while the system is still small.
+Do not specify every future function. Review decisions that affect ownership, invariants, coordination, security, or future change cost.
 
-A true vertical slice crosses the relevant layers to demonstrate one behavior. A domain-only unit of work may be an appropriate preparatory step, but it should not be mislabeled as a complete vertical slice. This corrects a loose use of the term earlier in the conversation.
+## Plan in demonstrable increments
 
-An outline should name each increment's result, relevant files or boundaries, acceptance evidence, and stop conditions. It should also distinguish what is safe to deploy from what is merely safe to commit. A feature can be incrementally integrated behind controlled exposure without claiming the whole user workflow is ready.
+“Build the database, then backend, then frontend” divides work by layer. It may postpone the first proof of real behavior until the end.
+
+A better first increment might demonstrate one allowed assignment through the required layers. Later increments add denied cases, concurrency, audit behavior, and the user interaction.
+
+A vertical slice crosses the layers needed to demonstrate one behavior. A domain-only step may still be useful, but it should not be described as complete user behavior.
+
+Each increment should state:
+
+- the observable result;
+- the relevant files or boundaries;
+- the evidence expected;
+- what is safe to commit or deploy; and
+- what would stop the work.
 
 ## Choose a route, not a paperwork tier
 
-For familiar, low-impact changes, use a compact brief and targeted verification. For a change with a few open choices, combine product and technical reasoning into a short design discussion. For substantial product uncertainty and architectural consequences, separate the PRD, technical design, and outline.
+Use a route that fits the decision:
 
-RPI itself supports several routes and permits skipping artifacts when the necessary detail is already settled. Our routing policy builds on that flexibility. It is not a fixed requirement inherited from the source. [S01](../research/sources/index.md#s01)
+- **Familiar and low impact:** compact brief plus targeted checks.
+- **A few open choices:** short combined product and technical discussion.
+- **High product uncertainty or architectural impact:** separate research, product, technical, and implementation decisions.
+- **One decisive unknown:** bounded experiment before a full plan.
 
-Risk and uncertainty are related but not identical. A small, well-understood change to an access-control rule can still require review because of its possible harm. A large exploratory prototype can be low risk when isolated from customers and production data. Do not classify work using line count alone.
+RPI supports several routes and allows artifacts to be skipped when the necessary detail is already settled. This book keeps that flexibility. [S01](../research/sources/index.md#s01)
 
-## The stopping rule for planning
+Risk is not the same as size. A one-line permission change can be dangerous. A large isolated prototype using synthetic data can be low risk.
 
-Continue planning when another finding could change a consequential decision or make the next step substantially safer. Stop when further detail is unlikely to change the next responsible action and implementation can provide better evidence at acceptable cost.
+## Know when to stop planning
 
-That rule requires judgment. An agent cannot simply declare that uncertainty is low because it has generated a plausible design. It should point to an existing pattern, a relevant test, an accepted requirement, or an experiment. When evidence is weak, the next action can be a bounded spike rather than a full feature.
+Continue while another finding could change an important decision or make the next step substantially safer.
 
-A planning budget is useful as a review trigger, not as permission to ignore remaining danger. If the budget is exhausted and the unknown is still consequential, the result is an escalation or a smaller scope. It is not an instruction to proceed blindly.
+Stop when further detail is unlikely to change the next responsible action and implementation can provide better evidence at acceptable cost.
 
-## Documents must not become a second implementation
+An agent should support “uncertainty is low” with an existing pattern, accepted requirement, relevant test, or experiment. A plausible design is not evidence merely because it is well written.
 
-Reference the artifact that owns a decision rather than duplicating it everywhere. The PRD owns intended behavior. The module contract owns public responsibilities. The feature design owns the accepted technical delta. Test evidence describes a particular implementation revision.
+A planning budget is a review point, not permission to ignore danger. If the budget ends while an important unknown remains, reduce scope or escalate the decision.
 
-When a technical discovery changes the product promise, update the PRD and associated views. When code deviates from a design, record and review the deviation. A document saying the right thing cannot compensate for code doing another thing.
+## Keep documents and code connected
 
-## The practical implication
+Reference the artifact that owns a decision instead of copying it everywhere. When implementation discovers that a product promise cannot be met, update the product decision. When code departs from an accepted design, make the deviation visible.
 
-Begin the next feature by answering: what is already settled, what could reverse the approach, what is the smallest useful evidence, and who owns the remaining decision? Select the artifacts after answering those questions. Planning is valuable when it prevents avoidable surprise, not when it makes an uncertain plan look complete.
+A correct document cannot compensate for different runtime behavior.
+
+## What to do next
+
+Before planning the next feature, answer:
+
+1. What is already settled?
+2. What unknown could reverse the approach?
+3. What is the smallest credible evidence that reduces it?
+4. Who owns the remaining decision?
+
+Choose the planning route after those answers. Planning is valuable when it prevents avoidable surprise, not when it makes uncertainty look complete.
 
 ---
 

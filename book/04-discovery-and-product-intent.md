@@ -2,75 +2,117 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Our working model](03-our-working-model.md) · [Next: Research and adaptive planning](05-research-and-adaptive-planning.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. The task-assignment story is illustrative.
 
-## A feature request is a starting point, not a complete product definition
+## Start with the request, but do not stop there
 
-“Allow managers to assign tasks” sounds clear until the system must decide who counts as a manager, which people can be assigned, whether assignment creates access, what happens when membership is revoked, and whether the person assigning needs confirmation. Those are product behaviors with technical consequences.
+A feature request tells us what someone currently thinks should be built. It does not automatically tell us the problem, the affected people, the rules, or the expected improvement.
 
-The first goal of discovery is not to produce a long document. It is to distinguish known behavior, assumptions, and decisions that someone must own. A coding agent can investigate existing behavior. It should not invent a company's access policy because it needs a boolean to finish a function.
+“Add task reassignment” is a reasonable starting point. Discovery turns it into something a team can responsibly design:
 
-The [task-assignment example](../examples/task-assignment/README.md) carries one requirement through the book. It is fictional, uses synthetic actors, and has no implied client approval. This separation matters: a coherent example is not evidence that real customers wanted it.
+> An authorized manager can move an existing task to an active member of the same workspace, without granting new visibility or losing the assignment history.
 
-## From outcome to use case
+That sentence is not the whole product requirement, but it exposes much more meaning than the feature name.
 
-An outcome hypothesis might be: team coordinators can make responsibility clear without follow-up messages or unauthorized access. That statement still needs observation. We would first learn how assignment works today, what “clear responsibility” means to the users, and which errors are costly.
+## Describe the user-visible path
 
-A use case then describes an actor pursuing a goal. It names the trigger, relevant preconditions, the successful result, alternatives, failure behavior, and invariants. It is not a list of database operations. One use case may cross several screens and APIs; several use cases may share an endpoint.
+A useful use case shows what happens from the person's point of view:
 
-For assignment, the successful result is not merely an updated row. The authorized coordinator can see the confirmed assignee; the assignee's access remains governed by the existing sharing policy; the audit history records the actual change; and a failed operation leaves no partial state. Whether notification is required immediately, eventually, or not at all is a separate product decision.
+1. A manager opens a task they are allowed to manage.
+2. They choose an eligible member.
+3. The system shows what will change.
+4. The manager confirms.
+5. The task receives the new assignee and records the event.
+6. If the task changed meanwhile, the manager sees a conflict instead of silently overwriting another update.
 
-## Personas, roles, permissions, and resources
+Include important denied paths as well. A manager from another workspace must not learn whether the task exists. An inactive member must not become the assignee. A repeated request must not create duplicate audit events.
 
-A persona explains a person's motivations and context. A security role groups capabilities. A permission names an operation. A resource and its context determine whether the operation is permitted in this instance. These concepts should be connected explicitly but not collapsed into one enumeration.
+Concrete paths expose product questions earlier than broad phrases such as “secure reassignment support.”
 
-A product persona called “team coordinator” might include people with different permissions in different organizations. A service account may have no human persona. A user with a managerial role in one workspace should not automatically gain the same authority in another.
+## Keep four concepts separate
 
-This distinction begins in discovery, not only in security implementation. Product examples should include authorized and unauthorized cases. Later, the technical design must specify how identity and resource context are established at runtime. The typed registry is a useful representation, not the source of the business decision.
+Product and security discussions often mix these concepts:
 
-## What the PRD owns
+- **Persona:** the person's context and motivation, such as a supervisor coordinating urgent work.
+- **Role:** a named position in the system, such as manager or member.
+- **Permission:** a capability, such as `tasks:assign`.
+- **Resource relationship:** whether this person may act on this particular task in this workspace.
 
-Our proposed PRD records the problem, affected actors, success hypothesis, intended behavior, non-goals, important constraints, and acceptance scenarios. It includes the human experience of failures: what users see, what can be retried, and what they are allowed to learn about unavailable resources.
+A manager role alone may not authorize every assignment. The decision may also depend on workspace membership, task visibility, assignee eligibility, and the current task revision.
 
-HumanLayer's inspected PRD process separates those user-facing choices from implementation questions and asks how the result will help after release. Its technical details are deferred to the TDD. [S03](../research/sources/index.md#s03)
+Separating these concepts avoids building product assumptions into vague role names.
 
-That separation is useful but not absolute in the sense of ignoring reality. An integration limitation may make a promised behavior impossible or prohibitively costly. Technical research can inform the PRD. The PRD should describe the accepted behavior and constraints without prescribing class names or folder layouts unnecessarily.
+## What the product requirement owns
 
-## Acceptance is not outcome measurement
+The product requirement should answer:
 
-Acceptance criteria establish what must be true for the feature to meet the agreed behavioral contract. Outcome evaluation asks whether the feature helped the intended people in practice. They answer different questions.
+- Who needs the change?
+- What are they trying to accomplish?
+- What behavior is required?
+- What is deliberately out of scope?
+- Which failures must be visible?
+- What must remain unchanged?
+- How will acceptance be demonstrated?
+- What customer improvement do we expect?
 
-An acceptance scenario can verify that an inactive person cannot be assigned and that the previous assignment remains unchanged. It cannot establish that team coordinators now spend less time clarifying responsibilities. That requires observation of the workflow and a credible comparison with the prior situation.
+It should not dictate every class, database table, or framework choice. Those belong to technical design unless the product behavior depends on them.
 
-A modest project may not support a controlled experiment. It can still record the evidence honestly: a small set of observed tasks, user explanations, error cases, or before-and-after timings with their limitations. The absence of a perfect causal estimate is not a reason to assume that shipping created value.
+HumanLayer's inspected product-design material offers one source for separating user intent from technical structure. This book adopts that separation without requiring a long PRD for every change. [S03](../research/sources/index.md#s03)
 
-## Prototype the uncertainty, not the entire product
+## Acceptance and outcome are different
 
-A logic prototype is appropriate when the difficulty lies in state transitions, rules, or consequences. An interface prototype is appropriate when people need to experience alternative flows or layouts. A technical spike is appropriate when an API, storage mechanism, or performance assumption must be tested. A customer conversation is appropriate when the meaning of the problem is still unclear.
+Acceptance evidence asks whether the implementation behaves as agreed. Outcome evidence asks whether the change helped people in their real work.
 
-Matt's prototype skill explicitly distinguishes logic and UI questions and keeps prototype artifacts separate from production implementation. We borrow that discipline, not its incidental tooling as a permanent requirement. [S06](../research/sources/index.md#s06)
+For reassignment:
 
-For assignment, a small state explorer could demonstrate revocation between selection and submission. A UI comparison could test whether users understand the difference between selecting an assignee and granting access. Neither needs real credentials, production persistence, or an elaborate reusable design system.
+- **Acceptance:** an authorized manager can reassign an eligible member, denied cases leave state unchanged, and the audit event is recorded.
+- **Outcome:** supervisors redistribute urgent work faster, with no increase in access incidents or assignment mistakes.
 
-Each experiment should state a question, an observation, a verdict, and the decision affected. “The demo looks good” is not a useful verdict when the uncertainty was whether assignment should confer access.
+The first can be checked before release. The second usually requires observation after people use the change.
 
-## Discovery should challenge the requested solution
+> **Do not confuse:** meeting requirements with creating customer value.
 
-The agent should not only ask which implementation the user prefers. It should surface a consequential assumption and explain why it matters. For example: “This proposal treats assignment as access. Is that intentional? The alternative is to require sharing first.” A Make Clear view can show the two outcomes without forcing a nontechnical reviewer to parse an authorization schema.
+## Prototype the uncertainty
 
-Challenge is not obstruction. Once the relevant person has made an informed decision within their authority, the factory should record it and proceed. Reopening settled choices without new evidence consumes the attention the system is trying to preserve.
+A prototype should answer a question, not imitate the whole product.
 
-The same applies to deciding not to build. If the requested assistant merely disguises an unreliable inventory source, discovery should expose that limitation. The [customer-outcome example](../examples/customer-outcome/README.md) demonstrates this branch explicitly.
+If the uncertainty is whether managers understand that reassignment does not grant visibility, build the smallest interaction that tests that explanation. If the uncertainty is whether access rules can be represented safely, build a small state model. If the uncertainty is provider behavior, run an isolated integration experiment.
 
-## A useful readiness boundary
+Matt Pocock's inspected material supports focused experiments as part of alignment and design. [S06](../research/sources/index.md#s06)
 
-A feature is ready for technical design when the next technical decisions have enough product context to be made responsibly. It does not require knowing every future enhancement. It does require visible ownership of the unresolved questions that could reverse the design.
+A prototype can influence production. Its existence does not make it production-ready.
 
-Before implementation, the selected slice should have a demonstrable result, clear failure behavior, and no silent assumption about a consequential permission or external commitment. Where uncertainty remains, a time-boxed experiment may be the implementation task itself.
+## Challenge the requested solution
 
-## The practical implication
+Discovery is useful when it can change the plan.
 
-Keep the PRD close to examples. A short statement plus concrete permitted, denied, and failed interactions can communicate more than broad adjectives such as secure, seamless, or scalable. Make those examples traceable into the technical design and verification plan. That is how product meaning survives the handoff to agents.
+A customer asking for an AI assistant may actually have unreliable data, poor search, or an unclear operating process. A reassignment request may be caused by incorrect workload data rather than missing controls.
+
+Challenge should be specific and helpful: name the assumption, explain its consequence, and propose a cheaper way to test it. Endless questioning is not discovery. It is delay.
+
+## Know when the work is ready
+
+A change is ready for technical planning when the team understands:
+
+- the intended result;
+- the people and resources involved;
+- the main allowed and denied paths;
+- the rules that must not change;
+- the most important remaining uncertainty; and
+- who owns unresolved product decisions.
+
+Not every detail must be settled. The next step must simply be responsible and likely to produce better evidence.
+
+## What to do next
+
+Before writing the implementation plan, answer four questions in plain language:
+
+1. What is the person trying to accomplish?
+2. What behavior would count as success?
+3. What must not become possible?
+4. Which assumption could still reverse the approach?
+
+Then choose the smallest artifact or experiment that makes those answers usable by the people and agents doing the work.
 
 ---
 

@@ -1,78 +1,122 @@
 # 3. Our working model
 
-[Reading guide](../READING-GUIDE.md) · [Previous: The perspectives and the tensions](02-the-perspectives-and-tensions.md) · [Next: Discovery and product intent](04-discovery-and-product-intent.md)
+[Five-minute version](../START-HERE.md) · [Reading guide](../READING-GUIDE.md) · [Previous: The perspectives and the tensions](02-the-perspectives-and-tensions.md) · [Next: Discovery and product intent](04-discovery-and-product-intent.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. The loops describe how information should change decisions; they are not evidence that the model is effective.
 
-## A learning system with a production capability
+## The model in one sentence
 
-A software factory that only implements approved requests can be very efficient at preserving a mistaken assumption. A factory that only discovers valuable problems can leave them poorly implemented. A factory that does both but never improves its own operation can keep the engineer permanently overloaded.
+Choose worthwhile work, deliver it safely, and use what you learn to make the next change easier.
 
-Our working model has three connected feedback loops. They are not three departments or three agents. A small task may traverse them in a single session; a larger product may involve many people and tools. The distinction concerns the question being answered.
+Those responsibilities form three connected loops. They are not departments, agent roles, or mandatory phases. A small task may move through all three in one session.
 
 ![Three connected loops: customer value, engineering delivery, and factory learning.](../diagrams/rendered/02-three-loops.png)
 
-*The model is a proposed synthesis. The arrows describe information that should change decisions, not proof that the process is effective.*
+## Loop 1: customer value
 
-## The customer-value loop
+This loop asks:
 
-This loop asks whether the problem is worthwhile and whether the intervention helps. Its inputs include customer observations, operating constraints, requested changes, and evidence from existing behavior. Its output is not necessarily a feature list. It may be a revised hypothesis, a smaller scope, a decision to fix data, or a decision not to build.
+> Are we solving a worthwhile problem, and did the result help?
 
-A minimal outcome hypothesis names the affected people, the work they are trying to perform, the present difficulty, and how improvement will be evaluated. It also names what must not get worse. Reducing the time to send a quote would not be useful if it increased quoting errors or disclosed information to the wrong customer.
+For task reassignment, the first question is not how to add an endpoint. It is why supervisors need to move work, who is affected, what “better” means, and what must not get worse.
 
-DORA's customer-feedback guidance links product decisions to evidence about customer interaction and adoption. Our extension is to make that feedback a first-class boundary around agent execution, rather than treating it as an optional activity after delivery. [S13](../research/sources/index.md#s13)
+The output may be a feature. It may also be a smaller scope, a data correction, a process change, or a decision not to build.
 
-## The engineering-delivery loop
+A useful outcome hypothesis names:
 
-This loop asks how to make the accepted change safely and maintainably. It contains research, design, implementation, verification, and release. The depth of each activity depends on the change, not on a fixed ceremony.
+- the people affected;
+- the work they are trying to do;
+- the current difficulty;
+- the improvement expected; and
+- an unacceptable regression.
 
-The durable foundation consists of current product meaning, module contracts, allowed dependencies, security intent, reference patterns, and executable checks. A feature-specific design derives from that foundation. It does not re-create the entire architecture, and it cannot silently discard an inconvenient rule.
+For example: supervisors can redistribute urgent tasks in less time, without granting new access or losing the assignment history.
 
-The result is a bounded, inspectable change with evidence. The evidence may justify a merge, a preview deployment, or a further experiment. Those are distinct permissions. Passing tests does not automatically authorize a production rollout.
+DORA connects product decisions with customer interaction and adoption evidence. This book makes that feedback an outer boundary around agent execution rather than an optional activity after delivery. [S13](../research/sources/index.md#s13)
 
-## The factory-improvement loop
+## Loop 2: engineering delivery
 
-This loop asks why the work required its particular effort and what should change next time. It draws on repeated review comments, failed checks, surprising dependencies, unclear domain terms, waiting time, and outcome observations.
+This loop asks:
 
-It should improve the right layer. Repeated unknown permission names may call for a typed registry. Repeated confusion about who a customer is may call for a domain-language decision. Repeated deployment delays may reveal missing authority or an unavailable test environment. Repeated client rejection may mean the solution was validated too late.
+> How can we make and release the accepted change safely?
 
-The loop must also remove unnecessary machinery. A guardrail that consistently blocks legitimate work may need redesign. A template field no one uses may need deletion. A shared abstraction used once may not belong in the foundation. The factory itself is software and process that must be maintained.
+It includes targeted research, product clarification, technical design, implementation, verification, and release. The depth depends on the task.
 
-## Four capabilities operating across the loops
+For reassignment, the durable rules may include workspace membership, visibility, audit behavior, and conflict handling. The feature design applies those rules to one operation. It should not redraw the entire architecture or silently discard an inconvenient constraint.
 
-Human engineering supplies intent and consequential judgment. Autonomous execution performs bounded investigation and implementation. Verification establishes evidence about specific claims. Make Clear turns the relevant material into a form someone can understand and challenge.
+The result is a bounded change plus evidence. That evidence may justify another implementation step, a preview, a merge, or a release decision. Those are separate actions with separate authority.
 
-Make Clear is not a fourth sequential stage. It may help during discovery, technical design, debugging, review, or learning. It does not automatically create a human approval requirement. Someone can use it simply to understand a system, and an already authorized change can remain autonomous even when a visual record is produced.
+> **Do not confuse:** passing checks with permission to release.
 
-Likewise, research is not restricted to the beginning. An agent may discover an unknown during implementation. A bounded investigation can resolve it without reopening every decision. If the finding changes product intent or a foundational boundary, the workflow must return to the relevant decision owner.
+## Loop 3: factory learning
 
-## The contract connecting human judgment and autonomous action
+This loop asks:
 
-We propose that a delegated work item carry six pieces of information: desired outcome, approved scope, stable constraints, required evidence, permitted actions, and escalation conditions. These need not be six new files. They can be six short sections of one work item.
+> Why did this work require so much effort, and what should change next time?
 
-This turns the vague instruction “use your judgment” into something operational. The agent may refactor private code within a module, but may not change its public authorization behavior. It may run a preview with synthetic data, but may not contact real customers. It may propose a new dependency, but may not introduce a recurring paid service under an existing feature approval.
+Useful signals include repeated review comments, failed checks, confusing domain terms, surprising dependencies, unavailable environments, long waits, and customer rejection.
 
-A missing decision is not a blank check. Nor should every small unknown become a question to the human. The distinction is whether resolving it would exceed the task's authority or change a consequential contract.
+Improve the layer that caused the problem:
 
-## Leverage as a hypothesis about repeated work
+- repeated unknown permission names may justify a typed registry;
+- repeated confusion about membership may justify a clearer domain contract;
+- repeated missed denied cases may justify a shared test pattern;
+- repeated review reconstruction may justify a focused system view; and
+- a template field that never helps may deserve deletion.
 
-We use leverage to mean that an investment improves more than one later action. A generator can encode a known structure. A precise module contract can reduce discovery work. A runtime deny-by-default mechanism can prevent a class of omissions. A grounded visual can reduce the reconstruction needed for review.
+The factory must remove bad machinery as readily as it adds new machinery.
 
-The investment has costs: initial design, ongoing maintenance, exceptions, and the risk of enforcing a wrong default. Therefore “more reusable” is not automatically better. A useful factory accumulates validated capabilities, not every abstraction an agent can imagine.
+## Four capabilities support all three loops
 
-An approximate evaluation can separate setup effort from recurring effort. Count the attention needed to clarify, implement, verify, and support comparable changes before and after introducing a mechanism. Then observe subsequent changes in the same area. We do not claim a universal formula converts those observations into a definitive factory score.
+The loops use four capabilities:
 
-## Flow matters more than agent utilization
+1. **Human judgment** supplies intent and owns consequential decisions.
+2. **Autonomous execution** investigates and implements within an approved scope.
+3. **Verification** tests specific claims.
+4. **Make Clear** turns relevant evidence into something a person can understand and challenge.
 
-If implementation produces changes faster than a team can evaluate them, unfinished work accumulates. A factory dashboard should show blocked decisions, waiting reviews, unavailable test environments, and unresolved customer questions—not just active agents.
+These are not four stages. Make Clear may help during discovery, design, debugging, review, or learning. Research may happen again during implementation when a new unknown appears.
 
-DORA's work-in-process guidance emphasizes the complete value stream and addressing its constraint. We adapt that reasoning by allowing agents to stop starting new review-heavy work when downstream capacity is full. They may improve evidence, resolve a known blocker, or finish existing work instead. This is a proposed application, not a measured result of this repository. [S12](../research/sources/index.md#s12)
+## Connect judgment to action with six facts
 
-## The operating rules in one paragraph
+When delegating work, state:
 
-Start from a worthwhile outcome. Identify consequential uncertainty. Use the smallest credible action that can reduce it. Establish durable contracts where repeated work warrants them. Delegate only the authority actually granted. Verify claims against evidence. Make the relevant reality understandable. Release with an appropriate containment plan. Observe customer effects. Improve or simplify the factory when the evidence warrants it.
+1. the desired outcome;
+2. the approved scope;
+3. the rules that must remain stable;
+4. the evidence required;
+5. the actions and environments allowed; and
+6. the conditions that require stopping or escalation.
 
-The next chapters make each rule concrete. Their purpose is not to create a longer checklist. It is to help decide which work can proceed quickly and which decisions deserve attention.
+For example, an agent may change private code inside the Tasks module and run a preview with synthetic data. It may not change who can assign, contact real customers, or introduce a paid service.
+
+A missing decision is not a blank check. A small implementation choice is not automatically a reason to interrupt the human. Escalation is needed when the choice would exceed the task's authority or change an important contract.
+
+## Reuse only what earns reuse
+
+Leverage means one investment improves several later actions. A generator, module contract, deny-by-default mechanism, or grounded explanation can do that.
+
+Each also has setup, maintenance, exception, and learning costs. “Reusable” is not the same as “valuable.” Promote a mechanism when repeated evidence justifies it.
+
+## Optimize flow, not agent activity
+
+If agents produce changes faster than people can evaluate them, unfinished work grows. A useful view of the factory shows waiting decisions, reviews, environments, and customer questions—not only active agents.
+
+DORA's work-in-process guidance focuses on the whole value stream and its constraint. Applied here, that may mean pausing new review-heavy work while agents improve evidence or finish existing work. This application is proposed, not measured by this repository. [S12](../research/sources/index.md#s12)
+
+## The operating rules
+
+1. Begin with a worthwhile result.
+2. Find the unknown that could change the next decision.
+3. Take the smallest credible action that reduces it.
+4. Record stable rules where later work can use them.
+5. Delegate only the authority actually granted.
+6. Match evidence to each claim.
+7. Release with appropriate containment and recovery.
+8. Observe the customer effect.
+9. Improve or simplify the factory when evidence warrants it.
+
+The following chapters explain how to apply these rules without turning them into a fixed ceremony.
 
 ---
 

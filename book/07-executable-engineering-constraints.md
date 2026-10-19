@@ -2,80 +2,121 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Architecture for future change](06-architecture-for-future-change.md) · [Next: Bounded autonomy and agent sessions](08-bounded-autonomy-and-agent-sessions.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. Checks can enforce accepted rules; they cannot prove that the rules themselves are wise.
 
-## Turn intentions into mechanisms
+## Turn repeated instructions into checks
 
-“Keep the architecture clean” asks every contributor to reinterpret a goal. “Code outside Tasks may import only its published entry point” states a checkable boundary. The first can be useful guidance, but the second can become a reliable feedback mechanism.
+Written guidance is useful when judgment is needed. It is weak when the same mechanical rule must be remembered on every change.
 
-The aim is not to enforce every preference. It is to make recurring, consequential mistakes difficult to introduce and easy to diagnose. A check should explain the violation, identify the supported alternative, and provide a governed exception path when necessary.
+If every route must declare an access policy, a test can fail when a route has none. If one module must not import another module's private database code, a dependency check can enforce that rule. If permission names come from a registry, the type system can reject unknown names.
 
-## Choose the strongest useful representation
+The point is not maximum automation. It is to stop spending human review on a rule a machine can check reliably.
 
-Our preferred order is to remove an invalid path through architecture when possible, use types for representable constraints, add static or build checks for structural requirements, test runtime behavior, and retain prose for judgment that cannot be encoded usefully. This resembles the hierarchy in PStack's `correct` skill, which also requires demonstrating that a new check catches a real mistake. [S10](../research/sources/index.md#s10)
+## Use the strongest useful representation
 
-The order is not a law. A simple regression test may be the right immediate intervention while an ownership refactor remains too risky. The important distinction is between a reminder and a mechanism that actually detects or prevents the problem.
+A rule can live in several places:
 
-## What compile-time authorization can and cannot do
+1. a sentence in guidance;
+2. a working example;
+3. a template or generator;
+4. a static check;
+5. a runtime control; or
+6. a monitored operational limit.
 
-A typed permission registry can reject an unknown permission string. A complete typed policy map can reject a missing entry for a declared endpoint. Discriminated unions can make invalid combinations of configuration harder to express. TypeScript's narrowing and exhaustiveness mechanisms support this kind of representation. [S17](../research/sources/index.md#s17)
+Choose the strongest representation that matches the rule.
 
-However, the compiler does not know that a real HTTP request has a valid identity, that a membership is still active, or that a resource belongs to the correct tenant. Those are runtime facts. A cast, unchecked input, an unregistered route, or a separate entry point can also evade a poorly designed static convention.
+“Use clear names” still needs judgment. “Every externally reachable route declares an access policy” can be checked. “An unauthorized assignment changes nothing” needs runtime behavior, not only a type declaration.
 
-The proposed design therefore combines a typed registry with a route-inventory check and runtime deny-by-default behavior. Every actual route must have an explicit policy or a reviewed public designation. Application capabilities must enforce resource-specific invariants even when called outside HTTP. Nest's authorization documentation provides mechanisms such as guards and metadata; our deny-by-default and inventory requirements are additional design choices, not guarantees provided merely by using the framework. [S16](../research/sources/index.md#s16)
+## Types protect representations, not reality
 
-## Four separate assurances
+TypeScript can make permission names, endpoint identifiers, commands, and results explicit. It can ensure every known endpoint appears in a policy registry.
 
-| Mechanism | What it can establish in scope | What remains unproven |
-| --- | --- | --- |
-| Typed registry | A declaration uses known identifiers and shapes | Whether all runtime entry points use the declaration |
-| Route inventory | Discovered routes match the policy inventory | Whether the policy itself is appropriate |
-| Runtime policy checks | The checked request satisfies the implemented conditions | Whether omitted conditions should have existed |
-| Negative acceptance tests | Specific forbidden interactions are denied | All possible inputs, races, integrations, and deployments |
+It cannot prove that a caller's token is valid, that membership is current, that the task belongs to the workspace, or that a database commit was atomic.
 
-The combination is stronger than any one element, but it is still not a proof of complete security. Public routes, background jobs, websocket handlers, and administrative scripts require deliberate scope. A rule that protects only REST controllers should say so.
+For task reassignment, compile-time declarations help prevent missing or misspelled policy entries. Runtime code must still establish identity, resource context, eligibility, and transaction behavior.
 
-## Architecture checks should have adversarial fixtures
+> **Do not confuse:** a well-typed permission with an authorized real-world action.
 
-Dependency tools can enforce forbidden imports and cycles. For JavaScript and TypeScript, dependency-cruiser provides rule-based dependency validation; ArchUnit and Import Linter address related needs in Java and Python respectively. These are tools to evaluate for the chosen environment, not interchangeable configurations. [S18](../research/sources/index.md#s18)
+The separation between policy and delivery mechanisms follows the source material on architecture boundaries. [S10](../research/sources/index.md#s10)
 
-For each adopted rule, create a small valid fixture and a deliberately invalid one. A rule forbidding domain-to-infrastructure imports should fail when such an import is introduced. A rule restricting cross-module access should catch path aliases as well as ordinary relative imports within its documented scope.
+## Check four different things separately
 
-The meta-test matters. A configuration file with a persuasive rule name can match no files at all. A passing command then creates confidence without enforcement. Test the checker against the failure it is meant to catch, and ensure CI runs the same command used locally.
+Authorization work often combines four claims:
 
-## Three speeds of feedback
+- **Declaration:** every operation has a policy.
+- **Identity:** the actor is authenticated as claimed.
+- **Entitlement:** the actor may perform this operation on this resource.
+- **Effect:** allowed and denied requests change state correctly.
 
-Pre-commit should run cheap, relevant checks and safe mechanical transformations. Examples include formatting staged files and high-confidence local lint rules. It is not the place to run every browser and database scenario.
+One green test cannot be assumed to prove all four.
 
-Pull-request CI should independently run the required checks from a clean environment: types, boundaries, behavior, integration, migration, contract, and relevant end-to-end tests. Local hooks can be skipped. The server-side policy must not depend on a contributor voluntarily running them.
+For example, a route inventory can prove that `tasks.assign` has a declared policy. A domain test can prove that a manager from another workspace is rejected. An integration test can prove that a rejected request writes neither task state nor audit state.
 
-Periodic analysis can investigate broader change scenarios, mutation testing, dependency trends, or expensive environments. Start uncertain metrics as advisory signals. Turn them into blocking gates only after their meaning and false-positive cost are understood.
+## Test the checker with invalid examples
 
-A pre-commit hook does not itself instruct an AI to fix a failure. It rejects or transforms a change. An agent driver must observe the result, attempt an appropriate correction within a budget, rerun the check, and stop when it cannot resolve the failure without changing authority or scope.
+An architecture check that has never caught a violation may be protecting nothing.
 
-## Mechanical cleanup is not architectural review
+Keep small invalid fixtures that deliberately break the rule:
 
-Formatting can be delegated to deterministic tooling. A separate agent can inspect behavior, dependency changes, test adequacy, and unnecessary complexity. These are different responsibilities.
+- a route with no policy;
+- a forbidden import;
+- an unknown permission;
+- a module writing another module's state; or
+- a denied operation that still writes an audit event.
 
-A cleanup pass should not quietly rewrite unrelated code, broaden the change, or change public behavior. Large cosmetic edits can make the functional change harder to review. Separate them when they obscure evidence. An independent reviewer should not silently become the author of the code it is evaluating.
+The check should fail for the expected reason. This guards against a test that stays green because it scans the wrong files or ignores a new code shape.
 
-## Metrics and the danger of optimizing the representation
+The idea of testing tests connects with mutation and adversarial-fixture practices. [S17](../research/sources/index.md#s17)
 
-Complexity, duplication, dependency counts, and changed-file counts can reveal interesting patterns. They can also be improved superficially. Splitting code into many forwarding wrappers may lower one metric while making the system harder to understand. A single public method can hide a poorly designed collection of responsibilities.
+## Use three feedback speeds
 
-SlopCodeBench is a separate research benchmark focused on erosion across iterative specification changes. It is not a ready-made production CI plugin for our TypeScript application. We borrow the sequential-change evaluation idea while treating specific metrics as limited signals. [S19](../research/sources/index.md#s19)
+Not every check belongs in the same place:
 
-The project-specific question is whether later changes preserve expected behavior and remain understandable within the intended boundaries. A score cannot replace inspection of that question.
+- **Fast local checks:** types, focused tests, formatting, and small architecture rules.
+- **Integration checks:** persistence, external contracts, and multi-component behavior.
+- **Deployment checks:** real configuration, routes, credentials, migrations, and operational signals.
 
-## Governance of the guardrails
+Fast checks guide the edit loop. Slower checks prove boundaries that cannot be simulated credibly. A production-like check should not run on every keystroke, and a fast unit test should not be presented as deployment proof.
 
-An agent implementing a feature must not silently weaken the policy used to judge that feature. It may propose a change to a constraint and explain the evidence, but the proposal requires the appropriate owner. Exceptions should identify scope, rationale, authority, and a review point rather than becoming permanent invisible bypasses.
+The inspected testing sources distinguish several evidence layers and their tradeoffs. [S16](../research/sources/index.md#s16)
 
-For an inherited codebase, baseline existing structural violations and prevent new ones where a full cleanup would be impractical. Do not use a baseline to excuse an active data-access vulnerability. Structural debt and an exploitable security defect require different risk responses.
+## Keep cleanup separate from design review
 
-## The practical implication
+A formatter or simplifier can remove duplication and improve readability. It cannot decide whether assignment should grant access, who owns membership, or whether a transaction is safe.
 
-Start with a few high-confidence rules that catch actual mistakes: forbidden internal imports, undefined permission identifiers, missing route policies, and behavior regressions. Prove the checks fail on known bad fixtures. Expand only when the evidence justifies the additional machinery. The factory should accumulate dependable constraints, not decorative configuration files.
+Mechanical cleanup is useful after behavior is protected. Architectural review asks different questions about ownership, interfaces, side effects, and future change.
+
+## Do not optimize the representation
+
+Any metric can be gamed. A team can reduce file count by creating a giant module, improve coverage by testing trivial lines, or make changes appear local by hiding coupling behind shared utilities.
+
+SlopCodeBench and related work point toward evaluating maintainability through later changes rather than only static snapshots. [S19](../research/sources/index.md#s19)
+
+Use metrics as signals. Examine the real behavior and the next-change cost.
+
+## Govern the guardrails
+
+A check can enforce a wrong decision perfectly. Every important guardrail should therefore have:
+
+- an owner;
+- a plain-language reason;
+- a known scope;
+- invalid examples it catches;
+- an exception or revision path; and
+- a way to retire it when the rule no longer helps.
+
+Security guidance on policy enforcement supports making controls explicit, but each project still owns its actual rules. [S18](../research/sources/index.md#s18)
+
+## What to do next
+
+Choose one repeated review comment. Ask:
+
+1. Is the rule stable enough to automate?
+2. What is the strongest appropriate representation?
+3. What invalid example proves the check works?
+4. Who may revise or remove the rule?
+
+Automate that one rule well before building a broad governance framework.
 
 ---
 

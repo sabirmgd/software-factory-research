@@ -1,39 +1,85 @@
 # Reading guide
 
-The book supports zooming out to purpose and zooming in to implementation. It is not necessary to read every template or source note before beginning.
+You do not need to read the repository from top to bottom. Choose the shortest route that answers your question.
 
-## Three routes
+## Five minutes: understand the idea
 
-**Returning to the ideas:** read chapters 1 and 3, then use the question map to find a particular issue. The evolution record explains why a proposal changed.
+Read [Start here](START-HERE.md).
 
-**Discussing the argument:** read chapters 1–3 and 13, then follow the source notes and experiment plans. This route emphasizes assumptions, tradeoffs, and counterexamples.
+It explains the problem, the three loops, the task-assignment example, the six operating rules, and the limits of the current evidence.
 
-**Applying the model:** read chapters 4–10 alongside the task-assignment example, then chapter 12 and the relevant templates. Use the inherited-codebase example when the system already exists.
+## The practical route
 
-## The book
+Use this route if you want to apply the model:
 
-- [Why a factory?](book/01-why-a-factory.md)
-- [The perspectives and the tensions](book/02-the-perspectives-and-tensions.md)
-- [Our working model](book/03-our-working-model.md)
-- [Discovery and product intent](book/04-discovery-and-product-intent.md)
-- [Research and adaptive planning](book/05-research-and-adaptive-planning.md)
-- [Architecture for future change](book/06-architecture-for-future-change.md)
-- [Executable engineering constraints](book/07-executable-engineering-constraints.md)
-- [Bounded autonomy and agent sessions](book/08-bounded-autonomy-and-agent-sessions.md)
-- [Make Clear and human understanding](book/09-make-clear-and-human-understanding.md)
-- [Verification and safe delivery](book/10-verification-and-safe-delivery.md)
-- [Customer outcomes and factory learning](book/11-customer-outcomes-and-factory-learning.md)
-- [Putting it into practice](book/12-putting-it-into-practice.md)
-- [Limits and open questions](book/13-limits-and-open-questions.md)
+1. [Why a factory?](book/01-why-a-factory.md)
+2. [Our working model](book/03-our-working-model.md)
+3. [Discovery and product intent](book/04-discovery-and-product-intent.md)
+4. [Research and adaptive planning](book/05-research-and-adaptive-planning.md)
+5. [Architecture for future change](book/06-architecture-for-future-change.md)
+6. [Executable engineering constraints](book/07-executable-engineering-constraints.md)
+7. [Bounded autonomy and agent sessions](book/08-bounded-autonomy-and-agent-sessions.md)
+8. [Make Clear and human understanding](book/09-make-clear-and-human-understanding.md)
+9. [Verification and safe delivery](book/10-verification-and-safe-delivery.md)
+10. [Customer outcomes and factory learning](book/11-customer-outcomes-and-factory-learning.md)
+11. [Putting it into practice](book/12-putting-it-into-practice.md)
+
+Read these alongside the [task-assignment walkthrough](examples/task-assignment/README.md). It provides one stable example while the chapters introduce different ideas.
+
+## The critical route
+
+Use this route if you want to challenge the argument:
+
+1. [Why a factory?](book/01-why-a-factory.md)
+2. [Our working model](book/03-our-working-model.md)
+3. [The perspectives and tensions](book/02-the-perspectives-and-tensions.md)
+4. [Limits and open questions](book/13-limits-and-open-questions.md)
+5. [Experiment plan](experiments/evaluation-plan.md)
+6. [Sources](research/sources/index.md)
+
+This route focuses on assumptions, disagreements, counterexamples, and what would count as evidence against the model.
+
+## The shortest route for an existing codebase
+
+Read:
+
+1. [Research and adaptive planning](book/05-research-and-adaptive-planning.md)
+2. [Architecture for future change](book/06-architecture-for-future-change.md)
+3. [Verification and safe delivery](book/10-verification-and-safe-delivery.md)
+4. [Putting it into practice](book/12-putting-it-into-practice.md)
+5. [Inherited-codebase example](examples/inherited-codebase/README.md)
+
+The goal is not to force an existing system into a new template. It is to understand one change area, protect its current behavior, and improve the seam required by the next feature.
+
+## The complete book
+
+The book still contains thirteen chapters so each subject can be read independently:
+
+- [1. Why a factory?](book/01-why-a-factory.md)
+- [2. The perspectives and the tensions](book/02-the-perspectives-and-tensions.md)
+- [3. Our working model](book/03-our-working-model.md)
+- [4. Discovery and product intent](book/04-discovery-and-product-intent.md)
+- [5. Research and adaptive planning](book/05-research-and-adaptive-planning.md)
+- [6. Architecture for future change](book/06-architecture-for-future-change.md)
+- [7. Executable engineering constraints](book/07-executable-engineering-constraints.md)
+- [8. Bounded autonomy and agent sessions](book/08-bounded-autonomy-and-agent-sessions.md)
+- [9. Make Clear and human understanding](book/09-make-clear-and-human-understanding.md)
+- [10. Verification and safe delivery](book/10-verification-and-safe-delivery.md)
+- [11. Customer outcomes and factory learning](book/11-customer-outcomes-and-factory-learning.md)
+- [12. Putting it into practice](book/12-putting-it-into-practice.md)
+- [13. Limits and open questions](book/13-limits-and-open-questions.md)
 
 ## Supporting material
 
-[Questions and coverage](research/questions-and-coverage.md) records the lines of inquiry without turning the book into an FAQ. [Evolution of the ideas](research/evolution-of-the-ideas.md) preserves changes of mind. [Synthesis decisions](research/synthesis-decisions.md) separates our policy choices from source defaults. [Source corrections](research/source-corrections.md) identifies earlier overclaims or outdated references.
-
-Start with the [task-assignment walkthrough](examples/task-assignment/README.md) for a complete example. Compare it with [an inherited codebase](examples/inherited-codebase/README.md) and [a customer-outcome investigation](examples/customer-outcome/README.md).
-
-The [template index](templates/README.md) explains when to use or skip each artifact. [Experiments](experiments/evaluation-plan.md) states what is untested. [The archive](archive/README.md) is historical and may contain assumptions superseded by the book.
+- [Questions and coverage](research/questions-and-coverage.md) records the investigation.
+- [Evolution of the ideas](research/evolution-of-the-ideas.md) records important changes of mind.
+- [Synthesis decisions](research/synthesis-decisions.md) separates this book's choices from source defaults.
+- [Source corrections](research/source-corrections.md) records earlier overclaims and outdated references.
+- [Templates](templates/README.md) explains when to use or skip each artifact.
+- [Archive](archive/README.md) preserves historical material that may no longer match the current model.
 
 ## Reading the evidence labels
 
-**Source position** means an attributed statement supported by the inspected material. **Proposed synthesis** means our recommendation or inference. **Illustrative** means a fictional worked example. **Observed locally** applies only to a documented check in this package. **Not evaluated** means no outcome evidence has been collected. These labels should not be promoted silently as content moves between documents.
+**Source position** means an attributed statement supported by inspected material. **Proposed** means this book's recommendation. **Illustrative** means a fictional worked example. **Observed locally** applies only to a documented check in this repository. **Not evaluated** means that no outcome evidence has been collected.
+
+The labels tell you how much a statement supports. They do not require every paragraph to repeat the same disclaimer.

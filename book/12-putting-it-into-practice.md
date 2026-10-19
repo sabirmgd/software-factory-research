@@ -2,73 +2,159 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Customer outcomes and factory learning](11-customer-outcomes-and-factory-learning.md) · [Next: Limits and open questions](13-limits-and-open-questions.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed implementation path. This repository is the research publication, not the production factory described here.
 
-## Start with a product and one reference behavior
+## Start with one product and one behavior
 
-The first implementation should not be a giant orchestration platform. Choose one real workflow and a small set of consequential foundations. Build one representative vertical slice and examine the next change. This reveals whether the proposed boundaries help before they are reproduced by generators.
+Do not begin by building an orchestration platform, a large template, or a collection of agent roles.
 
-For this investigation, the concrete stack preference is TypeScript with NestJS and Next.js. Database, ORM, authentication provider, deployment target, monorepo tooling, and exact versions remain project decisions. They should not be invented merely to make a template appear complete.
+Choose one real product, one customer workflow, and one representative change. The change should be important enough to reveal real constraints but small enough to complete and learn from.
 
-The original handoff is preserved in the [archive](../archive/README.md). It is a historical implementation-oriented draft, not the current authority for the broader research model. Its stricter planning assumptions should be read alongside the adaptive approach in this book.
+Task reassignment is useful because it crosses product intent, authorization, state ownership, concurrency, audit, user interaction, and release evidence without requiring an entire business application.
 
-## A sensible bootstrap sequence
+The first goal is not a reusable factory. It is one change delivered with less avoidable confusion and with honest evidence.
 
-First establish outcome, actors, use cases, and important non-goals. Resolve the uncertainty that could reverse the first design with the smallest appropriate experiment. Identify candidate capabilities and their owners. Choose the few technology and operational constraints that the first slice genuinely needs.
+## A practical bootstrap sequence
 
-Then create a minimal runnable application with a supported build, test, and development path. Add a clear public contract between browser and backend. Implement identity and authorization behavior using a deliberate policy, not an invented demo role list accidentally promoted to production.
+### 1. Write the outcome
 
-Next, implement one complete behavior across user interaction, transport, application rules, persistence, errors, and evidence. Establish the dependency and policy checks that protect its intended boundaries. Challenge those checks with known invalid fixtures.
+Name the affected people, their work, the expected improvement, and what must not get worse.
 
-Only then extract generators and reusable skills from the working pattern. A generator should reproduce demonstrated structure, not amplify an untested design sketch.
+### 2. Inspect the current system
 
-## The repository template is not a fixed business model
+Find the relevant behavior, ownership, tests, entry points, and unknowns. Separate observed facts from inference.
 
-A template may provide compiler settings, error conventions, test harnesses, route-policy plumbing, documentation templates, and generator mechanics. It should not pre-create a dozen speculative business modules or assume that every customer uses the same tenancy and permission semantics.
+### 3. Settle the important decisions
 
-One possible structure is a backend composition root with capability modules, a web application with feature views, and a small public contracts package. Cross-cutting tooling and configuration can be shared where semantics are genuinely shared. Database ownership remains explicit even when one physical database serves several capabilities.
+Clarify product rules, state ownership, public operations, failure behavior, and release boundaries. Do not specify private details that implementation can decide safely.
 
-The template should provide a small set of supported commands and a working example. A new agent should be able to discover how to add a capability without searching through many obsolete patterns. A short `AGENTS.md` can point to current rules and examples instead of duplicating every document.
+### 4. Build one thin behavior
 
-## Architecture before generators, evidence before scale
+Implement the smallest useful path across the required layers. Demonstrate one allowed case before scaling the mechanism.
 
-The reference slice should demonstrate permitted behavior, important denied cases, errors, persistence, and observability. It should also demonstrate that a prohibited import or missing policy fails the relevant check. A template that merely starts successfully has not demonstrated architectural enforcement.
+### 5. Add the important denied cases
 
-After the first slice, introduce a plausible next requirement. Observe whether the change stays within the expected ownership boundaries and whether the public contract remains useful. A need to change the contract is not automatically failure, but it should be explained.
+Prove that wrong-workspace, inactive-member, stale-revision, repeated-request, and storage-failure paths behave safely.
 
-Do not claim success because a directory exists for every planned capability. The decisive evidence is whether a contributor can follow the supported path and whether known violations are caught.
+### 6. Make the result understandable
 
-## Adopting the model in an inherited codebase
+Prepare one focused explanation that shows what changed, what stayed stable, the important failure path, and the evidence.
 
-Start by reconstructing behavior and ownership in the area being changed. Use existing tests, user-visible behavior, code paths, and available operational evidence. Mark inferred boundaries as inferred. Make Clear can help the engineer and agent develop a shared view before editing.
+### 7. Release within explicit authority
 
-Do not force the entire application into the template's folder names. Add characterization tests around important behavior, identify one problematic seam, and improve the path required by the actual feature. Baseline structural violations when appropriate and prevent new ones. Treat active security defects according to their risk rather than hiding them in a general debt baseline.
+Choose the permitted environment, exposure, monitoring, stop condition, and recovery plan.
 
-The [inherited example](../examples/inherited-codebase/README.md) walks through this adoption path without pretending a rewrite is necessary for every legacy system.
+### 8. Learn from customer and engineering evidence
 
-## How the normal feature session changes
+Observe whether the workflow improved and where the delivery process consumed repeated effort.
 
-The next request begins with outcome and scope, then a targeted investigation. The task is routed according to unresolved product decisions, architectural impact, risk, and evidence availability. Small work can use a compact brief. Larger work may separate product and technical design.
+### 9. Extract only the repeated value
 
-A Make Clear view appears where it materially improves understanding. The agent receives a bounded assignment and implements a small verified increment. It reports actual evidence and deviations. The appropriate person accepts consequential decisions and authorizes release separately. Outcome feedback and recurring friction feed the next iteration.
+After the pattern works, consider a generator, shared test, reusable skill, or template. Do not automate an untested sketch.
 
-The workflow should become lighter for familiar changes because the repository carries more of the relevant knowledge. That is a hypothesis to measure, not permission to remove safeguards based on a few successful demonstrations.
+## Keep the starter small
 
-## What this publication actually implements
+A useful starter may include:
 
-This repository is a research book with templates, examples, diagrams, and local validation tools. It includes a small executable assignment model to demonstrate bounded claims. It does not contain a production NestJS/Next.js application, a deployed multi-agent orchestrator, or a verified installation of the original Make Clear skill.
+- compiler and lint settings;
+- error and result conventions;
+- a test harness;
+- policy declaration and enforcement plumbing;
+- a small working example;
+- a few architecture checks; and
+- short guidance pointing to current patterns.
 
-Keeping the publication separate from the eventual application starter is intentional. Readers can challenge the model without adopting a stack, and the starter can evolve without making every experimental idea a runtime dependency.
+It should not pre-create speculative business modules or assume that every product uses the same tenant, permission, and data-ownership rules.
 
-## A phased implementation handoff
+One possible structure is a composition root, capability modules, a web application, and a small public-contracts package. That is a starting option, not the business model of every project.
 
-The first project phase should settle consequential unknowns and define success. The second should provide a runnable base. The third should prove module and policy enforcement. The fourth should implement the reference behavior. The fifth should extract generators and agent guidance. The sixth should evaluate sequential changes and customer use.
+## Prove the path before generating it
 
-Each phase should leave a usable result and visible evidence. A blocked phase should report the specific missing authority or capability, not continue by guessing. Decisions such as production credentials, paid services, licensing, and irreversible migrations require deliberate ownership.
+The reference behavior should demonstrate:
 
-## The practical implication
+- a permitted action;
+- important denied actions;
+- named failures;
+- persistence and audit behavior;
+- the structural rules that keep ownership clear; and
+- evidence from the intended environment.
 
-Build the smallest factory that helps one real project. Improve it in response to repeated evidence. The goal is to make future work easier, not to create a large framework that must itself be supervised before any customer value can be delivered.
+Also prove that prohibited imports, missing policies, or invalid permissions fail the relevant check.
+
+A template that starts successfully has shown bootstrapping. It has not shown that the architecture protects future change.
+
+Introduce a plausible next requirement. For example, allow an explicitly shared guest to receive a task without making every guest eligible. Observe whether the change stays inside the expected boundary and whether the public contract remains useful.
+
+## Adopt the model gradually in an existing system
+
+Do not rename the whole codebase or force it into the starter's folders.
+
+For the area being changed:
+
+1. reconstruct current behavior and ownership;
+2. add characterization tests around important behavior;
+3. identify one difficult seam;
+4. improve the path required by the real feature; and
+5. prevent new violations without pretending old debt vanished.
+
+Baseline structural problems only when that is honest and safe. Active security defects should be handled according to risk, not hidden inside a broad “legacy exception.”
+
+The [inherited-codebase example](../examples/inherited-codebase/README.md) shows this route.
+
+## What a normal feature session should feel like
+
+The workflow should become lighter as the repository carries more knowledge.
+
+A familiar change may require only:
+
+- a compact outcome and scope;
+- targeted investigation;
+- one bounded implementation owner;
+- focused checks;
+- a clear evidence summary; and
+- the appropriate release decision.
+
+A risky or unfamiliar change expands because the decision requires it, not because every feature follows the same ceremony.
+
+If the factory makes familiar work heavier over time, that is evidence against its design.
+
+## What this repository implements
+
+This repository contains the book, sources, examples, diagrams, templates, local documentation checks, and a small executable assignment model.
+
+It does not contain:
+
+- a production NestJS/Next.js starter;
+- a deployed multi-agent orchestrator;
+- customer outcome evidence;
+- production authorization integration; or
+- proof that the complete factory saves more effort than it costs.
+
+Keeping the research publication separate lets the model be challenged without requiring adoption of one stack.
+
+## A sensible phased handoff
+
+1. Settle the outcome and important unknowns.
+2. Create a runnable base.
+3. Prove module and policy enforcement.
+4. Implement the reference behavior.
+5. Test the next plausible change.
+6. Extract only the mechanisms that demonstrated repeated value.
+7. Evaluate customer use and total human effort.
+
+Each phase should leave a usable result and visible evidence. A blocked phase should name the missing decision, access, or capability instead of guessing.
+
+## What to do next
+
+Build the smallest factory that helps one real project:
+
+1. choose one workflow;
+2. measure the current effort;
+3. deliver one representative behavior;
+4. observe the customer and engineering result; and
+5. keep only the mechanisms that make the next change easier.
+
+The factory is successful when future work becomes clearer and safer—not when the factory itself becomes large.
 
 ---
 

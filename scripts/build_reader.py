@@ -20,7 +20,7 @@ ROOT=Path(__file__).resolve().parents[1]
 def doc_id(path:Path)->str:
     return 'doc-'+re.sub(r'[^a-z0-9-]','-',str(path.relative_to(ROOT)).lower())
 def ordered_docs()->list[Path]:
-    first=[ROOT/'README.md',ROOT/'READING-GUIDE.md']
+    first=[ROOT/'README.md',ROOT/'START-HERE.md',ROOT/'READING-GUIDE.md']
     chapters=sorted((ROOT/'book').glob('*.md'))
     rest=[p for p in markdown_files(ROOT) if p not in first+chapters]
     # The full historical archive is included at the end, explicitly historical.
@@ -71,10 +71,13 @@ summary{cursor:pointer;font-weight:650}details{background:white;border:1px solid
 '''
 def main()->int:
     docs=ordered_docs();available=set(docs)
-    groups=[('Start here',[p for p in docs if p.parent==ROOT]),('The book',[p for p in docs if p.parent==ROOT/'book']),
+    start_docs=[ROOT/'README.md',ROOT/'START-HERE.md',ROOT/'READING-GUIDE.md']
+    project_docs=[p for p in docs if p.parent==ROOT and p not in start_docs]
+    groups=[('Start here',start_docs),('The book',[p for p in docs if p.parent==ROOT/'book']),
       ('Examples',[p for p in docs if 'examples' in p.relative_to(ROOT).parts]),
       ('Research and sources',[p for p in docs if 'research' in p.relative_to(ROOT).parts]),
       ('Templates and experiments',[p for p in docs if set(p.relative_to(ROOT).parts)&{'templates','experiments'}]),
+      ('Project reference',project_docs),
       ('Diagrams and historical archive',[p for p in docs if set(p.relative_to(ROOT).parts)&{'diagrams','archive'}])]
     toc=[]
     for label,paths in groups:
@@ -82,11 +85,11 @@ def main()->int:
         for p in paths:
             title=next((line.lstrip('# ').strip() for line in p.read_text().splitlines() if line.startswith('# ')),p.stem)
             links.append(f'<li><a href="#{doc_id(p)}">{html.escape(title)}</a></li>')
-        toc.append(f'<details{(" open" if label=="The book" else "")}><summary>{label}</summary><ul>'+''.join(links)+'</ul></details>')
+        toc.append(f'<details{(" open" if label=="Start here" else "")}><summary>{label}</summary><ul>'+''.join(links)+'</ul></details>')
     content=[]
     for path in docs:
         content.append(f'<article id="{doc_id(path)}"><div class="path">{html.escape(str(path.relative_to(ROOT)))}</div>'+render_doc(path,available)+'<p class="back"><a href="#top">Back to contents</a></p></article>')
-    output='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'+f'<meta name="source-digest" content="{digest_sources(ROOT)}">'+ '<title>Beyond Code Generation — Research Book</title><style>'+CSS+'</style></head><body><header id="top"><p>SOFTWARE FACTORY RESEARCH · FIRST EDITION</p><h1>Beyond Code Generation</h1><p>Customer outcomes. Human judgment. Maintainable change.</p><p>By Sabir Moglad · AI-assisted research and synthesis · October 17, 2026</p><p>A complete offline reading edition. Proposals, source positions, and executed checks are distinguished throughout. No factory-effectiveness or customer trial is claimed.</p><nav aria-label="Book contents">'+''.join(toc)+'</nav></header><main>'+''.join(content)+'</main><footer>Generated from canonical Markdown. No external fonts, scripts, tracking, or assets. The source repository includes editable diagrams, tests, and publishing instructions.</footer></body></html>'
+    output='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'+f'<meta name="source-digest" content="{digest_sources(ROOT)}">'+ '<title>Beyond Code Generation — Research Book</title><style>'+CSS+'</style></head><body><header id="top"><p>SOFTWARE FACTORY RESEARCH · PLAIN-LANGUAGE EDITION</p><h1>Beyond Code Generation</h1><p>A practical model for building useful software with AI agents.</p><p>By Sabir Moglad · Revised October 19, 2026</p><p>Start with the five-minute version, then choose the shortest reading route for your question.</p><nav aria-label="Book contents">'+''.join(toc)+'</nav></header><main>'+''.join(content)+'</main><footer>Generated from canonical Markdown. No external fonts, scripts, tracking, or assets. The source repository includes editable diagrams, tests, and publishing instructions.</footer></body></html>'
     (ROOT/'index.html').write_text(output)
     print(f'Built offline reader with {len(docs)} documents ({len(output.encode()):,} bytes).')
     return 0

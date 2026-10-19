@@ -2,81 +2,124 @@
 
 [Reading guide](../READING-GUIDE.md) · [Previous: Bounded autonomy and agent sessions](08-bounded-autonomy-and-agent-sessions.md) · [Next: Verification and safe delivery](10-verification-and-safe-delivery.md)
 
-> **Status:** Proposed synthesis, with attributed sources. Illustrations are not client results.
+> **Status:** Proposed. The original local Make Clear implementation was not retrieved; this chapter describes the capability developed in this publication.
 
-## The hidden work in human review
+## The problem is reconstruction
 
-A technical review often begins before the reviewer reaches the actual decision. They must reconstruct the system from prose, code, diagrams, and changes; identify which details are relevant; distinguish existing behavior from a proposal; and decide what evidence to trust. Only then can they evaluate the work.
+A technical review often starts long before the decision.
 
-Make Clear began from Sabir's objection to that reconstruction burden. Text alone is sometimes an inadequate interface between an agent's work and a person's understanding. The goal is broader than approval. Someone may want to learn a system, explore an idea, compare consequences, or challenge an assumption without making any decision yet.
+The reviewer must find the relevant code, rebuild the system in their head, separate current behavior from proposed behavior, identify important omissions, and decide which evidence to trust. Only then can they judge the change.
 
-This chapter specifies that perspective as a proposed factory capability. It does not claim that the original local Make Clear skill was retrieved or verified. Available evidence establishes the user's intent; the implementation described here is a new, explicit design proposal. The [source-correction record](../research/source-corrections.md) preserves that limitation.
+Make Clear tries to reduce that reconstruction work.
 
-## Understanding is the product of the capability
+Its purpose is not to generate diagrams. Its purpose is to help someone accurately understand something important with less effort.
 
-A diagram is not automatically clearer than prose. A short explanation may be best for a simple distinction. A sequence diagram may reveal the timing of authorization and persistence. A before-and-after dependency view may reveal a new coupling. A state explorer may expose a rule that is hard to reason about statically. A UI prototype may help someone recognize an unexpected interaction.
+## Start with the question
 
-The representation should follow the question. Producing every possible view creates another reconstruction task. The capability should select the smallest useful view and explain what it leaves out.
+The right representation depends on what the person needs to understand.
 
-HumanLayer's inspected `show-me` skill likewise selects among code-shape sketches, call trees, diffs, diagrams, and focused HTML views. Our Make Clear design extends that mechanism with explicit uncertainty, evidence provenance, and support for understanding without approval. [S20](../research/sources/index.md#s20)
+- A short explanation may settle a simple distinction.
+- A sequence diagram may reveal when authorization and persistence occur.
+- A before-and-after dependency view may expose new coupling.
+- A state table may clarify allowed and denied transitions.
+- A small prototype may reveal whether an interaction makes sense.
 
-## Architecture and explanation reduce different kinds of context
+Producing every possible view creates another review burden. Use the smallest representation that answers the question, then state what it leaves out.
 
-A well-designed module reduces the internal knowledge a caller needs in order to act correctly. A grounded explanation reduces the material a reviewer needs to reconstruct in order to understand or judge. These are analogous goals, not identical mechanisms.
+HumanLayer's inspected `show-me` skill also chooses among focused representations. This Make Clear proposal adds explicit uncertainty, evidence pointers, and support for understanding without requiring approval. [S20](../research/sources/index.md#s20)
 
-Both can fail by hiding the wrong thing. A module can conceal a dangerous side effect. A diagram can omit the failure path that determines whether a design is acceptable. Simplicity is useful only when the remaining interface preserves the obligations and consequences that matter.
+## A concrete example
 
-This suggests a review question for Make Clear: after reading the view, what can the person understand or decide, and what important uncertainty would still surprise them?
+“Explain the task-reassignment change” is too broad.
 
-## The input and output contract
+A better question is:
 
-The input should identify the question, audience, relevant artifacts, revision or state, known uncertainty, and whether a decision is being requested. “Explain the PR” is broad. “Show whether this PR changes who can see an assignment, including denied cases” is focused.
+> Does this change alter who can see a task, including the important denied cases?
 
-The output should include a view or explanation, the important consequence, evidence pointers, unresolved assumptions, and any requested decision. It should not fabricate an approval where none is required. It should not replace the governing product or technical artifact with a disconnected summary.
+A useful answer could contain:
 
-![Make Clear transforms source material into an inspectable view while preserving evidence and uncertainty.](../diagrams/rendered/06-make-clear.png)
+1. one sentence stating that reassignment does not grant visibility;
+2. a small flow showing identity, workspace membership, task visibility, eligibility, and the denied result;
+3. links to the policy code and tests; and
+4. one unresolved assumption about membership changing during the transaction.
 
-*The view is derived from evidence or an explicitly labeled proposal. It is not verification by itself.*
+That is enough to support a focused review. It does not need a map of the entire application.
 
-## Three information states
+## Good architecture and good explanation solve related problems
 
-An observed statement is grounded in an inspected source or executed behavior. A proposed statement describes an intended change. An unverified statement is an assumption or claim that has not yet been established. These labels should remain visible in the output, especially when a diagram combines existing and planned components.
+Good architecture hides details a developer should not need. A good explanation hides details a reviewer should not need.
 
-For example, “the endpoint checks membership” may be observed in code, while “membership remains valid throughout the transaction” may still be unverified. A diagram showing both with identical arrows can conceal the distinction. A caption or visual annotation should make the gap explicit.
+Neither may hide important risk.
 
-Evidence is also revision-specific. A before-and-after view should identify the baseline and proposed revision. A screenshot from a prototype is not proof that production behaves that way. A test result applies to the environment and code that actually ran.
+A module can conceal a dangerous side effect. A diagram can omit the failure path that decides whether the design is acceptable. Simplicity helps only when the remaining interface preserves the obligations and consequences that matter.
 
-## Show consequences, not only structure
+After reading a Make Clear view, ask:
 
-A box labeled Authorization may tell a technical reader very little. A flow showing the source of identity, the resource's tenant, the permission check, and the denied result is more useful when the question concerns access.
+> What can the person now understand, and what important surprise is still possible?
 
-For a product decision, compare the user-visible consequence of two alternatives. If assignment grants access in one design but not another, demonstrate the difference with an external collaborator. For architecture, show where a future provider change would be implemented under each option. For release, show what is exposed, what is monitored, and what can and cannot be reversed.
+## Label three information states
 
-The capability should challenge the premise when necessary. It should not make a flawed proposal visually persuasive simply because the proposal was requested. Challenge should be specific, grounded, and tied to the user's goal.
+Keep these states visible when they affect the conclusion:
 
-## Where it fits in the workflow
+- **Observed:** established from inspected source or executed behavior.
+- **Proposed:** intended future behavior or structure.
+- **Unverified:** assumed or claimed but not yet established.
 
-During research, Make Clear can map the current system and distinguish known boundaries from inferred ones. During discovery, it can compare journeys or state transitions. During technical design, it can show interfaces and alternatives. During implementation review, it can explain the actual change and connect it to evidence. During learning, it can reveal a recurring pattern of friction.
+For example, code may show that an endpoint checks membership. The claim that membership remains valid throughout the commit may still be unverified.
 
-It should be callable at any of these points. A high-impact decision may trigger it automatically as preparation for review. A small familiar change should not generate a visual report merely because a template contains a diagram field.
+A diagram that draws both with identical confidence hides the difference. Use a caption, annotation, or separate line of text.
 
-Understanding and authority remain separate. A person understanding a design does not automatically authorize deployment. An agent producing a view does not automatically require a person to approve it.
+Evidence also belongs to a revision and environment. A prototype screenshot is not production proof. A test result supports the code and environment that actually ran.
 
-## Phone-friendly and accessible views
+## Show consequences, not decorative boxes
 
-Use short labels, readable type, meaningful captions, and layouts that do not require zooming into an enormous poster. Favor several focused views over a dense omnibus diagram. Do not encode essential meaning through color alone. Provide text alternatives for images and a route back to the source artifacts.
+A box labeled “Authorization” says little.
 
-This repository keeps canonical graph data, Mermaid exports, and rendered SVG/PNG views. The rendered images make the concepts readable without depending on a particular chat client's diagram support. GitHub's Markdown supports Mermaid, but other viewers may differ. [S21](../research/sources/index.md#s21)
+When access is the question, show where identity comes from, which resource context is used, which rule is checked, and what the caller learns when access is denied.
 
-## What could make this fail?
+When comparing product choices, show what changes for the user. When comparing architectures, show where a likely future change would go. When explaining a release, show who is exposed, what is monitored, and what recovery cannot undo.
 
-A polished explanation can increase confidence without increasing correctness. Selection of evidence can hide relevant disagreement. A generated diagram can become stale. A prototype can be mistaken for a working product. A visual reviewer may overlook details that would have been obvious in a diff.
+Make Clear should challenge a flawed premise rather than make it visually persuasive. The challenge should name the assumption, explain its consequence, and point to evidence or a way to test it.
 
-The remedy is not to abandon visualization. It is to keep evidence accessible, label uncertainty, include consequential failure paths, and evaluate the effect on review quality as well as review time. The [Make Clear experiment](../experiments/hypotheses.md) therefore examines misunderstandings found and missed, not simply whether reviewers prefer the visual presentation.
+## Use it where understanding is the bottleneck
 
-## The practical implication
+Make Clear can help during:
 
-Treat Make Clear as the human-understanding interface of the factory. Its success is a person accurately understanding something important with less reconstruction—not the number of diagrams generated or approvals obtained.
+- **research:** map the current system and distinguish known from inferred boundaries;
+- **discovery:** compare journeys, states, or product choices;
+- **design:** show ownership, interfaces, alternatives, and failure paths;
+- **implementation review:** explain what changed and connect it to evidence; and
+- **learning:** show recurring friction across several changes.
+
+Do not generate a visual report merely because a template has a diagram field. A familiar change may need only two clear paragraphs.
+
+Understanding and authority remain separate. Understanding a design does not authorize deployment. Producing an explanation does not create a new approval gate.
+
+## Make views usable
+
+Use short labels, readable type, meaningful captions, and focused layouts. Avoid enormous posters that require zooming. Do not use color as the only carrier of meaning. Provide a text alternative and a route back to source material.
+
+This repository keeps canonical graph data plus SVG and PNG outputs so the concepts remain readable across viewers. [S21](../research/sources/index.md#s21)
+
+## Guard against false confidence
+
+A polished explanation may increase confidence without improving correctness. It can select convenient evidence, become stale, or hide a detail that would be obvious in a diff.
+
+Keep the evidence accessible. Include important failure paths. Label uncertainty. Evaluate whether reviewers detect the right issues, not only whether they prefer the presentation.
+
+> **Do not confuse:** a clear explanation with proof that the explained system is correct.
+
+## What to do next
+
+For the next difficult review:
+
+1. Write the exact question the reviewer must answer.
+2. Choose one representation that reduces the most reconstruction.
+3. Show the important consequence and failure path.
+4. Label observed, proposed, and unverified information where needed.
+5. Link back to the evidence.
+
+Success is accurate understanding with less effort—not more diagrams.
 
 ---
 
